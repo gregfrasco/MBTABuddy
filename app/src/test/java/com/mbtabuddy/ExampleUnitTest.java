@@ -1,4 +1,4 @@
-package com.mbtabuddy;
+package com.Activities;
 
 import org.junit.Test;
 
