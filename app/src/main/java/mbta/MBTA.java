@@ -1,11 +1,26 @@
 package mbta;
 
+import android.util.Log;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Greg on 2016-02-04.
  */
-public class MBTA {
+public class MBTA{
 
     private static MBTA instance;
+    private final String mbtaAPI = "http://realtime.mbta.com/developer/api/v2/";
+    private final String apiKey = "?api_key=RpDBj89zSU6aOljozJLfpg";
+    private final String format = "&format=xml";
+    private String query;
+    private String results;
 
     public static MBTA getInstance(){
         if(instance == null){
@@ -16,5 +31,45 @@ public class MBTA {
 
     private MBTA(){
 
+    }
+
+    public List<Route> getRoutes(){
+        String apiResult = run(mbtaAPI + "routes" + apiKey + format);
+        List<Route> routes = new ArrayList<Route>();
+        String[] splitRoutes = apiResult.split("mode route_type=");
+        return null;
+    }
+
+
+    public String run(final String query) {
+        final Thread thread = new Thread() {
+            @Override
+            public void run() {
+                InputStream is = null;
+                try {
+                    URL url = new URL(query);
+                    is = url.openStream();  // throws an IOException
+                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                    MBTA.this.results = br.readLine();
+                } catch (MalformedURLException mue) {
+                    mue.printStackTrace();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                } finally {
+                    try {
+                        if (is != null) is.close();
+                    } catch (IOException ioe) {
+                        // nothing to see here
+                    }
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return results;
     }
 }
