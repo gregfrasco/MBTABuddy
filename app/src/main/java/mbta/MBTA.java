@@ -3,8 +3,10 @@ package mbta;
 /**
  * Created by Greg on 2016-02-04.
  */
-public class MBTA {
+public class MBTA implements Runnable{
 
+    private final String MBTAAPI = "http://realtime.mbta.com/developer/api/v2/";
+    private final String APIKey =
     private static MBTA instance;
 
     public static MBTA getInstance(){
@@ -15,6 +17,11 @@ public class MBTA {
     }
 
     private MBTA(){
+
+    }
+
+    @Override
+    public void run() {
 
     }
 }
