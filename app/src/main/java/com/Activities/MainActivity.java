@@ -1,7 +1,9 @@
-package com.mbtabuddy;
+package com.Activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import mbta.mbtabuddy.R;
 
 public class MainActivity extends AppCompatActivity {
 
