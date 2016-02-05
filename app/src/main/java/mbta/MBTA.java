@@ -13,6 +13,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -50,6 +52,23 @@ public class MBTA{
             this.routes = routes;
         }
         return routes;
+    }
+
+    public List<ParentStation> getStopsByRoute(Route route){
+        String apiResult = run(mbtaAPI + "stopsbyroute" + apiKey + "&route="+ route.getRouteId() + format);
+        Gson gson = new Gson();
+        StopsByRoute stopsByRoute = gson.fromJson(apiResult, StopsByRoute.class);
+        HashMap<String,ParentStation>parentStationMap = new HashMap<String,ParentStation>();
+        for(Direction direction : stopsByRoute.getDirection()){
+            for(Stop stop: direction.getStop()){
+                if(!parentStationMap.containsKey(stop.getParentStationName())){
+                    parentStationMap.put(stop.getParentStationName(),new ParentStation(stop));
+                }else{
+                    parentStationMap.get(stop.getParentStationName()).addStop(stop);
+                }
+            }
+        }
+        return new ArrayList<ParentStation>((Collection<? extends ParentStation>) parentStationMap.values());
     }
 
     public String run(final String query) {

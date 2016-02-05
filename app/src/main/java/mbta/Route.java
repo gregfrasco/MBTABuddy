@@ -5,6 +5,8 @@ import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 @Generated("org.jsonschema2pojo")
 public class Route {
 
@@ -14,14 +16,7 @@ public class Route {
     @SerializedName("route_name")
     @Expose
     private String routeName;
-
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
-    public Route() {
-    }
-
+    private List<ParentStation> stations;
     /**
      * 
      * @param routeId
@@ -43,20 +38,6 @@ public class Route {
 
     /**
      * 
-     * @param routeId
-     *     The route_id
-     */
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
-    }
-
-    public Route withRouteId(String routeId) {
-        this.routeId = routeId;
-        return this;
-    }
-
-    /**
-     * 
      * @return
      *     The routeName
      */
@@ -64,18 +45,12 @@ public class Route {
         return routeName;
     }
 
-    /**
-     * 
-     * @param routeName
-     *     The route_name
-     */
-    public void setRouteName(String routeName) {
-        this.routeName = routeName;
-    }
-
-    public Route withRouteName(String routeName) {
-        this.routeName = routeName;
-        return this;
+    public List<ParentStation> getStations() {
+        if(this.stations == null) {
+            MBTA mbta = MBTA.getInstance();
+            this.stations = mbta.getStopsByRoute(this);
+        }
+        return this.stations;
     }
 
 }

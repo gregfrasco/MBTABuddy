@@ -6,8 +6,13 @@ package mbta;
 public class Station {
 
     private ParentStation station;
-    private Direction direction;
     private int stopOrder;
     private int stopID;
+
+    public Station(ParentStation parentStation,Stop stop) {
+        this.station = parentStation;
+        this.stopID = Integer.parseInt(stop.getStopId());
+        this.stopOrder = Integer.parseInt(stop.getStopOrder());
+    }
 
 }
