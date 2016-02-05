@@ -17,6 +17,7 @@ public class Route {
     @Expose
     private String routeName;
     private List<ParentStation> stations;
+    private RouteType routeType;
     /**
      * 
      * @param routeId
@@ -43,6 +44,14 @@ public class Route {
      */
     public String getRouteName() {
         return routeName;
+    }
+
+    public RouteType getRouteType() {
+        return routeType;
+    }
+
+    public void setRouteType(RouteType routeType) {
+        this.routeType = routeType;
     }
 
     public List<ParentStation> getStations() {

@@ -47,7 +47,11 @@ public class MBTA{
             Gson gson = new Gson();
             JSON json = gson.fromJson(apiResult, JSON.class);
             for (Mode mode : json.getMode()) {
-                routes.addAll(mode.getRoute());
+                List<Route> setRoute = mode.getRoute();
+                for(Route route: setRoute){
+                    route.setRouteType(RouteType.valueOf(mode.getRouteType()));
+                }
+                routes.addAll(setRoute);
             }
             this.routes = routes;
         }
@@ -101,5 +105,15 @@ public class MBTA{
             e.printStackTrace();
         }
         return results;
+    }
+
+    public Route getCompatibleRoutes(MBTARoutes route){
+        List<Route> routes = this.getRoutes();
+        for(Route temproute: routes){
+            if(temproute.getRouteName().equals(route.toString())){
+                return temproute;
+            }
+        }
+        return null;
     }
 }
