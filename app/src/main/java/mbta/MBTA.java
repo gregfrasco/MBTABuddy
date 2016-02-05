@@ -1,6 +1,11 @@
 package mbta;
 
 import android.util.Log;
+
+import com.google.android.gms.plus.model.people.Person;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,9 +23,9 @@ public class MBTA{
     private static MBTA instance;
     private final String mbtaAPI = "http://realtime.mbta.com/developer/api/v2/";
     private final String apiKey = "?api_key=RpDBj89zSU6aOljozJLfpg";
-    private final String format = "&format=xml";
-    private String query;
+    private final String format = "&format=json";
     private String results;
+    private List<Route> routes;
 
     public static MBTA getInstance(){
         if(instance == null){
@@ -34,12 +39,18 @@ public class MBTA{
     }
 
     public List<Route> getRoutes(){
-        String apiResult = run(mbtaAPI + "routes" + apiKey + format);
-        List<Route> routes = new ArrayList<Route>();
-        String[] splitRoutes = apiResult.split("mode route_type=");
-        return null;
+        if(routes == null) {
+            String apiResult = run(mbtaAPI + "routes" + apiKey + format);
+            List<Route> routes = new ArrayList<Route>();
+            Gson gson = new Gson();
+            JSON json = gson.fromJson(apiResult, JSON.class);
+            for (Mode mode : json.getMode()) {
+                routes.addAll(mode.getRoute());
+            }
+            this.routes = routes;
+        }
+        return routes;
     }
-
 
     public String run(final String query) {
         final Thread thread = new Thread() {
