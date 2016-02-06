@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
-public class JSON {
+public class RoutesJSON {
 
     @SerializedName("mode")
     @Expose
@@ -18,14 +18,14 @@ public class JSON {
      * No args constructor for use in serialization
      * 
      */
-    public JSON() {
+    public RoutesJSON() {
     }
 
     /**
      * 
      * @param mode
      */
-    public JSON(List<Mode> mode) {
+    public RoutesJSON(List<Mode> mode) {
         this.mode = mode;
     }
 
@@ -47,7 +47,7 @@ public class JSON {
         this.mode = mode;
     }
 
-    public JSON withMode(List<Mode> mode) {
+    public RoutesJSON withMode(List<Mode> mode) {
         this.mode = mode;
         return this;
     }

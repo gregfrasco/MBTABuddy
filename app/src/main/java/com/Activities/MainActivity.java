@@ -7,7 +7,9 @@ import android.util.Log;
 import java.util.List;
 
 import mbta.MBTA;
+import mbta.MBTARoutes;
 import mbta.ParentStation;
+import mbta.Route;
 import mbta.Station;
 import mbta.mbtabuddy.R;
 
@@ -18,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MBTA mbta = MBTA.getInstance();
-        List<ParentStation> stationList = mbta.getStopsByRoute(mbta.getRoutes().get(1));
-        for(ParentStation station : stationList){
+        Route route = mbta.getCompatibleRoutes(MBTARoutes.Red_Line);
+        for(ParentStation station : route.getStations()){
             Log.v("MBTA",station.getName());
         }
     }

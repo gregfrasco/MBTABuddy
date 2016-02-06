@@ -1,10 +1,6 @@
 package mbta;
 
-import android.util.Log;
-
-import com.google.android.gms.plus.model.people.Person;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,11 +41,11 @@ public class MBTA{
             String apiResult = run(mbtaAPI + "routes" + apiKey + format);
             List<Route> routes = new ArrayList<Route>();
             Gson gson = new Gson();
-            JSON json = gson.fromJson(apiResult, JSON.class);
+            RoutesJSON json = gson.fromJson(apiResult, RoutesJSON.class);
             for (Mode mode : json.getMode()) {
                 List<Route> setRoute = mode.getRoute();
                 for(Route route: setRoute){
-                    route.setRouteType(RouteType.valueOf(mode.getRouteType()));
+                    route.setRouteType(new RouteType(mode.getModeName()));
                 }
                 routes.addAll(setRoute);
             }
@@ -107,11 +103,11 @@ public class MBTA{
         return results;
     }
 
-    public Route getCompatibleRoutes(MBTARoutes route){
+    public Route getCompatibleRoutes(MBTARoutes.Routes route){
         List<Route> routes = this.getRoutes();
-        for(Route temproute: routes){
-            if(temproute.getRouteName().equals(route.toString())){
-                return temproute;
+        for(Route testRoute: routes){
+            if(testRoute.getRouteName().equals(route.toString())){
+                return testRoute;
             }
         }
         return null;
