@@ -20,9 +20,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MBTA mbta = MBTA.getInstance();
-        Route route = mbta.getCompatibleRoutes(MBTARoutes.Red_Line);
-        for(ParentStation station : route.getStations()){
-            Log.v("MBTA",station.getName());
+        List<ParentStation> station = mbta.getStopsByRoute(mbta.getCompatibleRoutes(MBTARoutes.Routes.Blue_Line));
+        List<Route> stations = mbta.getRoutesByStop(station.get(0).getOutbound());
+        for(Route route : stations){
+            Log.v("MBTA",route.getRouteName());
         }
     }
 }

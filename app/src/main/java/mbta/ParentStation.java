@@ -33,4 +33,44 @@ public class ParentStation {
     public String getName() {
         return this.stationName;
     }
+
+    public String getStationName() {
+        return stationName;
+    }
+
+    public void setStationName(String stationName) {
+        this.stationName = stationName;
+    }
+
+    public float getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(float longitude) {
+        Longitude = longitude;
+    }
+
+    public float getLatitude() {
+        return Latitude;
+    }
+
+    public void setLatitude(float latitude) {
+        Latitude = latitude;
+    }
+
+    public Station getInbound() {
+        return inbound;
+    }
+
+    public void setInbound(Station inbound) {
+        this.inbound = inbound;
+    }
+
+    public Station getOutbound() {
+        return outbound;
+    }
+
+    public void setOutbound(Station outbound) {
+        this.outbound = outbound;
+    }
 }

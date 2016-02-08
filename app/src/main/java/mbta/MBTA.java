@@ -71,6 +71,17 @@ public class MBTA{
         return new ArrayList<ParentStation>((Collection<? extends ParentStation>) parentStationMap.values());
     }
 
+    public List<Station> getStopsByLocation(double lat, double lon){
+        String apiResult = run(mbtaAPI + "stopsbylocation" + apiKey + "&lat="+ lat + "&lon="+ lon + format);
+        Gson gson = new Gson();
+        StopsByLocation stopsByLocation = gson.fromJson(apiResult, StopsByLocation.class);
+        List<Station> stations = new ArrayList<Station>();
+        for (Stop stop : stopsByLocation.getStop()){
+            stations.add(new Station(stop));
+        }
+        return stations;
+    }
+
     public String run(final String query) {
         final Thread thread = new Thread() {
             @Override
@@ -111,5 +122,12 @@ public class MBTA{
             }
         }
         return null;
+    }
+
+    public List<Route> getRoutesByStop(Station station){
+        String apiResult = run(mbtaAPI + "routesbystop" + apiKey + "&stop="+ station.getStopID() + format);
+        Gson gson = new Gson();
+        RoutesByStop routesByStop = gson.fromJson(apiResult, RoutesByStop.class);
+        return routesByStop.getRoutes();
     }
 }
