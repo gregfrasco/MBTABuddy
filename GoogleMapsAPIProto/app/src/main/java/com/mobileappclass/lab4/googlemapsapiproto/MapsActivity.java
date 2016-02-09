@@ -2,7 +2,14 @@ package com.mobileappclass.lab4.googlemapsapiproto;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -13,12 +20,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -51,6 +58,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Get bitmap descriptor for the icon image resource
         BitmapDescriptor markIcon = BitmapDescriptorFactory.fromResource(R.mipmap.ic_cookie);
 
+        GMapsRouteRequest("42.3374786,-71.0953609", "42.3731106,-71.1224075", "transit");
+
         //Create a LatLng container for the location for the icon
         //Maybe we can get from MBTA API?
         LatLng winthrop = new LatLng(42.3804809,-70.9827367);
@@ -80,14 +89,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    JSONObject getGMapsRouteObj(String origin, String dest)
+    void GMapsRouteRequest(String origin, String dest)
     {
-        return getGMapsRouteObj(origin, dest, null);
+        GMapsRouteRequest(origin, dest, null);
     }
 
-    JSONObject getGMapsRouteObj(String origin, String dest, String travelType)
+    //This method shows how to make a request for a JSON object
+    //containing information on routes from the Google Maps API
+    void GMapsRouteRequest(String origin, String dest, String travelType)
     {
-        String gMapsApiReq = "http://maps.googleapis.com/maps/api/directions/";
+        String gMapsApiReq = "https://maps.googleapis.com/maps/api/directions/";
         String requestType = "json";
 
         //Parameters to be used in requesting directions from GMaps web API
@@ -98,17 +109,82 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         {
             params.put("mode", travelType);
         }
-        params.put("key", getString(R.string.google_maps_key));//API key
 
         //Build our full request string
         String fullRequest = gMapsApiReq;
         fullRequest += requestType + "?";
+
+        int i = 1;
+        int max = params.keySet().size();
         for(String paramKey : params.keySet())
         {
             String value = params.get(paramKey);
-            fullRequest += paramKey + "=" + value;
+            fullRequest += paramKey + "=" + value + "&";
         }
 
-        return null;
+        fullRequest += "transit_mode=rail&";
+        fullRequest += "key=" + getString(R.string.ServerKey);
+
+        final String response;
+        Response.Listener<JSONObject> listener = new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                
+                //Utilize the jSON object
+                String stat = "";
+                JSONArray testArray = new JSONArray();
+                JSONObject routesObject = new JSONObject();
+                JSONArray legsArray = new JSONArray();
+                JSONArray stepsArray = new JSONArray();
+                JSONArray subStepsArray = new JSONArray();
+
+                try {
+                    //Routes: The array of routes requested
+                    testArray =  response.getJSONArray("routes");
+
+                    //Get the first route (should be only)
+                    routesObject = testArray.getJSONObject(0);
+
+                    //Gets the array of legs of the route (ie. if there is waypoints,
+                    //there will be multiple legs, otherwise just one element, with
+                    //steps for that leg
+                    legsArray = routesObject.getJSONArray("legs"); //Get the legs
+
+                    //Get the first leg for testing sake (We may have more depending on how we do
+                    //this, and get the array of steps from that leg
+                    stepsArray = legsArray.getJSONObject(0).getJSONArray("steps");
+
+                    //Now iterate through the steps
+                    for (int i = 0; i < stepsArray.length(); i++)
+                    {
+                        //Get each object key of this step, if it has transit_details key,
+                        //we should get that transit info
+                        Iterator<String> thisStepKeys = stepsArray.getJSONObject(i).keys();
+                        while(thisStepKeys.hasNext())
+                        {
+                            String key = thisStepKeys.next();
+                            if(key.equals("transit_details"))
+                            {
+                                //Log the transit details
+                                Log.v("MBTAProto", stepsArray.getJSONObject(i).getJSONObject(key).toString());
+                            }
+                        }
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, fullRequest, null, listener, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        RequestQueue reqQ = Volley.newRequestQueue(getApplicationContext());
+        reqQ.add(request);
     }
 }
