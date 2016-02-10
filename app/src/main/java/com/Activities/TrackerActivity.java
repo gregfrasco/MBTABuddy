@@ -10,11 +10,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import gmap.MapManager;
+import mbta.MBTARoutes;
 import mbta.mbtabuddy.R;
 
 public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private MapManager mapManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,10 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //Get our mapManager singleton and give it the layout inflater
+        mapManager = MapManager.getInstance();
+        mapManager.SetLayoutInflater(getLayoutInflater());
     }
 
 
@@ -40,9 +47,11 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mapManager.SetMap(mMap);
+
+        //Test Code
+        mapManager.AddTrainMarker("testTrain", new LatLng(-42, 70), "Test Train", MBTARoutes.Routes.Blue_Line);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-42, 70), 12));
+        //End Test
     }
 }

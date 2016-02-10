@@ -1,5 +1,6 @@
 package com.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,5 +26,9 @@ public class MainActivity extends AppCompatActivity {
         for(Route route : stations){
             Log.v("MBTA",route.getRouteName());
         }
+
+        //Test Code
+        Intent trackerInten = new Intent(MainActivity.this, TrackerActivity.class);
+        startActivity(trackerInten);
     }
 }
