@@ -47,9 +47,7 @@ public class TrainMarker
         if(trainRoute == MBTARoutes.Routes.Blue_Line)
         {
             //Set marker icon to blue
-
-            BitmapDescriptor bmp = BitmapDescriptorFactory.fromResource(R.drawable.ic_blue);
-            return bmp;
+            return BitmapDescriptorFactory.fromResource(R.drawable.ic_blue);
         }
         else if(trainRoute== MBTARoutes.Routes.Red_Line)
         {

@@ -9,7 +9,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -65,6 +64,13 @@ public class MapManager {
         return null;
     }
 
+    /**
+     * @param tripNum
+     * Given by MBTA API
+     *
+     * @return
+     * TrainMarker object associated with this tripNum on creation
+     */
     public TrainMarker GetTrainMarkerFromTripNum(String tripNum)
     {
         for(TrainMarker train : trainMarkers)
