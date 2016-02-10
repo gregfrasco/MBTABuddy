@@ -25,6 +25,16 @@ public class MBTA{
     private String results;
     private List<Route> routes;
 
+    //Public Lines
+    public final Route RED_LINE = getCompatibleRoutes(MBTARoutes.Routes.Red_Line);
+    public final Route ORANGE_LINE = getCompatibleRoutes(MBTARoutes.Routes.Orange_Line);
+    public final Route GREEN_LINE_B = getCompatibleRoutes(MBTARoutes.Routes.Green_Line_B);
+    public final Route GREEN_LINE_C = getCompatibleRoutes(MBTARoutes.Routes.Green_Line_C);
+    public final Route GREEN_LINE_D = getCompatibleRoutes(MBTARoutes.Routes.Green_Line_D);
+    public final Route GREEN_LINE_E = getCompatibleRoutes(MBTARoutes.Routes.Green_Line_E);
+    public final Route BLUE_LINE = getCompatibleRoutes(MBTARoutes.Routes.Blue_Line);
+
+
     public static MBTA getInstance(){
         if(instance == null){
            instance = new MBTA();
@@ -143,6 +153,28 @@ public class MBTA{
                     trips.addAll(direction.getTrip());
                 }
             }
+        }
+        return trips;
+    }
+
+    public List<Trip> getScheduleByRoute(Route route){
+        String apiResult = run(mbtaAPI + "schedulebyroute" + apiKey + "&route="+ route.getRouteId() + format);
+        Gson gson = new Gson();
+        ScheduleByRoute scheduleByRoute = gson.fromJson(apiResult, ScheduleByRoute.class);
+        List<Trip> trips = new ArrayList<Trip>();
+        for(Direction direction: scheduleByRoute.getDirection()){
+            trips.addAll(direction.getTrip());
+        }
+        return trips;
+    }
+
+    public List<Trip> getScheduleByTrip(Trip trip){
+        String apiResult = run(mbtaAPI + "schedulebytrip" + apiKey + "&trip="+ trip.getTripId() + format);
+        Gson gson = new Gson();
+        ScheduleByTrip scheduleByTrip = gson.fromJson(apiResult, ScheduleByTrip.class);
+        List<Trip> trips = new ArrayList<Trip>();
+        for(Direction direction: scheduleByTrip.getDirection()){
+            trips.addAll(direction.getTrip());
         }
         return trips;
     }

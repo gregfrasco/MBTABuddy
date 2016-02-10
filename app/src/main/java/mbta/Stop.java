@@ -33,6 +33,15 @@ public class Stop {
     @SerializedName("distance")
     @Expose
     private String distance;
+    @SerializedName("sch_arr_dt")
+    @Expose
+    private String schArrDt;
+    @SerializedName("sch_dep_dt")
+    @Expose
+    private String schDepDt;
+    @SerializedName("stop_sequence")
+    @Expose
+    private String stopSequence;
 
     /**
      * @return The stopOrder
@@ -145,5 +154,59 @@ public class Stop {
      */
     public void setDistance(String distance) {
         this.distance = distance;
+    }
+
+    /**
+     *
+     * @return
+     * The stopSequence
+     */
+    public String getStopSequence() {
+        return stopSequence;
+    }
+
+    /**
+     *
+     * @param stopSequence
+     * The stop_sequence
+     */
+    public void setStopSequence(String stopSequence) {
+        this.stopSequence = stopSequence;
+    }
+
+    /**
+     *
+     * @return
+     * The schArrDt
+     */
+    public String getSchArrDt() {
+        return schArrDt;
+    }
+
+    /**
+     *
+     * @param schArrDt
+     * The sch_arr_dt
+     */
+    public void setSchArrDt(String schArrDt) {
+        this.schArrDt = schArrDt;
+    }
+
+    /**
+     *
+     * @return
+     * The schDepDt
+     */
+    public String getSchDepDt() {
+        return schDepDt;
+    }
+
+    /**
+     *
+     * @param schDepDt
+     * The sch_dep_dt
+     */
+    public void setSchDepDt(String schDepDt) {
+        this.schDepDt = schDepDt;
     }
 }
