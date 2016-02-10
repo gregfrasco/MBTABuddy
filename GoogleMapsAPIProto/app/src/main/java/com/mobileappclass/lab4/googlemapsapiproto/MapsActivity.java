@@ -129,7 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Response.Listener<JSONObject> listener = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                
+
                 //Utilize the jSON object
                 String stat = "";
                 JSONArray testArray = new JSONArray();
@@ -157,16 +157,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     //Now iterate through the steps
                     for (int i = 0; i < stepsArray.length(); i++)
                     {
-                        //Get each object key of this step, if it has transit_details key,
-                        //we should get that transit info
-                        Iterator<String> thisStepKeys = stepsArray.getJSONObject(i).keys();
+                        //Get the handle on he step we are on, iterating through the steps
+                        JSONObject thisStep = stepsArray.getJSONObject(i);
+
+                        //Iterate through each key in this step's JSON Object to find out if it
+                        //is a transit step (can probably filter this better)
+                        Iterator<String> thisStepKeys = thisStep.keys();
                         while(thisStepKeys.hasNext())
                         {
+                            //If it has a transit_details key we can look at the transit
+                            //departure time etc.
                             String key = thisStepKeys.next();
                             if(key.equals("transit_details"))
                             {
+                                //Get the estimated time of this transit trip (MBTA train in our case)
+                                //in seconds
+                                int estTripDuration = thisStep.getJSONObject("duration").getInt("value");
+
                                 //Log the transit details
-                                Log.v("MBTAProto", stepsArray.getJSONObject(i).getJSONObject(key).toString());
+                                Log.v("MBTAProto", thisStep.getJSONObject(key).toString());
+
+                                //We can iterate through the keys of the transit_details
+                                //(Num stops, times etc.)
+                                Iterator<String> thisStepTransitDetails = thisStep.getJSONObject(key).keys();
+                                while(thisStepTransitDetails.hasNext())
+                                {
+                                    key = thisStepTransitDetails.next();
+                                    //Here we can get info about the line, vehicle info etc
+                                    if(key.equals("line"))
+                                    {
+                                        //Get vehicle JSONObject-> Get type-> etc
+                                    }
+                                    Log.v("MBTAProto",key);
+                                }
                             }
                         }
                     }
