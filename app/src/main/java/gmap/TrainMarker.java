@@ -17,12 +17,19 @@ public class TrainMarker
 {
     private Marker mapMarker;
     private MBTARoutes.Routes trainRoute;
+    private String tripNum;
 
-    public TrainMarker(MBTARoutes.Routes route, Marker marker)
+    public TrainMarker(MBTARoutes.Routes route, Marker marker, String TripNum)
     {
+        tripNum = TripNum;
         mapMarker = marker;
         trainRoute = route;
         marker.setIcon(GetIcon());
+    }
+
+    public String GetTripNum()
+    {
+        return tripNum;
     }
 
     public Marker GetMarker()

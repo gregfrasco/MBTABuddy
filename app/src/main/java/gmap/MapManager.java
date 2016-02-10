@@ -25,7 +25,7 @@ public class MapManager {
     private GoogleMap map;
 
     //TrainMarker objects, keys being their MBTA trip num from MBTA api
-    private Hashtable<String, TrainMarker> trainMarkers = new Hashtable<String,TrainMarker>();
+    private List<TrainMarker> trainMarkers = new ArrayList<TrainMarker>();
 
     public static MapManager getInstance()
     {
@@ -48,8 +48,34 @@ public class MapManager {
     //Move a train already on the map
     public void MoveTrainMarker(String tripNum, LatLng newPos)
     {
-        TrainMarker train = trainMarkers.get(tripNum);
+        TrainMarker train = GetTrainMarkerFromTripNum(tripNum);
         train.GetMarker().setPosition(newPos);
+    }
+
+    public TrainMarker GetTrainMarkerFromId(String markerId)
+    {
+        for(TrainMarker train : trainMarkers)
+        {
+            if(train.GetMarker().getId() == markerId)
+            {
+                return train;
+            }
+        }
+
+        return null;
+    }
+
+    public TrainMarker GetTrainMarkerFromTripNum(String tripNum)
+    {
+        for(TrainMarker train : trainMarkers)
+        {
+            if(train.GetTripNum() == tripNum)
+            {
+                return train;
+            }
+        }
+
+        return null;
     }
 
     //Add a train to the map
@@ -60,8 +86,8 @@ public class MapManager {
                         .title(title)
         );
 
-        TrainMarker newtm = new TrainMarker(route, newMarker);
-        trainMarkers.put(tripNum, newtm);
+        TrainMarker newtm = new TrainMarker(route, newMarker, tripNum);
+        trainMarkers.add(newtm);
     }
 
 }
