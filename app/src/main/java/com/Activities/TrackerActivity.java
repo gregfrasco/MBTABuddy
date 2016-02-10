@@ -11,12 +11,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import gmap.MapManager;
+import gmapdirections.GDirections;
 import mbta.MBTARoutes;
 import mbta.mbtabuddy.R;
 
 public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private GDirections gDirections;
     private MapManager mapManager;
 
     @Override
@@ -27,6 +29,10 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        gDirections = GDirections.getInstance();
+        gDirections.setContext(getBaseContext());
+        gDirections.Test();
 
         //Get our mapManager singleton and give it the layout inflater
         mapManager = MapManager.getInstance();
