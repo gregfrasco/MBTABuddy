@@ -5,6 +5,7 @@ import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Generated("org.jsonschema2pojo")
@@ -16,6 +17,10 @@ public class Route {
     @SerializedName("route_name")
     @Expose
     private String routeName;
+    @SerializedName("direction")
+    @Expose
+    private List<Direction> direction = new ArrayList<Direction>();
+
     private List<ParentStation> stations;
     private RouteType routeType;
     /**
@@ -52,6 +57,24 @@ public class Route {
 
     public void setRouteType(RouteType routeType) {
         this.routeType = routeType;
+    }
+
+    /**
+     *
+     * @return
+     * The direction
+     */
+    public List<Direction> getDirection() {
+        return direction;
+    }
+
+    /**
+     *
+     * @param direction
+     * The direction
+     */
+    public void setDirection(List<Direction> direction) {
+        this.direction = direction;
     }
 
     public List<ParentStation> getStations() {
