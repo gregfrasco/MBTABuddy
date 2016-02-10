@@ -1,5 +1,7 @@
 package mbta;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -177,5 +179,26 @@ public class MBTA{
             trips.addAll(direction.getTrip());
         }
         return trips;
+    }
+
+    //TODO Return Something
+    public void getPredictionsByStop(Station station){
+        String apiResult = run(mbtaAPI + "predictionsbystop" + apiKey + "&stop="+ station.getStopID() + format);
+        Gson gson = new Gson();
+        PredictionsByStop predictionsByStop = gson.fromJson(apiResult, PredictionsByStop.class);
+        Log.v("MBTA",predictionsByStop.getMode().get(0).getRoute().get(0).getDirection().get(0).getTrip().get(0).getVehicle().getVehicleBearing());
+
+    }
+
+    //TODO Return Something
+    public void getPredictionsByRoute(Route route){
+        String apiResult = run(mbtaAPI + "predictionsbyroute" + apiKey + "&route="+ route.getRouteId() + format);
+        Gson gson = new Gson();
+        PredictionsByRoute predictionsByRoute = gson.fromJson(apiResult, PredictionsByRoute.class);
+        for(Direction direction: predictionsByRoute.getDirection()){
+            for(Trip trip: direction.getTrip()){
+                Log.v("MBTA",trip.getVehicle() + " mph " + trip.getPreAway());
+            }
+        }
     }
 }

@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MBTA mbta = MBTA.getInstance();
-        List<Trip> trips = mbta.getScheduleByTrip(mbta.getScheduleByRoute(mbta.RED_LINE).get(0));
-        for(Trip trip : trips){
-            Log.v("MBTA", trip.getTripName() + " " + trip.getSchArrDt() + " " + trip.getSchDepDt());
-        }
+        mbta.getPredictionsByRoute(mbta.BLUE_LINE);
     }
 }
