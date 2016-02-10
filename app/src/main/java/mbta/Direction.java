@@ -19,6 +19,9 @@ public class Direction {
     @SerializedName("stop")
     @Expose
     private List<Stop> stop = new ArrayList<Stop>();
+    @SerializedName("trip")
+    @Expose
+    private List<Trip> trip = new ArrayList<Trip>();
 
     /**
      * 
@@ -72,6 +75,24 @@ public class Direction {
      */
     public void setStop(List<Stop> stop) {
         this.stop = stop;
+    }
+
+    /**
+     *
+     * @return
+     * The trip
+     */
+    public List<Trip> getTrip() {
+        return trip;
+    }
+
+    /**
+     *
+     * @param trip
+     * The trip
+     */
+    public void setTrip(List<Trip> trip) {
+        this.trip = trip;
     }
 
 }

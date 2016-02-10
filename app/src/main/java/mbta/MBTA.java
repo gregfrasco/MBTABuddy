@@ -36,6 +36,7 @@ public class MBTA{
 
     }
 
+    //TODO Clean this method
     public List<Route> getRoutes(){
         if(routes == null) {
             String apiResult = run(mbtaAPI + "routes" + apiKey + format);
@@ -124,10 +125,25 @@ public class MBTA{
         return null;
     }
 
-    public List<Route> getRoutesByStop(Station station){
+    public List<Route> getRoutesByStop(Station station) {
         String apiResult = run(mbtaAPI + "routesbystop" + apiKey + "&stop="+ station.getStopID() + format);
         Gson gson = new Gson();
         RoutesByStop routesByStop = gson.fromJson(apiResult, RoutesByStop.class);
         return routesByStop.getRoutes();
+    }
+
+    public List<Trip> getScheduleByStop(Station station) {
+        String apiResult = run(mbtaAPI + "schedulebystop" + apiKey + "&stop="+ station.getStopID() + format);
+        Gson gson = new Gson();
+        ScheduleByStop scheduleByStop = gson.fromJson(apiResult, ScheduleByStop.class);
+        List<Trip> trips = new ArrayList<Trip>();
+        for(Mode mode :scheduleByStop.getMode()){
+            for(Route route : mode.getRoute()){
+                for(Direction direction: route.getDirection()){
+                    trips.addAll(direction.getTrip());
+                }
+            }
+        }
+        return trips;
     }
 }
