@@ -1,16 +1,15 @@
 package gmap;
 
-import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 
 import mbta.MBTARoutes;
@@ -25,6 +24,7 @@ public class MapManager {
 
     //TrainMarker objects, keys being their MBTA trip num from MBTA api
     private List<TrainMarker> trainMarkers = new ArrayList<TrainMarker>();
+    private List<StationMarker> stationMarkers = new ArrayList<StationMarker>();
 
     public static MapManager getInstance()
     {
@@ -42,12 +42,30 @@ public class MapManager {
     {
         map = _map;
         map.setInfoWindowAdapter(new TrainInfoWindow(inflater));
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                //For train markers
+                if (GetTrainMarkerFromId(marker.getId()) != null) {
+                    //...
+                    return false;//We want to show info window
+                }
+
+                //For station markers
+                if (GetStationMarkerById(marker.getId()) != null) {
+                    //...
+                    return true;
+                }
+
+                return true;//True overrides default behavior
+            }
+        });
     }
 
     //Move a train already on the map
     public void MoveTrainMarker(String tripNum, LatLng newPos)
     {
-        TrainMarker train = GetTrainMarkerFromTripNum(tripNum);
+        TrainMarker train = GetTrainMarkerFromVehicleNum(tripNum);
         train.GetMarker().setPosition(newPos);
     }
 
@@ -55,7 +73,8 @@ public class MapManager {
     {
         for(TrainMarker train : trainMarkers)
         {
-            if(train.GetMarker().getId() == markerId)
+            String id = train.GetMarker().getId();
+            if(id.equals(markerId))
             {
                 return train;
             }
@@ -65,17 +84,17 @@ public class MapManager {
     }
 
     /**
-     * @param tripNum
+     * @param vehicleNum
      * Given by MBTA API
      *
      * @return
      * TrainMarker object associated with this tripNum on creation
      */
-    public TrainMarker GetTrainMarkerFromTripNum(String tripNum)
+    public TrainMarker GetTrainMarkerFromVehicleNum(String vehicleNum)
     {
         for(TrainMarker train : trainMarkers)
         {
-            if(train.GetTripNum() == tripNum)
+            if(train.GetVehicleNum().equals(vehicleNum))
             {
                 return train;
             }
@@ -84,15 +103,64 @@ public class MapManager {
         return null;
     }
 
+    public StationMarker GetStationMarker(String stationName)
+    {
+        for(StationMarker stat : stationMarkers)
+        {
+            if(stat.getStationName().equals(stationName))
+                return stat;
+        }
+
+        return null;
+    }
+
+    public StationMarker GetStationMarkerById(String markerId)
+    {
+        for (StationMarker stat : stationMarkers)
+        {
+            String id = stat.getMarker().getId();
+            if(id.equals(markerId)){
+                return stat;
+            }
+        }
+
+        return null;
+    }
+
+    public void ZoomToTrainMarker(String vehicleNum, int zoomNum)
+    {
+        TrainMarker train = GetTrainMarkerFromVehicleNum(vehicleNum);
+        LatLng position = train.GetMarker().getPosition();
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, zoomNum));
+    }
+
+    public void ZoomToStationMarker(String stationName, int zoomNum)
+    {
+        StationMarker sm = GetStationMarker(stationName);
+        LatLng pos = sm.getMarker().getPosition();
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, zoomNum));
+    }
+
+    public void AddStationMarker(String stationName, LatLng location)
+    {
+        Marker newMarker = map.addMarker(new MarkerOptions()
+                .position(location)
+                .title(stationName)
+        );
+
+        StationMarker newsm = new StationMarker(stationName, newMarker);
+        stationMarkers.add(newsm);
+    }
+
     //Add a train to the map
-    public void AddTrainMarker(String tripNum, LatLng location, String title,MBTARoutes.Routes route)
+    public void AddTrainMarker(String vehicleNum, LatLng location, String title,MBTARoutes.Routes route)
     {
         Marker newMarker = map.addMarker(new MarkerOptions()
                         .position(location)
                         .title(title)
         );
 
-        TrainMarker newtm = new TrainMarker(route, newMarker, tripNum);
+        TrainMarker newtm = new TrainMarker(route, newMarker, vehicleNum);
         trainMarkers.add(newtm);
     }
 

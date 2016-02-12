@@ -30,9 +30,10 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //Get our GDirections instance, give it context
         gDirections = GDirections.getInstance();
         gDirections.setContext(getBaseContext());
-        gDirections.Test();
+        //gDirections.Test();
 
         //Get our mapManager singleton and give it the layout inflater
         mapManager = MapManager.getInstance();
@@ -52,12 +53,13 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         mapManager.SetMap(mMap);
 
         //Test Code
-        mapManager.AddTrainMarker("testTrain", new LatLng(-42, 70), "Test Train", MBTARoutes.Routes.Blue_Line);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-42, 70), 12));
+        mapManager.AddTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", MBTARoutes.Routes.Blue_Line);
+        mapManager.ZoomToTrainMarker("1234", 16);
+
+        mapManager.AddStationMarker("Ruggles", new LatLng(42.339486, -71.085609));
         //End Test
     }
 }

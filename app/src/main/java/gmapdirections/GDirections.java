@@ -23,6 +23,8 @@ import mbta.mbtabuddy.R;
 
 /**
  * Created by cruzj6 on 2/10/2016.
+ * This class is for working with the Google Directions API if we
+ * decide to do routing
  */
 public class GDirections {
 

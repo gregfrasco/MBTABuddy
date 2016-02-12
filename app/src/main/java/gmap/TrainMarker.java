@@ -1,8 +1,5 @@
 package gmap;
 
-import android.content.res.Resources;
-import android.graphics.drawable.BitmapDrawable;
-
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
@@ -17,19 +14,19 @@ public class TrainMarker
 {
     private Marker mapMarker;
     private MBTARoutes.Routes trainRoute;
-    private String tripNum;
+    private String vehicleNum;
 
-    public TrainMarker(MBTARoutes.Routes route, Marker marker, String TripNum)
+    public TrainMarker(MBTARoutes.Routes route, Marker marker, String VehicleNum)
     {
-        tripNum = TripNum;
+        vehicleNum = VehicleNum;
         mapMarker = marker;
         trainRoute = route;
         marker.setIcon(GetIcon());
     }
 
-    public String GetTripNum()
+    public String GetVehicleNum()
     {
-        return tripNum;
+        return vehicleNum;
     }
 
     public Marker GetMarker()
