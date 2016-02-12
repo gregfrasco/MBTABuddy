@@ -24,6 +24,7 @@ public class MBTA{
     private final String mbtaAPI = "http://realtime.mbta.com/developer/api/v2/";
     private final String apiKey = "?api_key=RpDBj89zSU6aOljozJLfpg";
     private final String format = "&format=json";
+    private final String alerts = "&include_access_alerts=true&include_service_alerts=true";
     private String results;
     private List<Route> routes;
 
@@ -182,7 +183,7 @@ public class MBTA{
     }
 
     //TODO Return Something
-    public void getPredictionsByStop(Station station){
+    private void getPredictionsByStop(Station station){
         String apiResult = run(mbtaAPI + "predictionsbystop" + apiKey + "&stop="+ station.getStopID() + format);
         Gson gson = new Gson();
         PredictionsByStop predictionsByStop = gson.fromJson(apiResult, PredictionsByStop.class);
@@ -191,13 +192,13 @@ public class MBTA{
     }
 
     //TODO Return Something
-    public void getPredictionsByRoute(Route route){
+    private void getPredictionsByRoute(Route route){
         String apiResult = run(mbtaAPI + "predictionsbyroute" + apiKey + "&route="+ route.getRouteId() + format);
         Gson gson = new Gson();
         PredictionsByRoute predictionsByRoute = gson.fromJson(apiResult, PredictionsByRoute.class);
         for(Direction direction: predictionsByRoute.getDirection()){
             for(Trip trip: direction.getTrip()){
-                Log.v("MBTA",trip.getVehicle() + " mph " + trip.getPreAway());
+                Log.v("MBTA",trip + " mph " + trip.getPreAway());
             }
         }
     }
@@ -213,5 +214,34 @@ public class MBTA{
             }
         }
         return vehicles;
+    }
+
+    public List<Stop> getPredictionsByTrip(Trip trip) {
+        String apiResult = run(mbtaAPI + "predictionsbytrip" + apiKey + "&trip="+ trip.getTripId() + format);
+        Gson gson = new Gson();
+        PredictionsByTrip predictionsByTrip = gson.fromJson(apiResult, PredictionsByTrip.class);
+        return predictionsByTrip.getStop();
+    }
+
+    private List<Alert> getAlerts(){
+        String apiResult = run(mbtaAPI + "predictionsbytrip" + apiKey + format);
+        Gson gson = new Gson();
+        //PredictionsByTrip predictionsByTrip = gson.fromJson(apiResult, PredictionsByTrip.class);
+        //return predictionsByTrip.getStop();
+        return null;
+    }
+
+    public List<Alert> getAlertsByRoute(Route route){
+        String apiResult = run(mbtaAPI + "alertsbyroute" + apiKey + "&route="+ route.getRouteId() + alerts + format);
+        Gson gson = new Gson();
+        AlertsByRoute alertsByRoute = gson.fromJson(apiResult, AlertsByRoute.class);
+        return alertsByRoute.getAlerts();
+    }
+
+    public List<Alert> getAlertsByStop(Stop stop){
+        String apiResult = run(mbtaAPI + "alertsbystop" + apiKey + "&route="+ stop.getStopId() + alerts + format);
+        Gson gson = new Gson();
+        AlertsByRoute alertsByRoute = gson.fromJson(apiResult, AlertsByRoute.class);
+        return alertsByRoute.getAlerts();
     }
 }

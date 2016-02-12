@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import mbta.Alert;
 import mbta.MBTA;
 import mbta.MBTARoutes;
 import mbta.ParentStation;
@@ -24,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MBTA mbta = MBTA.getInstance();
-        List<Vehicle> vehicles = mbta.getVehiclesByRoute(mbta.RED_LINE);
-        for(Vehicle v: vehicles){
-            Log.v("MBTA","Lat: " + v.getVehicleLat() + " Lon: " + v.getVehicleLon());
+        List<Alert> alerts = mbta.getAlertsByRoute(mbta.RED_LINE);
+        for(Alert alert: alerts){
+            Log.v("MBTA",alert.getHeaderText());
         }
 
     }
