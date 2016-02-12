@@ -61,8 +61,9 @@ public class MapManager {
             }
         });
     }
+    //region TrainMarkers
 
-    //Move a train already on the map
+    // Move a train already on the map
     public void MoveTrainMarker(String tripNum, LatLng newPos)
     {
         TrainMarker train = GetTrainMarkerFromVehicleNum(tripNum);
@@ -79,7 +80,6 @@ public class MapManager {
                 return train;
             }
         }
-
         return null;
     }
 
@@ -103,6 +103,28 @@ public class MapManager {
         return null;
     }
 
+    public void ZoomToTrainMarker(String vehicleNum, int zoomNum)
+    {
+        TrainMarker train = GetTrainMarkerFromVehicleNum(vehicleNum);
+        LatLng position = train.GetMarker().getPosition();
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, zoomNum));
+    }
+
+    //Add a train to the map
+    public void AddTrainMarker(String vehicleNum, LatLng location, String title,MBTARoutes.Routes route)
+    {
+        Marker newMarker = map.addMarker(new MarkerOptions()
+                        .position(location)
+                        .title(title)
+        );
+
+        TrainMarker newtm = new TrainMarker(route, newMarker, vehicleNum);
+        trainMarkers.add(newtm);
+    }
+
+    //endregion
+
+    //region StationMarkers
     public StationMarker GetStationMarker(String stationName)
     {
         for(StationMarker stat : stationMarkers)
@@ -127,13 +149,6 @@ public class MapManager {
         return null;
     }
 
-    public void ZoomToTrainMarker(String vehicleNum, int zoomNum)
-    {
-        TrainMarker train = GetTrainMarkerFromVehicleNum(vehicleNum);
-        LatLng position = train.GetMarker().getPosition();
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, zoomNum));
-    }
-
     public void ZoomToStationMarker(String stationName, int zoomNum)
     {
         StationMarker sm = GetStationMarker(stationName);
@@ -151,17 +166,5 @@ public class MapManager {
         StationMarker newsm = new StationMarker(stationName, newMarker);
         stationMarkers.add(newsm);
     }
-
-    //Add a train to the map
-    public void AddTrainMarker(String vehicleNum, LatLng location, String title,MBTARoutes.Routes route)
-    {
-        Marker newMarker = map.addMarker(new MarkerOptions()
-                        .position(location)
-                        .title(title)
-        );
-
-        TrainMarker newtm = new TrainMarker(route, newMarker, vehicleNum);
-        trainMarkers.add(newtm);
-    }
-
+    //endregion
 }
