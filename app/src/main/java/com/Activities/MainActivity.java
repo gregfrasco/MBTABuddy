@@ -12,6 +12,7 @@ import mbta.ParentStation;
 import mbta.Route;
 import mbta.Station;
 import mbta.Trip;
+import mbta.Vehicle;
 import mbta.mbtabuddy.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MBTA mbta = MBTA.getInstance();
-        mbta.getPredictionsByRoute(mbta.BLUE_LINE);
+        List<Vehicle> vehicles = mbta.getVehiclesByRoute(mbta.RED_LINE);
+        for(Vehicle v: vehicles){
+            Log.v("MBTA","Lat: " + v.getVehicleLat() + " Lon: " + v.getVehicleLon());
+        }
+
     }
 }

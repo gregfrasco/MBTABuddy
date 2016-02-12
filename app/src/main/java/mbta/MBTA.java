@@ -201,4 +201,17 @@ public class MBTA{
             }
         }
     }
+
+    public List<Vehicle> getVehiclesByRoute(Route route){
+        String apiResult = run(mbtaAPI + "vehiclesbyroute" + apiKey + "&route="+ route.getRouteId() + format);
+        Gson gson = new Gson();
+        VehiclesByRoute vehiclesByRoute = gson.fromJson(apiResult, VehiclesByRoute.class);
+        List<Vehicle> vehicles = new ArrayList<Vehicle>();
+        for(Direction direction: vehiclesByRoute.getDirection()){
+            for(Trip trip: direction.getTrip()){
+                vehicles.add(trip.getVehicle());
+            }
+        }
+        return vehicles;
+    }
 }
