@@ -21,7 +21,10 @@ public class TrainMarker
         vehicleNum = VehicleNum;
         mapMarker = marker;
         trainRoute = route;
-        marker.setIcon(GetIcon());
+
+        //Get out bitmapDescriptor (icon bmp) based on the color of the train
+        BitmapDescriptor bmp = GetIcon();
+        marker.setIcon(bmp);
     }
 
     public String GetVehicleNum()
@@ -39,7 +42,7 @@ public class TrainMarker
         return trainRoute;
     }
 
-    public BitmapDescriptor GetIcon()
+    private BitmapDescriptor GetIcon()
     {
         if(trainRoute == MBTARoutes.Routes.Blue_Line)
         {

@@ -1,5 +1,6 @@
 package gmap;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -19,7 +20,7 @@ import mbta.MBTARoutes;
  */
 public class MapManager {
     static MapManager instance;
-    private LayoutInflater inflater;
+    private Context context;
     private GoogleMap map;
 
     //TrainMarker objects, keys being their MBTA trip num from MBTA api
@@ -33,15 +34,15 @@ public class MapManager {
         return instance;
     }
 
-    public void SetLayoutInflater(LayoutInflater inf)
+    public void SetContext(Context con)
     {
-        inflater = inf;
+        context = con;
     }
 
     public void SetMap(GoogleMap _map)
     {
         map = _map;
-        map.setInfoWindowAdapter(new TrainInfoWindow(inflater));
+        map.setInfoWindowAdapter(new TrainInfoWindow(context));
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {

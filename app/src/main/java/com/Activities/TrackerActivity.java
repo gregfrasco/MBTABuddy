@@ -35,9 +35,9 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         gDirections.setContext(getBaseContext());
         //gDirections.Test();
 
-        //Get our mapManager singleton and give it the layout inflater
+        //Get our mapManager singleton and give it the context
         mapManager = MapManager.getInstance();
-        mapManager.SetLayoutInflater(getLayoutInflater());
+        mapManager.SetContext(this);
     }
 
 
