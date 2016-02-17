@@ -20,9 +20,7 @@ public class Route {
     @SerializedName("direction")
     @Expose
     private List<Direction> direction = new ArrayList<Direction>();
-
-    private List<ParentStation> stations;
-    private RouteType routeType;
+    private LineType lineType;
     /**
      * 
      * @param routeId
@@ -51,13 +49,6 @@ public class Route {
         return routeName;
     }
 
-    public RouteType getRouteType() {
-        return routeType;
-    }
-
-    public void setRouteType(RouteType routeType) {
-        this.routeType = routeType;
-    }
 
     /**
      *
@@ -77,12 +68,11 @@ public class Route {
         this.direction = direction;
     }
 
-    public List<ParentStation> getStations() {
-        if(this.stations == null) {
-            MBTA mbta = MBTA.getInstance();
-            this.stations = mbta.getStopsByRoute(this);
-        }
-        return this.stations;
+    public LineType getLineType() {
+        return lineType;
     }
 
+    public void setLineType(LineType lineType) {
+        this.lineType = lineType;
+    }
 }

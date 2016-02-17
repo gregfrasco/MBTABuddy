@@ -12,10 +12,11 @@ public class Line {
     private List<Station> stations;
     private LineType type;
 
+    //TODO
     public Line(Route route) {
         MBTA mbta = MBTA.getInstance();
         this.lineID = route.getRouteId();
         this.lineName = route.getRouteName();
-        this.stations;
+        this.type = route.getLineType();
     }
 }

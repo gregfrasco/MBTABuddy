@@ -50,19 +50,11 @@ public class MBTA{
     public List<Route> getRoutes(){
         if(routes == null) {
             String apiResult = run(mbtaAPI + "routes" + apiKey + format);
-            List<Route> routes = new ArrayList<Route>();
             Gson gson = new Gson();
-            RoutesJSON json = gson.fromJson(apiResult, RoutesJSON.class);
-            for (Mode mode : json.getMode()) {
-                List<Route> setRoute = mode.getRoute();
-                for(Route route: setRoute){
-                    route.setRouteType(new RouteType(mode.getModeName()));
-                }
-                routes.addAll(setRoute);
-            }
-            this.routes = routes;
+            Routes routes = gson.fromJson(apiResult, Routes.class);
+            this.routes = routes.getRoutes();
         }
-        return routes;
+        return this.routes;
     }
 
     //TODO This
