@@ -10,11 +10,16 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import gmap.MapManager;
+import gmapdirections.GDirections;
+import mbta.MBTARoutes;
 import mbta.mbtabuddy.R;
 
 public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private GDirections gDirections;
+    private MapManager mapManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,15 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //Get our GDirections instance, give it context
+        gDirections = GDirections.getInstance();
+        gDirections.setContext(getBaseContext());
+        //gDirections.Test();
+
+        //Get our mapManager singleton and give it the context
+        mapManager = MapManager.getInstance();
+        mapManager.SetContext(this);
     }
 
 
@@ -39,10 +53,13 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mapManager.SetMap(mMap);
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //Test Code
+        mapManager.AddTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", MBTARoutes.Routes.Blue_Line);
+        mapManager.ZoomToTrainMarker("1234", 16);
+
+        mapManager.AddStationMarker("Ruggles", new LatLng(42.339486, -71.085609));
+        //End Test
     }
 }
