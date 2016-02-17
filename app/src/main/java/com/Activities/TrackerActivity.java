@@ -1,7 +1,9 @@
 package com.Activities;
 
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.widget.ListView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,14 +14,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import gmap.MapManager;
 import gmapdirections.GDirections;
+import gmapdirections.GPSManager;
+import gmapdirections.RouteInfoContainer;
 import mbta.MBTARoutes;
 import mbta.mbtabuddy.R;
 
-public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback {
+public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback{
 
     private GoogleMap mMap;
     private GDirections gDirections;
     private MapManager mapManager;
+    private GPSManager gpsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +38,21 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         //Get our GDirections instance, give it context
         gDirections = GDirections.getInstance();
         gDirections.setContext(getBaseContext());
-        //gDirections.Test();
+        gDirections.Test();
 
         //Get our mapManager singleton and give it the context
         mapManager = MapManager.getInstance();
         mapManager.SetContext(this);
+
+        //Set up gpsManager with context
+        gpsManager = GPSManager.getInstance();
+        gpsManager.InitLocationManager(this);
     }
 
+    private void setUpDestinationInfo(LatLng destination)
+    {
+
+    }
 
     /**
      * Manipulates the map once available.

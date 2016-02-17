@@ -116,7 +116,6 @@ public class MapManager {
         map.moveCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds(swPoint, nePoint), 10));
     }
 
-
     public void ZoomToTrainMarker(String vehicleNum, int zoomNum)
     {
         TrainMarker train = GetTrainMarkerFromVehicleNum(vehicleNum);

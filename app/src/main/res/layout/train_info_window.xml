@@ -29,11 +29,20 @@
                 android:textSize="12dp"
                 android:textStyle="bold"/>
             <TextView
-                android:id="@+id/snippet"
+                android:id="@+id/ETA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10dp"/>
+            <TextView
+                android:id="@+id/Direction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             </LinearLayout>
+
+            <TextView
+                android:id = "@+id/RemainingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
     </LinearLayout>
 
 
