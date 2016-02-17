@@ -8,6 +8,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
@@ -62,6 +63,12 @@ public class MapManager {
             }
         });
     }
+
+    public void ZoomToLocation(LatLng location, int zoomAmnt)
+    {
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomAmnt));
+    }
+
     //region TrainMarkers
 
     // Move a train already on the map
@@ -103,6 +110,12 @@ public class MapManager {
 
         return null;
     }
+
+    public void ZoomTwoPoints(LatLng swPoint, LatLng nePoint)
+    {
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds(swPoint, nePoint), 10));
+    }
+
 
     public void ZoomToTrainMarker(String vehicleNum, int zoomNum)
     {
