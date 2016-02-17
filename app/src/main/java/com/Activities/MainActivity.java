@@ -7,12 +7,9 @@ import android.util.Log;
 
 import java.util.List;
 
+import mbta.Line;
+import mbta.Lines;
 import mbta.MBTA;
-import mbta.MBTARoutes;
-import mbta.ParentStation;
-import mbta.Route;
-import mbta.Station;
-import mbta.Trip;
 import mbta.mbtabuddy.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,11 +21,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MBTA mbta = MBTA.getInstance();
-        List<Trip> trips = mbta.getScheduleByStop(mbta.getStopsByRoute(mbta.getRoutes().get(0)).get(0).getOutbound());
-        for(Trip trip: trips){
-            Log.v("MBTA",trip.getTripName());
-        }
-
+        Line redline = mbta.getLine(Lines.Red_Line);
+        Log.v("MBTA",redline.getTerminalStation1().getStationName());
+        Log.v("MBTA",redline.getTerminalStation2().getStationName());
         //Test Code
         Intent trackerInten = new Intent(MainActivity.this, TrackerActivity.class);
         startActivity(trackerInten);

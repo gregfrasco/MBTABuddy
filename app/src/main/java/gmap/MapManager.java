@@ -12,8 +12,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.List;
-
-import mbta.MBTARoutes;
+import mbta.Lines;
 
 /**
  * Created by cruzj6 on 2/10/2016.
@@ -112,14 +111,14 @@ public class MapManager {
     }
 
     //Add a train to the map
-    public void AddTrainMarker(String vehicleNum, LatLng location, String title,MBTARoutes.Routes route)
+    public void AddTrainMarker(String vehicleNum, LatLng location, String title, Lines line)
     {
         Marker newMarker = map.addMarker(new MarkerOptions()
                         .position(location)
                         .title(title)
         );
 
-        TrainMarker newtm = new TrainMarker(route, newMarker, vehicleNum);
+        TrainMarker newtm = new TrainMarker(line, newMarker, vehicleNum);
         trainMarkers.add(newtm);
     }
 

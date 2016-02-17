@@ -60,14 +60,14 @@ public class Routes {
             LineType type = setType(mode.getRouteType());
             for(Route route:mode.getRoute()){
                 route.setLineType(type);
+                routes.add(route);
             }
-            routes.addAll(mode.getRoute());
         }
         return routes;
     }
 
     public LineType setType(String type) {
-        switch(""){
+        switch(type){
             case "0":
                 return LineType.Tram;
             case "1":

@@ -3,8 +3,7 @@ package gmap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
-
-import mbta.MBTARoutes;
+import mbta.Lines;
 import mbta.mbtabuddy.R;
 
 /**
@@ -13,14 +12,14 @@ import mbta.mbtabuddy.R;
 public class TrainMarker
 {
     private Marker mapMarker;
-    private MBTARoutes.Routes trainRoute;
+    private Lines trainRoute;
     private String vehicleNum;
 
-    public TrainMarker(MBTARoutes.Routes route, Marker marker, String VehicleNum)
+    public TrainMarker(Lines lines, Marker marker, String VehicleNum)
     {
         vehicleNum = VehicleNum;
         mapMarker = marker;
-        trainRoute = route;
+        trainRoute = lines;
 
         //Get out bitmapDescriptor (icon bmp) based on the color of the train
         BitmapDescriptor bmp = GetIcon();
@@ -37,36 +36,27 @@ public class TrainMarker
         return mapMarker;
     }
 
-    public MBTARoutes.Routes GetRouteEnum()
+    public Lines GetRouteEnum()
     {
         return trainRoute;
     }
 
-    private BitmapDescriptor GetIcon()
-    {
-        if(trainRoute == MBTARoutes.Routes.Blue_Line)
-        {
-            //Set marker icon to blue
-            return BitmapDescriptorFactory.fromResource(R.drawable.ic_blue);
+    private BitmapDescriptor GetIcon() {
+        switch(trainRoute){
+            case Red_Line:
+                return BitmapDescriptorFactory.fromResource(R.drawable.ic_red);
+            case Orange_Line:
+                return BitmapDescriptorFactory.fromResource(R.drawable.ic_orange);
+            case Green_Line_B:
+            case Green_Line_C:
+            case Green_Line_D:
+            case Green_Line_E:
+                return BitmapDescriptorFactory.fromResource(R.drawable.ic_green);
+            case Blue_Line:
+                return BitmapDescriptorFactory.fromResource(R.drawable.ic_blue);
+            default:
+                return BitmapDescriptorFactory.fromResource(R.drawable.ic_green);
         }
-        else if(trainRoute== MBTARoutes.Routes.Red_Line)
-        {
-            //set red icon
-            return BitmapDescriptorFactory.fromResource(R.drawable.ic_red);
-        }
-        else if(trainRoute == MBTARoutes.Routes.Green_Line_B || trainRoute == MBTARoutes.Routes.Green_Line_C ||
-                trainRoute == MBTARoutes.Routes.Green_Line_D || trainRoute == MBTARoutes.Routes.Green_Line_E)
-        {
-            //set green icon
-            return BitmapDescriptorFactory.fromResource(R.drawable.ic_green);
-        }
-        else if(trainRoute == MBTARoutes.Routes.Orange_Line)
-        {
-            //set orange icon
-            return BitmapDescriptorFactory.fromResource(R.drawable.ic_orange);
-        }
-        else //Default icon
-            return BitmapDescriptorFactory.fromResource(R.drawable.ic_green);
     }
 
 

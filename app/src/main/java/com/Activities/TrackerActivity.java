@@ -12,7 +12,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import gmap.MapManager;
 import gmapdirections.GDirections;
-import mbta.MBTARoutes;
+import mbta.Lines;
 import mbta.mbtabuddy.R;
 
 public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -56,9 +56,8 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         mapManager.SetMap(mMap);
 
         //Test Code
-        mapManager.AddTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", MBTARoutes.Routes.Blue_Line);
+        mapManager.AddTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", Lines.Blue_Line);
         mapManager.ZoomToTrainMarker("1234", 16);
-
         mapManager.AddStationMarker("Ruggles", new LatLng(42.339486, -71.085609));
         //End Test
     }
