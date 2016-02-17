@@ -1,5 +1,5 @@
 
-package mbta;
+package mbta.mbtaAPI;
 
 import java.util.ArrayList;
 import java.util.List;

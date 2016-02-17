@@ -1,4 +1,4 @@
-package mbta;
+package mbta.mbtaAPI;
 
 /**
  * Created by frascog on 2/4/16.

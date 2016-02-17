@@ -1,6 +1,8 @@
-package mbta;
+package mbta.mbtaAPI;
 
 import java.util.HashMap;
+
+import mbta.Lines;
 
 /**
  * Created by frascog on 2/5/16.

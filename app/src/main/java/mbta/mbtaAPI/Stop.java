@@ -1,5 +1,5 @@
 
-package mbta;
+package mbta.mbtaAPI;
 
 import javax.annotation.Generated;
 

@@ -1,5 +1,5 @@
 
-package mbta;
+package mbta.mbtaAPI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,17 +8,35 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
-public class ScheduleByRoute {
+public class AlertsByRoute {
 
+    @SerializedName("alerts")
+    @Expose
+    private List<Alert> alerts = new ArrayList<Alert>();
     @SerializedName("route_id")
     @Expose
     private String routeId;
     @SerializedName("route_name")
     @Expose
     private String routeName;
-    @SerializedName("direction")
-    @Expose
-    private List<Direction> direction = new ArrayList<Direction>();
+
+    /**
+     * 
+     * @return
+     *     The alerts
+     */
+    public List<Alert> getAlerts() {
+        return alerts;
+    }
+
+    /**
+     * 
+     * @param alerts
+     *     The alerts
+     */
+    public void setAlerts(List<Alert> alerts) {
+        this.alerts = alerts;
+    }
 
     /**
      * 
@@ -54,24 +72,6 @@ public class ScheduleByRoute {
      */
     public void setRouteName(String routeName) {
         this.routeName = routeName;
-    }
-
-    /**
-     * 
-     * @return
-     *     The direction
-     */
-    public List<Direction> getDirection() {
-        return direction;
-    }
-
-    /**
-     * 
-     * @param direction
-     *     The direction
-     */
-    public void setDirection(List<Direction> direction) {
-        this.direction = direction;
     }
 
 }

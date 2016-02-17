@@ -1,5 +1,5 @@
 
-package mbta;
+package mbta.mbtaAPI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
-public class RoutesByStop {
+public class PredictionsByStop {
 
     @SerializedName("stop_id")
     @Expose
@@ -19,7 +19,9 @@ public class RoutesByStop {
     @SerializedName("mode")
     @Expose
     private List<Mode> mode = new ArrayList<Mode>();
-    private List<Route> routes;
+    @SerializedName("alert_headers")
+    @Expose
+    private List<AlertHeader> alertHeaders = new ArrayList<AlertHeader>();
 
     /**
      * 
@@ -75,11 +77,22 @@ public class RoutesByStop {
         this.mode = mode;
     }
 
-    public List<Route> getRoutes() {
-        List<Route> routes = new ArrayList<Route>();
-        for (Mode mode: this.getMode()){
-            routes.addAll(mode.getRoute());
-        }
-        return routes;
+    /**
+     * 
+     * @return
+     *     The alertHeaders
+     */
+    public List<AlertHeader> getAlertHeaders() {
+        return alertHeaders;
     }
+
+    /**
+     * 
+     * @param alertHeaders
+     *     The alert_headers
+     */
+    public void setAlertHeaders(List<AlertHeader> alertHeaders) {
+        this.alertHeaders = alertHeaders;
+    }
+
 }

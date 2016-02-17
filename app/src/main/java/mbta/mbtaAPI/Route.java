@@ -1,14 +1,17 @@
 
-package mbta;
+package mbta.mbtaAPI;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import mbta.LineType;
+
 @Generated("org.jsonschema2pojo")
-public class ScheduleByTrip {
+public class Route {
 
     @SerializedName("route_id")
     @Expose
@@ -19,6 +22,16 @@ public class ScheduleByTrip {
     @SerializedName("direction")
     @Expose
     private List<Direction> direction = new ArrayList<Direction>();
+    private LineType lineType;
+    /**
+     * 
+     * @param routeId
+     * @param routeName
+     */
+    public Route(String routeId, String routeName) {
+        this.routeId = routeId;
+        this.routeName = routeName;
+    }
 
     /**
      * 
@@ -31,15 +44,6 @@ public class ScheduleByTrip {
 
     /**
      * 
-     * @param routeId
-     *     The route_id
-     */
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
-    }
-
-    /**
-     * 
      * @return
      *     The routeName
      */
@@ -47,31 +51,30 @@ public class ScheduleByTrip {
         return routeName;
     }
 
-    /**
-     * 
-     * @param routeName
-     *     The route_name
-     */
-    public void setRouteName(String routeName) {
-        this.routeName = routeName;
-    }
 
     /**
-     * 
+     *
      * @return
-     *     The direction
+     * The direction
      */
     public List<Direction> getDirection() {
         return direction;
     }
 
     /**
-     * 
+     *
      * @param direction
-     *     The direction
+     * The direction
      */
     public void setDirection(List<Direction> direction) {
         this.direction = direction;
     }
 
+    public LineType getLineType() {
+        return lineType;
+    }
+
+    public void setLineType(LineType lineType) {
+        this.lineType = lineType;
+    }
 }

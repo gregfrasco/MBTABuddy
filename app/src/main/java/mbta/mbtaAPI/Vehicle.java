@@ -1,5 +1,5 @@
 
-package mbta;
+package mbta.mbtaAPI;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
