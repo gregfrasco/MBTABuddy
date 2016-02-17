@@ -1,32 +1,35 @@
 package mbta;
 
+import java.util.HashMap;
+
 /**
  * Created by frascog on 2/5/16.
  */
 public class MBTARoutes {
 
-    public static Routes Red_Line = Routes.Red_Line;
-    public static Routes Orange_Line = Routes.Orange_Line;
-    public static Routes Green_Line_B = Routes.Green_Line_B;
-    public static Routes Green_Line_C = Routes.Green_Line_C;
-    public static Routes Green_Line_D = Routes.Green_Line_D;
-    public static Routes Green_Line_E = Routes.Green_Line_E;
-    public static Routes Blue_Line = Routes.Blue_Line;
+    private HashMap<Lines,String> compatiableLines;
+    private static MBTARoutes instance;
 
-    public enum Routes {
-        Red_Line,
-        Orange_Line,
-        Green_Line_B,
-        Green_Line_C,
-        Green_Line_D,
-        Green_Line_E,
-        Blue_Line;
-
-        @Override
-        public String toString() {
-            return super.toString().replaceAll("_"," ");
+    public static MBTARoutes getInstance() {
+        if(instance == null){
+            instance = new MBTARoutes();
         }
+        return instance;
     }
 
+    private MBTARoutes() {
+        this.compatiableLines = new HashMap<Lines,String>();
+        this.compatiableLines.put(Lines.Red_Line,"Red");
+        this.compatiableLines.put(Lines.Orange_Line,"Orange");
+        this.compatiableLines.put(Lines.Green_Line_B,"Green-B");
+        this.compatiableLines.put(Lines.Green_Line_C,"Green-C");
+        this.compatiableLines.put(Lines.Green_Line_D,"Green-D");
+        this.compatiableLines.put(Lines.Green_Line_E,"Green-E");
+        this.compatiableLines.put(Lines.Blue_Line,"Blue");
+        this.compatiableLines.put(Lines.Mattapan_Line,"Mattapan");
+    }
 
+    public String getLineID(Lines lines){
+        return this.compatiableLines.get(lines);
+    }
 }

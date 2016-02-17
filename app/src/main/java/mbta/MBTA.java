@@ -28,16 +28,6 @@ public class MBTA{
     private String results;
     private List<Route> routes;
 
-    //Public Lines
-    public final Route RED_LINE = getCompatibleRoutes(MBTARoutes.Routes.Red_Line);
-    public final Route ORANGE_LINE = getCompatibleRoutes(MBTARoutes.Routes.Orange_Line);
-    public final Route GREEN_LINE_B = getCompatibleRoutes(MBTARoutes.Routes.Green_Line_B);
-    public final Route GREEN_LINE_C = getCompatibleRoutes(MBTARoutes.Routes.Green_Line_C);
-    public final Route GREEN_LINE_D = getCompatibleRoutes(MBTARoutes.Routes.Green_Line_D);
-    public final Route GREEN_LINE_E = getCompatibleRoutes(MBTARoutes.Routes.Green_Line_E);
-    public final Route BLUE_LINE = getCompatibleRoutes(MBTARoutes.Routes.Blue_Line);
-
-
     public static MBTA getInstance(){
         if(instance == null){
            instance = new MBTA();
@@ -49,7 +39,14 @@ public class MBTA{
 
     }
 
+    //TODO Keep
+    public Line getLine(Lines lines){
+        MBTARoutes mbtaRoutes = MBTARoutes.getInstance();
+        return new Line(this.getRoute(mbtaRoutes.getLineID(lines)));
+    }
+
     //TODO Clean this method
+    //TODO Keep
     public List<Route> getRoutes(){
         if(routes == null) {
             String apiResult = run(mbtaAPI + "routes" + apiKey + format);
@@ -68,8 +65,13 @@ public class MBTA{
         return routes;
     }
 
+    //TODO This
+    public List<Station> getStationsByLine(Line line){
+        return null;
+    }
+
     public List<ParentStation> getStopsByRoute(Route route){
-        String apiResult = run(mbtaAPI + "stopsbyroute" + apiKey + "&route="+ route.getRouteId() + format);
+        String apiResult = run(mbtaAPI + "stopsbyroute" + apiKey + "&route=" + route.getRouteId() + format);
         Gson gson = new Gson();
         StopsByRoute stopsByRoute = gson.fromJson(apiResult, StopsByRoute.class);
         HashMap<String,ParentStation>parentStationMap = new HashMap<String,ParentStation>();
@@ -128,11 +130,11 @@ public class MBTA{
         return results;
     }
 
-    public Route getCompatibleRoutes(MBTARoutes.Routes route){
+    public Route getRoute(String ID){
         List<Route> routes = this.getRoutes();
-        for(Route testRoute: routes){
-            if(testRoute.getRouteName().equals(route.toString())){
-                return testRoute;
+        for(Route route: routes){
+            if(route.getRouteId().equals(ID)){
+                return route;
             }
         }
         return null;
