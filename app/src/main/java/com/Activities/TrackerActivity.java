@@ -54,6 +54,23 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults)
+    {
+        switch(PermissionConstants.getEnum(requestCode))
+        {
+            case PERMISSION_APPROVED:
+
+
+                break;
+
+            default:
+                break;
+
+        }
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -76,3 +93,4 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         //End Test
     }
 }
+
