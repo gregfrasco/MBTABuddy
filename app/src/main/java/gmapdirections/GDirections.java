@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -36,6 +37,36 @@ public class GDirections {
         if(instance == null)
             instance = new GDirections();
         return instance;
+    }
+
+    public RouteInfoContainer GetRouteInfo(LatLng start, LatLng dest)
+    {
+        //Create our new container and make a query for the directions information
+        RouteInfoContainer newRouteInfo = new RouteInfoContainer();
+        String response = RequestDirectionInfo(start.latitude + "," + start.longitude,
+                dest.latitude + "," + dest.longitude,"transit");
+        try {
+            //Extract the duration of each leg, of the most optimal route and add up
+            double totalTimeSecs = 0;
+            JSONObject responseObj = new JSONObject(response);
+            JSONObject idealRoute = responseObj.getJSONArray("routes").getJSONObject(0);
+            JSONArray routeLegs = idealRoute.getJSONArray("legs");
+
+            //Should only be one leg, because we are not using waypoints
+            totalTimeSecs = routeLegs.getJSONObject(0).getJSONObject("duration").getDouble("value");
+
+            //Next we want the ETA
+            String etaString =
+                    routeLegs.getJSONObject(0).getJSONObject("arrival_time").getString("text");
+
+            //Add it to our container
+            newRouteInfo.ETAString = etaString;
+            newRouteInfo.travelTime = totalTimeSecs;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return newRouteInfo;
     }
 
     /**
