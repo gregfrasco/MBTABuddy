@@ -1,5 +1,7 @@
 package mbta;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import mbta.mbtaAPI.Stop;
 
 /**
@@ -72,5 +74,9 @@ public class Station {
 
     public void setArrivalTimes(String[] arrivalTimes) {
         this.arrivalTimes = arrivalTimes;
+    }
+
+    public LatLng getLatLan() {
+        return new LatLng(this.getLatitue(),this.getLongitude());
     }
 }
