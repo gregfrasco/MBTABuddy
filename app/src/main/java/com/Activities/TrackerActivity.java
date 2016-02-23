@@ -16,7 +16,10 @@ import gmap.MapManager;
 import gmapdirections.GDirections;
 import gmapdirections.GPSManager;
 import gmapdirections.RouteInfoContainer;
-import mbta.MBTARoutes;
+import mbta.Line;
+import mbta.Lines;
+import mbta.MBTA;
+import mbta.Station;
 import mbta.mbtabuddy.R;
 
 public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback{
@@ -31,8 +34,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracker);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         //Get our GDirections instance, give it context
@@ -55,19 +57,12 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults)
-    {
-        switch(PermissionConstants.getEnum(requestCode))
-        {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch(PermissionConstants.getEnum(requestCode)) {
             case PERMISSION_APPROVED:
-
-
                 break;
-
             default:
                 break;
-
         }
     }
 
@@ -84,12 +79,17 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mapManager.SetMap(mMap);
-
         //Test Code
-        mapManager.AddTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", MBTARoutes.Routes.Blue_Line);
-        mapManager.ZoomToTrainMarker("1234", 16);
-
-        mapManager.AddStationMarker("Ruggles", new LatLng(42.339486, -71.085609));
+        MBTA mbta = MBTA.getInstance();
+        for(Station station : mbta.getStationsByLine(new Line(Lines.Orange_Line))){
+            mapManager.AddStationMarker(station.getStationName(),new LatLng(station.getLatitue(),station.getLongitude()));
+        }
+        for(Station station : mbta.getStationsByLine(new Line(Lines.Red_Line))){
+            mapManager.AddStationMarker(station.getStationName(),new LatLng(station.getLatitue(),station.getLongitude()));
+        }
+        for(Station station : mbta.getStationsByLine(new Line(Lines.Blue_Line))){
+            mapManager.AddStationMarker(station.getStationName(),new LatLng(station.getLatitue(),station.getLongitude()));
+        }
         //End Test
     }
 }

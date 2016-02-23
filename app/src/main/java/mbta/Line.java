@@ -28,6 +28,16 @@ public class Line {
         this.setTerminalStation2(stations[1]);
     }
 
+    public Line(Lines lines){
+        Line line = MBTA.getInstance().getLine(lines);
+        this.setLineID(line.getLineID());
+        this.setLineName(line.getLineName());
+        this.setType(line.getType());
+        this.setStations(line.getStations());
+        this.setTerminalStation1(line.getTerminalStation1());
+        this.setTerminalStation2(line.getTerminalStation2());
+    }
+
     public String getLineID() {
         return lineID;
     }

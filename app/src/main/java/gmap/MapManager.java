@@ -1,19 +1,20 @@
 package gmap;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.LayoutInflater;
-
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Resource;
+
 import mbta.Lines;
+import mbta.mbtabuddy.R;
 
 /**
  * Created by cruzj6 on 2/10/2016.
@@ -168,15 +169,15 @@ public class MapManager {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, zoomNum));
     }
 
-    public void AddStationMarker(String stationName, LatLng location)
-    {
+    public void AddStationMarker(String stationName, LatLng location) {
         Marker newMarker = map.addMarker(new MarkerOptions()
                 .position(location)
                 .title(stationName)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_station))
         );
 
         StationMarker newsm = new StationMarker(stationName, newMarker);
         stationMarkers.add(newsm);
     }
-    //endregion
+    
 }

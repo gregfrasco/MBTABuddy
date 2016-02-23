@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import java.util.Arrays;
 import java.util.List;
 
 import mbta.Line;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         MBTA mbta = MBTA.getInstance();
         Line redline = mbta.getLine(Lines.Red_Line);
-        Log.v("MBTA",redline.getStations().get(0).getArrivalTimes()[0]);
+        //Log.v("MBTA",redline.getStations().get(0).getArrivalTimes()[0]);
         //Test Code
         //Intent trackerInten = new Intent(MainActivity.this, TrackerActivity.class);
         //startActivity(trackerInten);
