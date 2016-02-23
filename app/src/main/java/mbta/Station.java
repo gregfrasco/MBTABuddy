@@ -15,15 +15,15 @@ public class Station {
     private String[] arrivalTimes;
 
     public Station(Stop stop) {
-
+        this(stop,null);
     }
 
     public Station(Stop stop,Line line) {
-        this.latitue = Double.parseDouble(stop.getStopLat());
-        this.longitude = Double.parseDouble(stop.getStopLon());
-        this.line = line;
-        this.stationID = stop.getStopId();
-        this.stationName = stop.getStopName();
+        this.setStationID(stop.getStopId());
+        this.setStationName(stop.getStopName());
+        this.setLatitue(Double.parseDouble(stop.getStopLat()));
+        this.setLongitude(Double.parseDouble(stop.getStopLon()));
+        this.setLine(line);
     }
 
     public Line getLine() {
@@ -66,8 +66,8 @@ public class Station {
         this.longitude = longitude;
     }
 
-    public String[] getArrivalTimes() {
-        return arrivalTimes;
+    public ArrivalTime getArrivalTimes() {
+        return new ArrivalTime(this);
     }
 
     public void setArrivalTimes(String[] arrivalTimes) {

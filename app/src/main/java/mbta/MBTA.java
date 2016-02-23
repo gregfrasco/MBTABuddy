@@ -206,13 +206,19 @@ public class MBTA{
         return trips;
     }
 
-    //TODO Return Something
-    private void getPredictionsByStop(Station station){
+    public String[] getPredictionsByStop(Station station){
         String apiResult = run(mbtaAPI + "predictionsbystop" + apiKey + "&stop="+ station.getStationID() + format);
         Gson gson = new Gson();
         PredictionsByStop predictionsByStop = gson.fromJson(apiResult, PredictionsByStop.class);
-        Log.v("MBTA",predictionsByStop.getMode().get(0).getRoute().get(0).getDirection().get(0).getTrip().get(0).getVehicle().getVehicleBearing());
-
+        String[] times = new String[4];
+        int i = 0;
+        for (Direction direction: predictionsByStop.getMode().get(0).getRoute().get(0).getDirection()){
+            times[i] = direction.getTrip().get(0).getPreAway();
+            times[i+1] = direction.getTrip().get(1).getPreAway();
+            i = i+2;
+            break;
+        }
+        return times;
     }
 
     //TODO Return Something
