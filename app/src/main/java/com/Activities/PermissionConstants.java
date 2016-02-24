@@ -2,7 +2,7 @@ package com.Activities;
 
 public enum PermissionConstants
 {
-    PERMISSION_APPROVED(1);
+    LOCATION_PERMISSION(121);
     private final int value;
 
     PermissionConstants(int i) {

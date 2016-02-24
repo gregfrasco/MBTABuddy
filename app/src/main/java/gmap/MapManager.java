@@ -198,7 +198,9 @@ public class MapManager implements RoutingListener{
         route.get(0).getPoints().remove(0);
         route.get(0).getPoints().remove(route.get(0).getPoints().size() - 1);
         this.map.addPolyline(new PolylineOptions()
-        .width(30).color(color).zIndex(0).addAll(route.get(0).getPoints()));
+                .width(20).color(color).zIndex(1).addAll(route.get(0).getPoints()));
+        this.map.addPolyline(new PolylineOptions()
+                .width(30).color(Color.GRAY).zIndex(0).addAll(route.get(0).getPoints()));
 
     }
 

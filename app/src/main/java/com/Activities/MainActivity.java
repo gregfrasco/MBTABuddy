@@ -25,7 +25,9 @@ public class MainActivity extends AppCompatActivity {
         Line redline = mbta.getLine(Lines.Red_Line);
         //Log.v("MBTA",redline.getStations().get(0).getArrivalTimes()[0]);
         //Test Code
-        //Intent trackerInten = new Intent(MainActivity.this, TrackerActivity.class);
-        //startActivity(trackerInten);
+        Intent trackerInten = new Intent(MainActivity.this, TrackerActivity.class);
+        startActivity(trackerInten);
     }
+
+
 }

@@ -1,40 +1,40 @@
 package com.Activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.widget.ListView;
+import android.util.Log;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import gmap.MapManager;
 import gmapdirections.GDirections;
 import gmapdirections.GPSManager;
-import gmapdirections.RouteInfoContainer;
 import mbta.Line;
 import mbta.Lines;
-import mbta.MBTA;
-import mbta.Station;
 import mbta.mbtabuddy.R;
 
-public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback{
+public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private GDirections gDirections;
     private MapManager mapManager;
     private GPSManager gpsManager;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracker);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         //Get our GDirections instance, give it context
@@ -45,24 +45,33 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         //Get our mapManager singleton and give it the context
         mapManager = MapManager.getInstance();
         mapManager.SetContext(this);
+        drawAllTrainLines();
 
-        //Set up gpsManager with context
-        gpsManager = GPSManager.getInstance();
-        gpsManager.InitLocationManager(this);
     }
 
-    private void setUpDestinationInfo(LatLng destination)
-    {
+    private void setUpDestinationInfo(LatLng destination) {
 
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch(PermissionConstants.getEnum(requestCode)) {
-            case PERMISSION_APPROVED:
-                break;
-            default:
-                break;
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+
+        //If this is request for location services
+        if(requestCode == PermissionConstants.LOCATION_PERMISSION.getValue())
+        {
+            // If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                Log.v("Tracker", "Location permission granted, hooking up gpsManager");
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
+
+            } else {
+
+                Log.v("Tracker", "didnt make it");
+            }
+            return;
         }
     }
 
@@ -79,18 +88,38 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mapManager.SetMap(mMap);
-        //Test Code
-        MBTA mbta = MBTA.getInstance();
-        mapManager.drawLine(new Line(Lines.Orange_Line));
-        mapManager.drawLine(new Line(Lines.Red_Line));
-        mapManager.drawLine(new Line(Lines.Blue_Line));
-        mapManager.drawLine(new Line(Lines.Green_Line_B));
-        mapManager.drawLine(new Line(Lines.Green_Line_C));
-        mapManager.drawLine(new Line(Lines.Green_Line_D));
-        mapManager.drawLine(new Line(Lines.Green_Line_E));
-        mapManager.drawLine(new Line(Lines.Mattapan_Line));
+        //Set up gpsManager with context
+        gpsManager = GPSManager.getInstance();
 
+        //Get the location manager service
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        //Get the permissions for the location service if needed
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    PermissionConstants.LOCATION_PERMISSION.getValue());
+        }
+        else
+        {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
+            Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
+        }
+
+
+        //Test Code
+        mapManager.AddTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", Lines.Blue_Line);
+        mapManager.ZoomToTrainMarker("1234", 16);
+
+        mapManager.AddStationMarker("Ruggles", new LatLng(42.339486, -71.085609));
         //End Test
+    }
+
+    public void drawAllTrainLines(){
+        for(Lines lines: Lines.values()){
+            this.mapManager.drawLine(new Line(lines));
+        }
     }
 }
 
