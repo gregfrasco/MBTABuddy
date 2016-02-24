@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.Activities.PermissionConstants;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,11 +31,9 @@ public class GPSManager implements LocationListener {
         return instance;
     }
 
-    public void InitLocationManager(Context context, GoogleMap mMap) {
+    public void InitLocationManager(Context context, GoogleMap mMap, LocationManager _locationManager) {
         myContext = context;
-        locationManager = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
 
-        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         //TODO: http://javapapers.com/android/get-current-location-in-android/
 
     }
@@ -43,7 +42,7 @@ public class GPSManager implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-
+        Log.v("GPSMANAGER", location.getLatitude() + " " + location.getLongitude());
     }
 
     @Override

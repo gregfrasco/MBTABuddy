@@ -27,4 +27,6 @@ public class MainActivity extends AppCompatActivity {
         Intent trackerInten = new Intent(MainActivity.this, TrackerActivity.class);
         startActivity(trackerInten);
     }
+
+
 }
