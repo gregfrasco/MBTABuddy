@@ -57,14 +57,21 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
                                            String permissions[], int[] grantResults) {
 
         //If this is request for location services
-        if(requestCode == PermissionConstants.LOCATION_PERMISSION.getValue())
-        {
+        if (requestCode == PermissionConstants.LOCATION_PERMISSION.getValue()) {
             // If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 Log.v("Tracker", "Location permission granted, hooking up gpsManager");
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                            PermissionConstants.LOCATION_PERMISSION.getValue());
+                    return;
+                }
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, gpsManager);
+                gpsManager.InitLocationManager(this, locationManager);
 
             } else {
 
@@ -103,9 +110,10 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         else
         {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, gpsManager);
+            gpsManager.InitLocationManager(this, locationManager);
             Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
         }
-
 
         //Test Code
         mapManager.AddTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", Lines.Blue_Line);

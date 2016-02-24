@@ -14,15 +14,25 @@ import android.util.Log;
 
 import com.Activities.PermissionConstants;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+
+import gmap.MapManager;
 
 /**
  * Created by cruzj6 on 2/17/2016.
+ *
+ * =============================================================
+ * NOTE: TO TEST THIS CLASS ON THE EMULATOR USE TELNET.
+ * I.E -> Telnet localhost 5554 to connect to emulator terminal
+ * and use command "geo fix <long> <lat>" to emulate gps
+ * ============================================================
  */
 public class GPSManager implements LocationListener {
 
     private static GPSManager instance;
     private LocationManager locationManager;
     private Context myContext;
+    private MapManager mapManager;
 
     public static GPSManager getInstance() {
         if (instance == null) {
@@ -31,21 +41,33 @@ public class GPSManager implements LocationListener {
         return instance;
     }
 
-    public void InitLocationManager(Context context, GoogleMap mMap, LocationManager _locationManager) {
-        myContext = context;
-
-        //TODO: http://javapapers.com/android/get-current-location-in-android/
-
+    public void LogLastLocation() {
+        if (ActivityCompat.checkSelfPermission(myContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(myContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            //TODO
+        }
+        Location lastLoc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        Log.v("GPSManager", lastLoc.getLatitude() + " " + lastLoc.getLongitude());
     }
 
+    public void InitLocationManager(Context context, LocationManager _locationManager) {
+        myContext = context;
+        locationManager = _locationManager;
+        mapManager = MapManager.getInstance();
+    }
+
+    /*
+     * See Note at top of GPSManager file for how to test GPS on emulator
+     */
     @Override
     public void onLocationChanged(Location location) {
-        Log.v("GPSManager", location.getLatitude() + " " + location.getLongitude());
+        Log.v("GPSManager", "Device GPS Location Changed to: " + location.getLatitude() + " " + location.getLongitude());
+        mapManager.MoveMyLocationMarker(new LatLng(location.getLatitude(), location.getLongitude()));
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
+        Log.v("GPSManager", "Provider Status changed: Provider =" + provider + " status=" + status);
     }
 
     @Override
@@ -55,6 +77,6 @@ public class GPSManager implements LocationListener {
 
     @Override
     public void onProviderDisabled(String provider) {
-
+        Log.v("GPSManager", "provider disabled: " + provider);
     }
 }

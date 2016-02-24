@@ -1,12 +1,12 @@
 package gmap;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.List;
 import mbta.Lines;
+import mbta.mbtabuddy.R;
 
 /**
  * Created by cruzj6 on 2/10/2016.
@@ -22,6 +23,7 @@ public class MapManager {
     static MapManager instance;
     private Context context;
     private GoogleMap map;
+    private Marker myMarker;
 
     //TrainMarker objects, keys being their MBTA trip num from MBTA api
     private List<TrainMarker> trainMarkers = new ArrayList<TrainMarker>();
@@ -179,4 +181,26 @@ public class MapManager {
         stationMarkers.add(newsm);
     }
     //endregion
+
+    public void MoveMyLocationMarker(LatLng newLoc)
+    {
+        if(myMarker == null)
+        {
+            AddMyLocationMarker("Me", newLoc);
+        }
+        else {
+            myMarker.setPosition(newLoc);
+        }
+    }
+
+    public void AddMyLocationMarker(String title, LatLng location)
+    {
+        //TODO: Make icon smaller
+        Marker meMarker = map.addMarker(new MarkerOptions()
+            .position(location)
+            .title(title)
+            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_myloc))
+        );
+        myMarker = meMarker;
+    }
 }
