@@ -18,6 +18,7 @@ import gmapdirections.GDirections;
 import gmapdirections.GPSManager;
 import mbta.Line;
 import mbta.Lines;
+import mbta.Station;
 import mbta.mbtabuddy.R;
 
 public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -45,8 +46,6 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         //Get our mapManager singleton and give it the context
         mapManager = MapManager.getInstance();
         mapManager.SetContext(this);
-        drawAllTrainLines();
-
     }
 
     private void setUpDestinationInfo(LatLng destination) {
@@ -58,13 +57,22 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
                                            String permissions[], int[] grantResults) {
 
         //If this is request for location services
-        if(requestCode == PermissionConstants.LOCATION_PERMISSION.getValue())
-        {
+        if (requestCode == PermissionConstants.LOCATION_PERMISSION.getValue()) {
             // If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 Log.v("Tracker", "Location permission granted, hooking up gpsManager");
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
 
             } else {
@@ -110,16 +118,10 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
 
         //Test Code
         mapManager.AddTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", Lines.Blue_Line);
-        mapManager.ZoomToTrainMarker("1234", 16);
+        mapManager.zoomToTrainMarker("1234", 16);
 
-        mapManager.AddStationMarker("Ruggles", new LatLng(42.339486, -71.085609));
+        //mapManager.AddStationMarker("Ruggles", new LatLng(42.339486, -71.085609));
         //End Test
-    }
-
-    public void drawAllTrainLines(){
-        for(Lines lines: Lines.values()){
-            this.mapManager.drawLine(new Line(lines));
-        }
     }
 }
 

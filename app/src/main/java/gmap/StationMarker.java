@@ -11,7 +11,7 @@ public class StationMarker
     private Marker marker;
     private String stationName;
 
-    StationMarker(String statName, Marker mapmarker)
+    public StationMarker(String statName, Marker mapmarker)
     {
         marker = mapmarker;
         stationName = statName;

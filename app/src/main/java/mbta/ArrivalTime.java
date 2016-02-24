@@ -1,5 +1,6 @@
 package mbta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,9 +14,17 @@ public class ArrivalTime {
     public ArrivalTime(Station station) {
         MBTA mbta = MBTA.getInstance();
         String[] times = mbta.getPredictionsByStop(station);
-        direction1Times.add(times[0]);
-        direction1Times.add(times[1]);
-        direction2Times.add(times[2]);
-        direction2Times.add(times[3]);
+        if(times.length >= 4){
+            direction1Times = new ArrayList<>();
+            direction2Times = new ArrayList<>();
+            direction1Times.add(times[0]);
+            direction1Times.add(times[1]);
+            direction2Times.add(times[2]);
+            direction2Times.add(times[3]);
+        } else if(times.length >= 2){
+            direction1Times = new ArrayList<>();
+            direction1Times.add(times[0]);
+            direction1Times.add(times[1]);
+        }
     }
 }

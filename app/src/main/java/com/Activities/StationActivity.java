@@ -1,0 +1,177 @@
+package com.Activities;
+
+import android.graphics.Color;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import directions.AbstractRouting;
+import directions.Route;
+import directions.RouteException;
+import directions.Routing;
+import directions.RoutingListener;
+import gmap.StationMarker;
+import gmap.TrainMarker;
+import mbta.Line;
+import mbta.Lines;
+import mbta.Station;
+import mbta.mbtabuddy.R;
+
+public class StationActivity extends FragmentActivity implements OnMapReadyCallback, RoutingListener {
+
+    private GoogleMap map;
+    private Station station;
+    private List<TrainMarker> trainMarkers = new ArrayList<TrainMarker>();
+    private List<StationMarker> stationMarkers = new ArrayList<StationMarker>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_station);
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.stationMap);
+        mapFragment.getMapAsync(this);
+
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });*/
+
+        Bundle bundle = getIntent().getExtras();
+        String stationID = bundle.getString("ID");
+        this.station = new Station(stationID);
+
+    }
+
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        this.drawStations(this.station.getLine());
+        this.drawTrainLines(this.station.getLine());
+        this.zoomToStationMarker(station.getStationID(),17);
+    }
+
+    public void drawAllTrainLines(){
+        for(Lines lines: Lines.values()){
+            this.drawLine(new Line(lines));
+        }
+    }
+
+    public void drawAllStations(){
+        for(Lines lines: Lines.values()){
+            Line line = new Line(lines);
+            for(Station station : line.getStations()){
+                this.addStationMarker(station.getStationID(), station.getLatLan());
+            }
+        }
+    }
+
+    public void drawStations(List<Line> lines) {
+        for(Line line: lines){
+            for(Station station : line.getStations()){
+                this.addStationMarker(station.getStationID(), station.getLatLan());
+            }
+        }
+    }
+
+    public void drawTrainLines(List<Line> lines) {
+        for(Line line:lines){
+            this.drawLine(line);
+        }
+    }
+
+    public void drawLine(Line line) {
+        Routing routing = new Routing.Builder()
+                .travelMode(AbstractRouting.TravelMode.TRANSIT)
+                .waypoints(line.getTerminalStation1().getLatLan(), line.getTerminalStation2().getLatLan())
+                .key("AIzaSyAuq6B6ktEChZCEfB-LbwyxshF44bWKItM")
+                .withListener(this)
+                .withColor(line.getColor())
+                .build();
+        routing.execute();
+    }
+
+    @Override
+    public void onRoutingFailure(RouteException e) {
+
+    }
+
+    @Override
+    public void onRoutingStart() {
+
+    }
+
+    @Override
+    public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex, int color) {
+        route.get(0).getPoints().remove(0);
+        route.get(0).getPoints().remove(route.get(0).getPoints().size() - 1);
+        //line
+        this.map.addPolyline(new PolylineOptions()
+                .width(20).color(color).zIndex(1).addAll(route.get(0).getPoints()));
+        //line border
+        this.map.addPolyline(new PolylineOptions()
+                .width(30).color(Color.BLACK).zIndex(0).addAll(route.get(0).getPoints()));
+    }
+
+    @Override
+    public void onRoutingCancelled() {
+
+    }
+
+    public void addStationMarker(String stationName, LatLng location) {
+        Marker newMarker = map.addMarker(new MarkerOptions()
+                        .position(location)
+                        .title(stationName)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_station))
+        );
+
+        StationMarker newsm = new StationMarker(stationName, newMarker);
+        stationMarkers.add(newsm);
+    }
+
+    public void zoomToStationMarker(String stationName, int zoomNum) {
+        StationMarker sm = getStationMarker(stationName);
+        LatLng pos = sm.getMarker().getPosition();
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, zoomNum));
+    }
+
+    public StationMarker getStationMarker(String stationName) {
+        for (StationMarker stat : stationMarkers) {
+            if (stat.getStationName().equals(stationName))
+                return stat;
+        }
+
+        return null;
+    }
+}

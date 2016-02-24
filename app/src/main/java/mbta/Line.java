@@ -42,6 +42,7 @@ public class Line {
         Station[] stations = mbta.getTerminalStations(this);
         this.setTerminalStation1(stations[0]);
         this.setTerminalStation2(stations[1]);
+        this.lines = Lines.getLine(this.lineID);
     }
 
     public Line(Lines lines){

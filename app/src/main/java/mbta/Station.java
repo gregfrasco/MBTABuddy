@@ -2,6 +2,10 @@ package mbta;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import mbta.mbtaAPI.Route;
 import mbta.mbtaAPI.Stop;
 
 /**
@@ -9,12 +13,12 @@ import mbta.mbtaAPI.Stop;
  */
 public class Station {
 
-    private Line line;
+    private List<Line> lines;
     private String stationID;
     private String stationName;
     private double latitue;
     private double longitude;
-    private String[] arrivalTimes;
+    private ArrivalTime arrivalTimes;
 
     public Station(Stop stop) {
         this(stop,null);
@@ -25,15 +29,32 @@ public class Station {
         this.setStationName(stop.getStopName());
         this.setLatitue(Double.parseDouble(stop.getStopLat()));
         this.setLongitude(Double.parseDouble(stop.getStopLon()));
-        this.setLine(line);
+        this.lines = new ArrayList<Line>();
+        this.lines.add(line);
     }
 
-    public Line getLine() {
-        return line;
+    public Station(String stationID) {
+        MBTA mbta = MBTA.getInstance();
+        Station s = new Station();
+        s.setStationID(stationID);
+        List<Route> routes = mbta.getRoutesByStop(s);
+        this.lines = new ArrayList<Line>();
+        for(Route route: routes){
+            this.lines.add(new Line(route));
+        }
+        for(Station station: lines.get(0).getStations()){
+            if(station.getStationID().equals(stationID)){
+                this.setStation(station);
+                break;
+            }
+        }
     }
 
-    public void setLine(Line line) {
-        this.line = line;
+    public Station() {
+    }
+
+    public List<Line> getLine() {
+        return lines;
     }
 
     public String getStationID() {
@@ -72,11 +93,19 @@ public class Station {
         return new ArrivalTime(this);
     }
 
-    public void setArrivalTimes(String[] arrivalTimes) {
+    public void setArrivalTimes(ArrivalTime arrivalTimes) {
         this.arrivalTimes = arrivalTimes;
     }
 
     public LatLng getLatLan() {
         return new LatLng(this.getLatitue(),this.getLongitude());
+    }
+
+    private void setStation(Station station) {
+        this.setArrivalTimes(station.getArrivalTimes());
+        this.setLatitue(station.getLatitue());
+        this.setLongitude(station.getLongitude());
+        this.setStationID(station.getStationID());
+        this.setStationName(station.getStationName());
     }
 }
