@@ -182,6 +182,7 @@ public class MapManager {
     }
     //endregion
 
+    //region MyLocation
     public void MoveMyLocationMarker(LatLng newLoc)
     {
         if(myMarker == null)
@@ -203,4 +204,5 @@ public class MapManager {
         );
         myMarker = meMarker;
     }
+    //endregion
 }

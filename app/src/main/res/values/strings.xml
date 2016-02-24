@@ -3,4 +3,12 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_tracker">MBTA Buddy</string>
     <string name="google_app_id">711856990816</string>
+    <string-array name="drawer_menu_labels">
+        <item>Map</item>
+        <item>Favorites</item>
+        <item>MBTA Map</item>
+        <item>Settings</item>
+    </string-array>
+    <string name="drawer_open">Open Nav Drawer</string>
+    <string name="drawer_close">Close Nav Drawer</string>
 </resources>

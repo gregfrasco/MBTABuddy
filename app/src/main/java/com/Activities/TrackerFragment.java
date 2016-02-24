@@ -5,8 +5,11 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -19,7 +22,7 @@ import gmapdirections.GPSManager;
 import mbta.Lines;
 import mbta.mbtabuddy.R;
 
-public class TrackerActivity extends FragmentActivity implements OnMapReadyCallback {
+public class TrackerFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private GDirections gDirections;
@@ -28,57 +31,45 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     private LocationManager locationManager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tracker);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstancetate) {
+
+        Log.v("Tracker", "View Created");
+        View retView = inflater.inflate(R.layout.activity_tracker, container, false);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         //Get our GDirections instance, give it context
         gDirections = GDirections.getInstance();
-        gDirections.setContext(getBaseContext());
+        gDirections.setContext(getActivity());
         gDirections.Test();
 
         //Get our mapManager singleton and give it the context
         mapManager = MapManager.getInstance();
-        mapManager.SetContext(this);
+        mapManager.SetContext(getActivity());
 
-
+        return retView;
     }
 
-    private void setUpDestinationInfo(LatLng destination) {
 
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-
-        //If this is request for location services
-        if (requestCode == PermissionConstants.LOCATION_PERMISSION.getValue()) {
-            // If request is cancelled, the result arrays are empty.
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                Log.v("Tracker", "Location permission granted, hooking up gpsManager");
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this,
-                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                            PermissionConstants.LOCATION_PERMISSION.getValue());
-                    return;
-                }
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, gpsManager);
-                gpsManager.InitLocationManager(this, locationManager);
-
-            } else {
-
-                Log.v("Tracker", "didnt make it");
-            }
+    public void enableLocationManager()
+    {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    PermissionConstants.LOCATION_TrackerFragment.getValue());
             return;
         }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, gpsManager);
+        gpsManager.InitLocationManager(getActivity(), locationManager);
     }
 
     /**
@@ -98,20 +89,20 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         gpsManager = GPSManager.getInstance();
 
         //Get the location manager service
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
 
         //Get the permissions for the location service if needed
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(this,
+            ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                    PermissionConstants.LOCATION_PERMISSION.getValue());
+                    PermissionConstants.LOCATION_TrackerFragment.getValue());
         }
         else
         {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, gpsManager);
-            gpsManager.InitLocationManager(this, locationManager);
+            gpsManager.InitLocationManager(getActivity(), locationManager);
             Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
         }
 

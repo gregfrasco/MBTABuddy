@@ -2,7 +2,7 @@ package com.Activities;
 
 public enum PermissionConstants
 {
-    LOCATION_PERMISSION(121);
+    LOCATION_TrackerFragment(121);
     private final int value;
 
     PermissionConstants(int i) {
