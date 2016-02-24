@@ -2,13 +2,16 @@ package mbta;
 
 import java.util.List;
 
+import mbta.mbtaAPI.MBTARoutes;
 import mbta.mbtaAPI.Route;
+import mbta.mbtabuddy.R;
 
 /**
  * Created by frascog on 2/17/16.
  */
 public class Line {
 
+    private Lines lines;
     private String lineID;
     private String lineName;
     private List<Station> stations;
@@ -30,6 +33,7 @@ public class Line {
 
     public Line(Lines lines){
         Line line = MBTA.getInstance().getLine(lines);
+        this.lines = lines;
         this.setLineID(line.getLineID());
         this.setLineName(line.getLineName());
         this.setType(line.getType());
@@ -84,5 +88,14 @@ public class Line {
 
     public void setTerminalStation1(Station terminalStation1) {
         this.terminalStation1 = terminalStation1;
+    }
+
+    public int getColor() {
+        if(this.getLineName().equals("Red Line")){
+            return R.color.mbta_Red;
+        } else if(this.getLineName().equals("Orange Line")){
+            return R.color.mbta_Orange;
+        }
+        return R.color.mbta_Green;
     }
 }

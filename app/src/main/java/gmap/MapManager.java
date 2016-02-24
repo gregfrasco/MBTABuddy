@@ -35,6 +35,7 @@ public class MapManager implements RoutingListener {
     private Context context;
     private GoogleMap map;
     private ArrayList<Polyline> polylines;
+    private Line line;
 
     //TrainMarker objects, keys being their MBTA trip num from MBTA api
     private List<TrainMarker> trainMarkers = new ArrayList<TrainMarker>();
@@ -171,6 +172,7 @@ public class MapManager implements RoutingListener {
     }
 
     public void drawLine(Line line) {
+        this.line = line;
         Routing routing = new Routing.Builder()
                 .travelMode(AbstractRouting.TravelMode.TRANSIT)
                 .waypoints(line.getTerminalStation1().getLatLan(), line.getTerminalStation2().getLatLan())
@@ -193,9 +195,10 @@ public class MapManager implements RoutingListener {
     @Override
     public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
         polylines = new ArrayList<>();
-        //add route(s) to the map.
+        route.get(0).getPoints().remove(0);
+        route.get(0).getPoints().remove(route.get(0).getPoints().size()-1);
         PolylineOptions polyOptions = new PolylineOptions();
-        polyOptions.color(context.getResources().getColor(R.color.mbta_Orange));
+        polyOptions.color(R.color.colorAccent);
         polyOptions.width(30);
         polyOptions.addAll(route.get(0).getPoints());
         Polyline polyline = map.addPolyline(polyOptions);
