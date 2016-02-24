@@ -75,6 +75,7 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         //Set up gpsManager with context
         gpsManager = GPSManager.getInstance();
 
+        //TODO: TRY PUTTING REQUEST CODE INTO gpsMANAGER class
         //TODO: Try Permissions in main activity, and make sure to set this up with the gpsManager
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
