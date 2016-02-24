@@ -57,7 +57,29 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
 
+            if(requestCode == PermissionConstants.PERMISSION_APPROVED.getValue())
+            {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 0, 0, gpsManager);
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+    }
 
     /**
      * Manipulates the map once available.
@@ -75,10 +97,13 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         //Set up gpsManager with context
         gpsManager = GPSManager.getInstance();
 
-        //TODO: TRY PUTTING REQUEST CODE INTO gpsMANAGER class
-        //TODO: Try Permissions in main activity, and make sure to set this up with the gpsManager
+        //TODO: Need to use "grantResults[]" in the permission result method handler
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+        }
         //Test Code
         mapManager.AddTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", Lines.Blue_Line);
        // mapManager.ZoomToTrainMarker("1234", 16);
