@@ -81,12 +81,15 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         mapManager.SetMap(mMap);
         //Test Code
         MBTA mbta = MBTA.getInstance();
-        Line line = new Line(Lines.Orange_Line);
-        mapManager.drawLine(line);
-        for(Station station : mbta.getStationsByLine(line)){
-            mapManager.AddStationMarker(station.getStationName(),new LatLng(station.getLatitue(),station.getLongitude()));
+        mapManager.drawLine(new Line(Lines.Orange_Line));
+        mapManager.drawLine(new Line(Lines.Red_Line));
+        mapManager.drawLine(new Line(Lines.Blue_Line));
+        mapManager.drawLine(new Line(Lines.Green_Line_B));
+        mapManager.drawLine(new Line(Lines.Green_Line_C));
+        mapManager.drawLine(new Line(Lines.Green_Line_D));
+        mapManager.drawLine(new Line(Lines.Green_Line_E));
+        mapManager.drawLine(new Line(Lines.Mattapan_Line));
 
-        }
         //End Test
     }
 }

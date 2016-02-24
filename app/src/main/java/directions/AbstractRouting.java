@@ -22,6 +22,7 @@ public abstract class AbstractRouting extends AsyncTask<Void, Void, ArrayList<Ro
 
     /* Private member variable that will hold the RouteException instance created in the background thread */
     private RouteException mException = null;
+    public int color;
 
     public enum TravelMode {
         BIKING("bicycling"),
@@ -94,7 +95,7 @@ public abstract class AbstractRouting extends AsyncTask<Void, Void, ArrayList<Ro
 
     protected void dispatchOnSuccess(ArrayList<Route> route, int shortestRouteIndex) {
         for (RoutingListener mListener : _aListeners) {
-            mListener.onRoutingSuccess(route, shortestRouteIndex);
+            mListener.onRoutingSuccess(route, shortestRouteIndex,this.color);
         }
     }
 

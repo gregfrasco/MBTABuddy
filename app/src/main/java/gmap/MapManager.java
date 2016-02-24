@@ -1,6 +1,9 @@
 package gmap;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,12 +33,10 @@ import mbta.mbtabuddy.R;
 /**
  * Created by cruzj6 on 2/10/2016.
  */
-public class MapManager implements RoutingListener {
+public class MapManager implements RoutingListener{
     static MapManager instance;
     private Context context;
     private GoogleMap map;
-    private ArrayList<Polyline> polylines;
-    private Line line;
 
     //TrainMarker objects, keys being their MBTA trip num from MBTA api
     private List<TrainMarker> trainMarkers = new ArrayList<TrainMarker>();
@@ -172,41 +173,38 @@ public class MapManager implements RoutingListener {
     }
 
     public void drawLine(Line line) {
-        this.line = line;
         Routing routing = new Routing.Builder()
                 .travelMode(AbstractRouting.TravelMode.TRANSIT)
                 .waypoints(line.getTerminalStation1().getLatLan(), line.getTerminalStation2().getLatLan())
-                .key(context.getString(R.string.google_maps_directions_api_key))
+                .key("AIzaSyAuq6B6ktEChZCEfB-LbwyxshF44bWKItM")
                 .withListener(this)
+                .withColor(line.getColor())
                 .build();
         routing.execute();
     }
 
     @Override
     public void onRoutingFailure(RouteException e) {
-
+        Log.v("MBTA", "ROUTE FAILED");
     }
 
     @Override
     public void onRoutingStart() {
-        // The Routing Request starts
+        Log.v("MBTA", "ROUTE START");
     }
 
     @Override
-    public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
-        polylines = new ArrayList<>();
+    public void onRoutingSuccess(ArrayList<directions.Route> route, int shortestRouteIndex,int color) {
         route.get(0).getPoints().remove(0);
-        route.get(0).getPoints().remove(route.get(0).getPoints().size()-1);
-        PolylineOptions polyOptions = new PolylineOptions();
-        polyOptions.color(R.color.colorAccent);
-        polyOptions.width(30);
-        polyOptions.addAll(route.get(0).getPoints());
-        Polyline polyline = map.addPolyline(polyOptions);
-        polylines.add(polyline);
+        route.get(0).getPoints().remove(route.get(0).getPoints().size() - 1);
+        this.map.addPolyline(new PolylineOptions()
+        .width(30).color(color).zIndex(0).addAll(route.get(0).getPoints()));
+
     }
 
     @Override
     public void onRoutingCancelled() {
-
+        Log.v("MBTA", "ROUTE CANCELLED");
     }
+
 }

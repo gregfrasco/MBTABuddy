@@ -28,6 +28,7 @@ public class Routing extends AbstractRouting {
         this.alternativeRoutes = builder.alternativeRoutes;
         this.language = builder.language;
         this.key = builder.key;
+        this.color = builder.color;
     }
 
     protected String constructURL () {
@@ -101,6 +102,7 @@ public class Routing extends AbstractRouting {
         private boolean optimize;
         private String language;
         private String key;
+        private int color;
 
         public Builder () {
             this.travelMode = TravelMode.DRIVING;
@@ -158,6 +160,11 @@ public class Routing extends AbstractRouting {
 
         public Builder withListener (RoutingListener listener) {
             this.listener = listener;
+            return this;
+        }
+
+        public Builder withColor(int color){
+            this.color = color;
             return this;
         }
 

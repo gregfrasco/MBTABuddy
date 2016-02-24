@@ -1,7 +1,19 @@
 package mbta;
 
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.util.Log;
+
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import directions.AbstractRouting;
+import directions.RouteException;
+import directions.Routing;
+import directions.RoutingListener;
 import mbta.mbtaAPI.MBTARoutes;
 import mbta.mbtaAPI.Route;
 import mbta.mbtabuddy.R;
@@ -18,6 +30,7 @@ public class Line {
     private LineType type;
     private Station terminalStation1;
     private Station terminalStation2;
+    private List<LatLng> points;
 
     //TODO
     public Line(Route route) {
@@ -91,11 +104,26 @@ public class Line {
     }
 
     public int getColor() {
-        if(this.getLineName().equals("Red Line")){
-            return R.color.mbta_Red;
-        } else if(this.getLineName().equals("Orange Line")){
-            return R.color.mbta_Orange;
+        int color = Color.BLUE;
+        switch (lines){
+            case Red_Line:
+            case Mattapan_Line:
+                color = Color.RED;
+                break;
+            case Orange_Line:
+                color = Color.rgb(255,165,0);
+                break;
+            case Green_Line_B:
+            case Green_Line_C:
+            case Green_Line_D:
+            case Green_Line_E:
+                color = Color.GREEN;
+                break;
+            case Blue_Line:
+                color = Color.BLUE;
+                break;
+
         }
-        return R.color.mbta_Green;
+        return color;
     }
 }

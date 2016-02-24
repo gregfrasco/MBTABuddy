@@ -7,7 +7,7 @@ public interface RoutingListener {
 
     void onRoutingStart();
 
-    void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex);
+    void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex,int color);
 
     void onRoutingCancelled();
 }
