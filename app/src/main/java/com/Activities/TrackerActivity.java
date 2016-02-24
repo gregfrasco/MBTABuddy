@@ -2,21 +2,16 @@ package com.Activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.widget.ListView;
+import android.util.Log;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import gmap.MapManager;
 import gmapdirections.GDirections;
@@ -61,24 +56,22 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
 
-            if(requestCode == PermissionConstants.PERMISSION_APPROVED.getValue())
-            {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        //If this is request for location services
+        if(requestCode == PermissionConstants.LOCATION_PERMISSION.getValue())
+        {
+            // If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 0, 0, gpsManager);
+                Log.v("Tracker", "Location permission granted, hooking up gpsManager");
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
 
-                } else {
+            } else {
 
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                return;
+                Log.v("Tracker", "didnt make it");
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
+            return;
+        }
     }
 
     /**
@@ -97,16 +90,26 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
         //Set up gpsManager with context
         gpsManager = GPSManager.getInstance();
 
-        //TODO: Need to use "grantResults[]" in the permission result method handler
+        //Get the location manager service
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+        //Get the permissions for the location service if needed
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    PermissionConstants.PERMISSION_APPROVED.getValue());
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    PermissionConstants.LOCATION_PERMISSION.getValue());
         }
+        else
+        {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
+            Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
+        }
+
+
         //Test Code
         mapManager.AddTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", Lines.Blue_Line);
-       // mapManager.ZoomToTrainMarker("1234", 16);
+        mapManager.ZoomToTrainMarker("1234", 16);
 
         mapManager.AddStationMarker("Ruggles", new LatLng(42.339486, -71.085609));
         //End Test

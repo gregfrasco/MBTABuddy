@@ -38,11 +38,9 @@ public class GPSManager implements LocationListener {
 
     }
 
-
-
     @Override
     public void onLocationChanged(Location location) {
-        Log.v("GPSMANAGER", location.getLatitude() + " " + location.getLongitude());
+        Log.v("GPSManager", location.getLatitude() + " " + location.getLongitude());
     }
 
     @Override
@@ -52,7 +50,7 @@ public class GPSManager implements LocationListener {
 
     @Override
     public void onProviderEnabled(String provider) {
-
+        Log.v("GPSManager", "provider enabled: " + provider);
     }
 
     @Override
