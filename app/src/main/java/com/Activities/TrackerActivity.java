@@ -114,14 +114,6 @@ public class TrackerActivity extends FragmentActivity implements OnMapReadyCallb
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
             Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
         }
-
-
-        //Test Code
-        mapManager.AddTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", Lines.Blue_Line);
-        mapManager.zoomToTrainMarker("1234", 16);
-
-        //mapManager.AddStationMarker("Ruggles", new LatLng(42.339486, -71.085609));
-        //End Test
     }
 }
 
