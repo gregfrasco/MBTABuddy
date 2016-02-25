@@ -2,6 +2,8 @@
 package mbta.mbtaAPI;
 
 import javax.annotation.Generated;
+
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -13,10 +15,10 @@ public class Vehicle {
     private String vehicleId;
     @SerializedName("vehicle_lat")
     @Expose
-    private String vehicleLat;
+    private double vehicleLat;
     @SerializedName("vehicle_lon")
     @Expose
-    private String vehicleLon;
+    private double vehicleLon;
     @SerializedName("vehicle_bearing")
     @Expose
     private String vehicleBearing;
@@ -50,7 +52,7 @@ public class Vehicle {
      * @return
      *     The vehicleLat
      */
-    public String getVehicleLat() {
+    public double getVehicleLat() {
         return vehicleLat;
     }
 
@@ -60,7 +62,7 @@ public class Vehicle {
      *     The vehicle_lat
      */
     public void setVehicleLat(String vehicleLat) {
-        this.vehicleLat = vehicleLat;
+        this.vehicleLat = Double.parseDouble(vehicleLat);
     }
 
     /**
@@ -68,7 +70,7 @@ public class Vehicle {
      * @return
      *     The vehicleLon
      */
-    public String getVehicleLon() {
+    public double getVehicleLon() {
         return vehicleLon;
     }
 
@@ -78,7 +80,7 @@ public class Vehicle {
      *     The vehicle_lon
      */
     public void setVehicleLon(String vehicleLon) {
-        this.vehicleLon = vehicleLon;
+        this.vehicleLon = Double.parseDouble(vehicleLon);;
     }
 
     /**
@@ -135,4 +137,7 @@ public class Vehicle {
         this.vehicleTimestamp = vehicleTimestamp;
     }
 
+    public LatLng getLatLng() {
+        return new LatLng(this.getVehicleLat(),this.getVehicleLon());
+    }
 }

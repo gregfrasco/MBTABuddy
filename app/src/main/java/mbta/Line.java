@@ -127,4 +127,8 @@ public class Line {
         }
         return color;
     }
+
+    public Lines getLines() {
+        return this.lines;
+    }
 }

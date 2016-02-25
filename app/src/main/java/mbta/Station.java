@@ -57,6 +57,10 @@ public class Station {
         return lines;
     }
 
+    public List<Line> getLines(){
+        return MBTA.getInstance().getRoutesByStop(this.stationID,this.stationName);
+    }
+
     public String getStationID() {
         return stationID;
     }

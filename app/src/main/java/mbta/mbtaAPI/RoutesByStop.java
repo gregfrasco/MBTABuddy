@@ -7,6 +7,8 @@ import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import mbta.*;
+
 @Generated("org.jsonschema2pojo")
 public class RoutesByStop {
 
@@ -81,5 +83,21 @@ public class RoutesByStop {
             routes.addAll(mode.getRoute());
         }
         return routes;
+    }
+
+    public List<Line> getLines(String stationName){
+        stationName = stationName.split("-")[0];
+        List<Line> lines = new ArrayList<Line>();
+        MBTA mbta = MBTA.getInstance();
+        for(Lines testLine: Lines.values()){
+            Line line = new Line(testLine);
+            for(mbta.Station station: line.getStations()){
+                if(station.getStationName().contains(stationName)){
+                    lines.add(line);
+                    break;
+                }
+            }
+        }
+        return lines;
     }
 }

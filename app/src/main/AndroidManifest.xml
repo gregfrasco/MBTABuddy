@@ -35,10 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.Activities.StationActivity2"
-            android:label="@string/title_activity_station"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <uses-library android:name="com.google.android.maps" />
 

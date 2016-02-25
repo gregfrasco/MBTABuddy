@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,7 +31,9 @@ import gmap.StationMarker;
 import gmap.TrainMarker;
 import mbta.Line;
 import mbta.Lines;
+import mbta.MBTA;
 import mbta.Station;
+import mbta.mbtaAPI.Vehicle;
 import mbta.mbtabuddy.R;
 
 public class StationActivity extends FragmentActivity implements OnMapReadyCallback, RoutingListener {
@@ -61,7 +64,6 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         Bundle bundle = getIntent().getExtras();
         String stationID = bundle.getString("ID");
         this.station = new Station(stationID);
-
     }
 
 
@@ -77,22 +79,17 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        this.drawStations(this.station.getLine());
-        this.drawTrainLines(this.station.getLine());
+        this.drawStations(this.station.getLines());
+        this.drawTrainLines(this.station.getLines());
+        this.addTrains(this.station.getLines(), station);
         this.zoomToStationMarker(station.getStationID(),17);
     }
 
-    public void drawAllTrainLines(){
-        for(Lines lines: Lines.values()){
-            this.drawLine(new Line(lines));
-        }
-    }
-
-    public void drawAllStations(){
-        for(Lines lines: Lines.values()){
-            Line line = new Line(lines);
-            for(Station station : line.getStations()){
-                this.addStationMarker(station.getStationID(), station.getLatLan());
+    private void addTrains(List<Line> lines, Station station) {
+        MBTA mbta = MBTA.getInstance();
+        for(Line line: lines) {
+            for (Vehicle vehicle : MBTA.getInstance().getVehiclesByRoute(line)) {
+                this.addTrainMarker(vehicle.getVehicleId(), vehicle.getLatLng(), "TESTING",line.getLines());
             }
         }
     }
@@ -124,12 +121,12 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
 
     @Override
     public void onRoutingFailure(RouteException e) {
-
+        Log.v("MBTA", "ROUTE FAILED");
     }
 
     @Override
     public void onRoutingStart() {
-
+        Log.v("MBTA", "ROUTE START");
     }
 
     @Override
@@ -146,7 +143,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
 
     @Override
     public void onRoutingCancelled() {
-
+        Log.v("MBTA", "ROUTE Cancelled");
     }
 
     public void addStationMarker(String stationName, LatLng location) {
@@ -170,6 +167,32 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         for (StationMarker stat : stationMarkers) {
             if (stat.getStationName().equals(stationName))
                 return stat;
+        }
+
+        return null;
+    }
+
+    public void zoomToTrainMarker(String vehicleNum, int zoomNum) {
+        TrainMarker train = getTrainMarkerFromVehicleNum(vehicleNum);
+        LatLng position = train.GetMarker().getPosition();
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, zoomNum));
+    }
+
+    //Add a train to the map
+    public void addTrainMarker(String vehicleNum, LatLng location, String title, Lines line) {
+        Marker newMarker = map.addMarker(new MarkerOptions()
+                        .position(location)
+                        .title(title)
+        );
+        TrainMarker newtm = new TrainMarker(line, newMarker, vehicleNum);
+        trainMarkers.add(newtm);
+    }
+
+    public TrainMarker getTrainMarkerFromVehicleNum(String vehicleNum) {
+        for (TrainMarker train : trainMarkers) {
+            if (train.GetVehicleNum().equals(vehicleNum)) {
+                return train;
+            }
         }
 
         return null;

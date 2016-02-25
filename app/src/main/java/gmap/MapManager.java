@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.util.Log;
 
 import com.Activities.StationActivity;
-import com.Activities.StationActivity2;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
