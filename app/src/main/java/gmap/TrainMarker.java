@@ -44,6 +44,7 @@ public class TrainMarker
     private BitmapDescriptor GetIcon() {
         switch(trainRoute){
             case Red_Line:
+            case Mattapan_Line:
                 return BitmapDescriptorFactory.fromResource(R.drawable.ic_red);
             case Orange_Line:
                 return BitmapDescriptorFactory.fromResource(R.drawable.ic_orange);

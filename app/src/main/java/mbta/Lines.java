@@ -1,5 +1,7 @@
 package mbta;
 
+import mbta.mbtaAPI.MBTARoutes;
+
 /**
  * Created by frascog on 2/17/16.
  */
@@ -12,4 +14,8 @@ public enum Lines {
     Green_Line_E,
     Blue_Line,
     Mattapan_Line;
+
+    public static Lines getLine(String lineID){
+        return MBTARoutes.getInstance().getLine(lineID);
+    }
 }

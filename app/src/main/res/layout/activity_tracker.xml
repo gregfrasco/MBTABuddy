@@ -15,9 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="383dp"
             tools:context="com.Activities.TrackerFragment"
+
             android:layout_alignParentStart="true" />
-
-
 
         <!--We can make this expanable and retractable to have fullscreen map-->
         <ScrollView

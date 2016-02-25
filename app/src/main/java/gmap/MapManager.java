@@ -1,9 +1,12 @@
 package gmap;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.util.Log;
+
+import com.Activities.StationActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -11,15 +14,24 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import directions.AbstractRouting;
+import directions.RouteException;
+import directions.Routing;
+import directions.RoutingListener;
+import mbta.Line;
 import mbta.Lines;
+import mbta.Station;
 import mbta.mbtabuddy.R;
 
 /**
  * Created by cruzj6 on 2/10/2016.
  */
-public class MapManager {
+public class MapManager implements RoutingListener{
     static MapManager instance;
     private Context context;
     private GoogleMap map;
@@ -29,23 +41,20 @@ public class MapManager {
     private List<TrainMarker> trainMarkers = new ArrayList<TrainMarker>();
     private List<StationMarker> stationMarkers = new ArrayList<StationMarker>();
 
-    public static MapManager getInstance()
-    {
-        if(instance == null)
+    public static MapManager getInstance() {
+        if (instance == null)
             instance = new MapManager();
         return instance;
     }
 
-    public void SetContext(Context con)
-    {
+    public void SetContext(Context con) {
         context = con;
     }
 
-    public void SetMap(GoogleMap _map)
-    {
-        map = _map;
-        map.setInfoWindowAdapter(new TrainInfoWindow(context));
-        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+    public void SetMap(GoogleMap map) {
+        this.map = map;
+        this.map.setInfoWindowAdapter(new TrainInfoWindow(context));
+        this.map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 //For train markers
@@ -57,35 +66,34 @@ public class MapManager {
                 //For station markers
                 if (GetStationMarkerById(marker.getId()) != null) {
                     //...
-                    return true;
+                    Intent intent = new Intent(context, StationActivity.class);
+                    intent.putExtra("ID",marker.getTitle());
+                    context.startActivity(intent);
                 }
 
                 return true;//True overrides default behavior
             }
         });
+        this.drawAllTrainLines();
+        this.drawAllStations();
     }
 
-    public void ZoomToLocation(LatLng location, int zoomAmnt)
-    {
+    public void ZoomToLocation(LatLng location, int zoomAmnt) {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomAmnt));
     }
 
     //region TrainMarkers
 
     // Move a train already on the map
-    public void MoveTrainMarker(String tripNum, LatLng newPos)
-    {
+    public void MoveTrainMarker(String tripNum, LatLng newPos) {
         TrainMarker train = GetTrainMarkerFromVehicleNum(tripNum);
         train.GetMarker().setPosition(newPos);
     }
 
-    public TrainMarker GetTrainMarkerFromId(String markerId)
-    {
-        for(TrainMarker train : trainMarkers)
-        {
+    public TrainMarker GetTrainMarkerFromId(String markerId) {
+        for (TrainMarker train : trainMarkers) {
             String id = train.GetMarker().getId();
-            if(id.equals(markerId))
-            {
+            if (id.equals(markerId)) {
                 return train;
             }
         }
@@ -93,18 +101,12 @@ public class MapManager {
     }
 
     /**
-     * @param vehicleNum
-     * Given by MBTA API
-     *
-     * @return
-     * TrainMarker object associated with this tripNum on creation
+     * @param vehicleNum Given by MBTA API
+     * @return TrainMarker object associated with this tripNum on creation
      */
-    public TrainMarker GetTrainMarkerFromVehicleNum(String vehicleNum)
-    {
-        for(TrainMarker train : trainMarkers)
-        {
-            if(train.GetVehicleNum().equals(vehicleNum))
-            {
+    public TrainMarker GetTrainMarkerFromVehicleNum(String vehicleNum) {
+        for (TrainMarker train : trainMarkers) {
+            if (train.GetVehicleNum().equals(vehicleNum)) {
                 return train;
             }
         }
@@ -112,21 +114,18 @@ public class MapManager {
         return null;
     }
 
-    public void ZoomTwoPoints(LatLng swPoint, LatLng nePoint)
-    {
+    public void zoomTwoPoints(LatLng swPoint, LatLng nePoint) {
         map.moveCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds(swPoint, nePoint), 10));
     }
 
-    public void ZoomToTrainMarker(String vehicleNum, int zoomNum)
-    {
+    public void zoomToTrainMarker(String vehicleNum, int zoomNum) {
         TrainMarker train = GetTrainMarkerFromVehicleNum(vehicleNum);
         LatLng position = train.GetMarker().getPosition();
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, zoomNum));
     }
 
     //Add a train to the map
-    public void AddTrainMarker(String vehicleNum, LatLng location, String title, Lines line)
-    {
+    public void addTrainMarker(String vehicleNum, LatLng location, String title, Lines line) {
         Marker newMarker = map.addMarker(new MarkerOptions()
                         .position(location)
                         .title(title)
@@ -139,23 +138,19 @@ public class MapManager {
     //endregion
 
     //region StationMarkers
-    public StationMarker GetStationMarker(String stationName)
-    {
-        for(StationMarker stat : stationMarkers)
-        {
-            if(stat.getStationName().equals(stationName))
+    public StationMarker getStationMarker(String stationName) {
+        for (StationMarker stat : stationMarkers) {
+            if (stat.getStationName().equals(stationName))
                 return stat;
         }
 
         return null;
     }
 
-    public StationMarker GetStationMarkerById(String markerId)
-    {
-        for (StationMarker stat : stationMarkers)
-        {
+    public StationMarker GetStationMarkerById(String markerId) {
+        for (StationMarker stat : stationMarkers) {
             String id = stat.getMarker().getId();
-            if(id.equals(markerId)){
+            if (id.equals(markerId)) {
                 return stat;
             }
         }
@@ -163,18 +158,18 @@ public class MapManager {
         return null;
     }
 
-    public void ZoomToStationMarker(String stationName, int zoomNum)
-    {
-        StationMarker sm = GetStationMarker(stationName);
+
+    public void zoomToStationMarker(String stationName, int zoomNum) {
+        StationMarker sm = getStationMarker(stationName);
         LatLng pos = sm.getMarker().getPosition();
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, zoomNum));
     }
 
-    public void AddStationMarker(String stationName, LatLng location)
-    {
+    public void addStationMarker(String stationName, LatLng location) {
         Marker newMarker = map.addMarker(new MarkerOptions()
-                .position(location)
-                .title(stationName)
+                        .position(location)
+                        .title(stationName)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_station))
         );
 
         StationMarker newsm = new StationMarker(stationName, newMarker);
@@ -183,18 +178,18 @@ public class MapManager {
     //endregion
 
     //region MyLocation
-    public void MoveMyLocationMarker(LatLng newLoc)
+    public void moveMyLocationMarker(LatLng newLoc)
     {
         if(myMarker == null)
         {
-            AddMyLocationMarker("Me", newLoc);
+            addMyLocationMarker("Me", newLoc);
         }
         else {
             myMarker.setPosition(newLoc);
         }
     }
 
-    public void AddMyLocationMarker(String title, LatLng location)
+    public void addMyLocationMarker(String title, LatLng location)
     {
         //TODO: Make icon smaller
         Marker meMarker = map.addMarker(new MarkerOptions()
@@ -205,4 +200,72 @@ public class MapManager {
         myMarker = meMarker;
     }
     //endregion
+
+    public void drawLine(Line line) {
+        Routing routing = new Routing.Builder()
+                .travelMode(AbstractRouting.TravelMode.TRANSIT)
+                .waypoints(line.getTerminalStation1().getLatLan(), line.getTerminalStation2().getLatLan())
+                .key("AIzaSyAuq6B6ktEChZCEfB-LbwyxshF44bWKItM")
+                .withListener(this)
+                .withColor(line.getColor())
+                .build();
+        routing.execute();
+    }
+
+    @Override
+    public void onRoutingFailure(RouteException e) {
+        Log.v("MBTA", "ROUTE FAILED");
+    }
+
+    @Override
+    public void onRoutingStart() {
+        Log.v("MBTA", "ROUTE START");
+    }
+
+    @Override
+    public void onRoutingSuccess(ArrayList<directions.Route> route, int shortestRouteIndex,int color) {
+        route.get(0).getPoints().remove(0);
+        route.get(0).getPoints().remove(route.get(0).getPoints().size() - 1);
+        //line
+        this.map.addPolyline(new PolylineOptions()
+                .width(20).color(color).zIndex(1).addAll(route.get(0).getPoints()));
+        //line border
+        this.map.addPolyline(new PolylineOptions()
+                .width(30).color(Color.BLACK).zIndex(0).addAll(route.get(0).getPoints()));
+
+    }
+
+    @Override
+    public void onRoutingCancelled() {
+        Log.v("MBTA", "ROUTE CANCELLED");
+    }
+
+    public void drawAllTrainLines(){
+        for(Lines lines: Lines.values()){
+            this.drawLine(new Line(lines));
+        }
+    }
+
+    public void drawAllStations(){
+        for(Lines lines: Lines.values()){
+            Line line = new Line(lines);
+            for(Station station : line.getStations()){
+                this.addStationMarker(station.getStationID(), station.getLatLan());
+            }
+        }
+    }
+
+    public void drawStations(List<Line> lines) {
+        for(Line line: lines){
+            for(Station station : line.getStations()){
+                this.addStationMarker(station.getStationID(), station.getLatLan());
+            }
+        }
+    }
+
+    public void drawTrainLines(List<Line> lines) {
+        for(Line line:lines){
+            this.drawLine(line);
+        }
+    }
 }

@@ -19,7 +19,9 @@ import com.google.android.gms.maps.model.LatLng;
 import gmap.MapManager;
 import gmapdirections.GDirections;
 import gmapdirections.GPSManager;
+import mbta.Line;
 import mbta.Lines;
+import mbta.Station;
 import mbta.mbtabuddy.R;
 
 public class TrackerFragment extends Fragment implements OnMapReadyCallback {
@@ -53,11 +55,10 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
 
         //Get our mapManager singleton and give it the context
         mapManager = MapManager.getInstance();
-        mapManager.SetContext(getActivity());
 
+        mapManager.SetContext(getActivity());
         return retView;
     }
-
 
     public void enableLocationManager()
     {
@@ -107,10 +108,10 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         }
 
         //Test Code
-        mapManager.AddTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", Lines.Blue_Line);
-        mapManager.ZoomToTrainMarker("1234", 16);
+        mapManager.addTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", Lines.Blue_Line);
+        mapManager.zoomToTrainMarker("1234", 16);
 
-        mapManager.AddStationMarker("Ruggles", new LatLng(42.339486, -71.085609));
+        mapManager.addStationMarker("Ruggles", new LatLng(42.339486, -71.085609));
         //End Test
     }
 }

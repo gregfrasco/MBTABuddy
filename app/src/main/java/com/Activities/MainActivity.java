@@ -15,7 +15,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-
+import java.util.Arrays;
+import java.util.List;
 import mbta.Line;
 import mbta.Lines;
 import mbta.MBTA;
@@ -88,15 +89,10 @@ public class MainActivity extends ActionBarActivity {
         });
         if(savedInstanceState == null){
             FragmentManager fm = getSupportFragmentManager();
-            Fragment fragment = new TrackerFragment();
-            fm.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
+            trackerFrag = new TrackerFragment();
+            fm.beginTransaction().replace(R.id.fragmentContent, trackerFrag).commit();
             setTitle(drawerLabels[0]);
         }
-    }
-
-    private void InitDrawerLayout()
-    {
-
     }
 
     @Override
