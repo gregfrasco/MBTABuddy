@@ -1,6 +1,7 @@
 package com.Activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -10,11 +11,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import gmap.MapManager;
 import gmapdirections.GDirections;
@@ -55,8 +61,35 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
 
         //Get our mapManager singleton and give it the context
         mapManager = MapManager.getInstance();
-
         mapManager.SetContext(getActivity());
+
+        Button searchButton = (Button) retView.findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText searchBox = (EditText) getActivity().findViewById(R.id.destSearch);
+                String searchString = searchBox.getText().toString();
+
+                HashMap<String, String> matches = new HashMap<String, String>();
+
+                for (Lines lines : Lines.values()) {
+                    Line line = new Line(lines);
+                    for (Station station : line.getStations()) {
+                        if (station.getStationName().toLowerCase().contains(searchString.toLowerCase())) {
+                            //Add to the list
+                            matches.put(station.getStationName(), station.getStationID());
+                        }
+                    }
+                }
+
+                Intent searchIntent = new Intent(getActivity(), SearchActivity.class);
+                searchIntent.putExtra("matches", matches);
+                startActivity(searchIntent);
+            }
+        });
+
+
+
         return retView;
     }
 
@@ -110,9 +143,6 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         //Test Code
         mapManager.addTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", Lines.Blue_Line);
         mapManager.zoomToTrainMarker("1234", 16);
-
-        mapManager.addStationMarker("Ruggles", new LatLng(42.339486, -71.085609));
-        //End Test
     }
 }
 
