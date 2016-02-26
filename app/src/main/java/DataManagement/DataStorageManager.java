@@ -1,13 +1,12 @@
-package gmap;
+package DataManagement;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by cruzj6 on 2/26/2016.
@@ -46,14 +45,20 @@ public class DataStorageManager {
         }
     }
 
-    private  Object LoadUserFavoritesData()
+    private List<FavoritesDataContainer> LoadUserFavoritesData()
     {
+        List<FavoritesDataContainer> favs = new ArrayList<FavoritesDataContainer>();
         try {
             SQLiteDatabase userData = context.openOrCreateDatabase("user_data", SQLiteDatabase.CREATE_IF_NECESSARY, null);
             userData.execSQL("CREATE TABLE IF NOT EXISTS Favorites(Name VARCHAR," +
                     " Type VARCHAR, StationID VARCHAR);");
             Cursor results = userData.rawQuery("Select * from Favorites", null);
+
+            //Go through all of the favorites in the table
             while(results.moveToNext()) {
+                //Our base new favorite item
+                FavoritesDataContainer newFav = null;
+
                 String FavName = results.getString(0);
                 String Type = results.getString(1);
                 String StationID = "";
@@ -61,8 +66,11 @@ public class DataStorageManager {
                 //If this is a station
                 if (Type.equals("Station")) {
                     StationID = results.getString(2);
+                    newFav = new StationFavContainer(FavName, Type, StationID);
                 }
+                //TODO: if (Type.equals("location") etc....
 
+                favs.add(newFav);
                 Log.v("DataStorageManager", "Loaded: " + FavName + "|" + Type + "|" + StationID);
             }
             userData.close();
@@ -72,7 +80,24 @@ public class DataStorageManager {
             Log.e("DataStorageManager", "Error in LoadUserFavoritesData: " +
                     ((e.getMessage() != null)? e.getMessage() : ""));
         }
-        return null;
+        return favs;
+    }
+
+    public boolean checkStationIsInDB(String stationID)
+    {
+        SQLiteDatabase userData = context.openOrCreateDatabase("user_data", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+        userData.execSQL("CREATE TABLE IF NOT EXISTS Favorites(Name VARCHAR," +
+                " Type VARCHAR, StationID VARCHAR);");
+        Cursor dbCheck = userData.rawQuery("SELECT StationId FROM Favorites", null);
+
+        //Check if the user already has it as a favorite
+        while(dbCheck.moveToNext())
+        {
+            if(dbCheck.getString(0).equals(stationID))
+                return true;
+        }
+
+        return false;
     }
 
     public void SaveStationFavorite(String StationId, String stationName)
@@ -82,13 +107,7 @@ public class DataStorageManager {
                 " Type VARCHAR, StationID VARCHAR);");
         Cursor dbCheck = userData.rawQuery("SELECT StationId FROM Favorites", null);
 
-        //Check if the user already has it as a favorite
-        Boolean isInAlready = false;
-        while(dbCheck.moveToNext())
-        {
-            if(dbCheck.getString(0).equals(StationId))
-                isInAlready = true;
-        }
+        boolean isInAlready = checkStationIsInDB(StationId);
 
         //Add if it's not already there
         if(!isInAlready) {
