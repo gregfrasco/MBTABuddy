@@ -13,10 +13,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import java.util.Arrays;
 import java.util.List;
+
+import gmap.DataStorageManager;
+import gmap.MBTAStaticMapFragment;
 import mbta.Line;
 import mbta.Lines;
 import mbta.MBTA;
@@ -77,6 +81,10 @@ public class MainActivity extends ActionBarActivity {
                     //Tracker fragment
                     case 0:
                         newFragment = new TrackerFragment();
+                        break;
+
+                    case 2:
+                        newFragment = new MBTAStaticMapFragment();
                         break;
 
                     default: //Return, do nothing

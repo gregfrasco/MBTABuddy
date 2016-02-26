@@ -1,5 +1,6 @@
 package com.Activities;
 
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,6 +30,7 @@ import directions.Route;
 import directions.RouteException;
 import directions.Routing;
 import directions.RoutingListener;
+import gmap.DataStorageManager;
 import gmap.StationMarker;
 import gmap.TrainMarker;
 import mbta.Line;
@@ -39,6 +42,7 @@ import mbta.mbtabuddy.R;
 
 public class StationActivity extends FragmentActivity implements OnMapReadyCallback, RoutingListener {
 
+    private DataStorageManager dataManager;
     private GoogleMap map;
     private Station station;
     private List<TrainMarker> trainMarkers = new ArrayList<TrainMarker>();
@@ -53,19 +57,12 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
                 .findFragmentById(R.id.stationMap);
         mapFragment.getMapAsync(this);
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
+        //Get our id of the station from the intent
         Bundle bundle = getIntent().getExtras();
         String stationID = bundle.getString("ID");
         this.station = new Station(stationID);
 
+        //TODO: this can be removed later
         Button backButton = (Button) findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +70,10 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
                 finish();
             }
         });
+
+        //Save station as favorite
+        ImageButton favButton = (ImageButton) findViewById(R.id.favoriteButton);
+        favButton.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_star_24dp));
     }
 
 
@@ -91,7 +92,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         this.drawStations(this.station.getLines());
         this.drawTrainLines(this.station.getLines());
         this.addTrains(this.station.getLines(), station);
-        this.zoomToStationMarker(station.getStationID(),17);
+        this.zoomToStationMarker(station.getStationID(), 17);
     }
 
     private void addTrains(List<Line> lines, Station station) {
@@ -205,5 +206,15 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         }
 
         return null;
+    }
+
+    public void addFavoriteStation()
+    {
+        if(dataManager == null)
+            dataManager = DataStorageManager.getInstance();
+        dataManager.SetContext(this); //TODO: Move to onResume()? or other method?
+
+        //Save it
+        dataManager.SaveStationFavorite(station.getStationID(), station.getStationName());
     }
 }
