@@ -16,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import gmap.MBTAStaticMapFragment;
 import mbta.Line;
 import mbta.Lines;
 import mbta.MBTA;
