@@ -41,6 +41,8 @@ public class MBTAStaticMapFragment extends Fragment {
                 @Override
                 public void run() {
                     try {
+                        //If this doesn't work out we just use a local static image, idea is
+                        //this image may be updated some day
                         final String mbtaMapImageURL = "http://www.mbta.com/images/subway-spider.jpg";
 
                         //Get the url object for the image source
@@ -49,13 +51,15 @@ public class MBTAStaticMapFragment extends Fragment {
                         connect.setDoInput(true);
                         connect.connect();
 
+                        //Open the input stream and stream to bitmap factory
                         InputStream is = connect.getInputStream();
                         Bitmap mapImage = BitmapFactory.decodeStream(is);
 
                         img.setImageBitmap(mapImage);
                         link.setText("Image From: " + mbtaMapImageURL);
                     } catch (Exception e) {
-                        Log.e("MBTAStaticMapFragment", "Error in getting map bitmap thread");
+                        Log.e("MBTAStaticMapFragment", "Error in getting map bitmap thread, using default image");
+                        img.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.subway_spider));
                     }
                 }
             });
