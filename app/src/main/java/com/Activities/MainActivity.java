@@ -25,6 +25,7 @@ public class MainActivity extends ActionBarActivity {
 
     //TODO Change MBTARoutes to route
 
+    static final String TAG = "MainActivity";
     private DrawerLayout drawerMainLayout;
     private ListView drawerList;
     private RelativeLayout drawerRelativeLayout;
@@ -61,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
         //Get our menu item strings array
         Resources res = getResources();
         drawerLabels = getResources().getStringArray(R.array.drawer_menu_labels);
-        ArrayAdapter<String> drawerMenuAdapter =
+        final ArrayAdapter<String> drawerMenuAdapter =
                 new ArrayAdapter<String>(this, R.layout.drawer_menu_item_layout,drawerLabels);
 
         //Set the adapter
@@ -75,14 +76,20 @@ public class MainActivity extends ActionBarActivity {
                 switch (position) {
                     //Tracker fragment
                     case 0:
+                        Log.v(TAG,"Fragment Switched to Map");
+                        setTitle(getResources().getStringArray(R.array.drawer_menu_labels)[0]);
                         newFragment = new TrackerFragment();
                         break;
 
                     case 1:
+                        Log.v(TAG,"Fragment Switched to Favorites");
+                        setTitle(getResources().getStringArray(R.array.drawer_menu_labels)[1]);
                         newFragment = new FavoritesFragment();
                         break;
 
                     case 2:
+                        Log.v(TAG,"Fragment Switched to Static Map");
+                        setTitle(getResources().getStringArray(R.array.drawer_menu_labels)[2]);
                         newFragment = new MBTAStaticMapFragment();
                         break;
 

@@ -59,6 +59,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         Bundle bundle = getIntent().getExtras();
         String stationID = bundle.getString("ID");
         this.station = new Station(stationID);
+        setTitle(station.getStationName());
     }
 
 

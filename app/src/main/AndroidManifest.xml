@@ -22,7 +22,6 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,32 +29,13 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <!--
-        activity
-            android:name="com.Activities.TrackerFragment"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
-        <activity
-            android:name="com.Activities.TrackerActivity"
-            android:label="@string/title_activity_tracker">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity
-        -->
 
         <uses-library android:name="com.google.android.maps" />
 
         <activity
             android:name="com.Activities.StationActivity"
-            android:label="@string/title_activity_station" />
+            android:label="@string/title_activity_station"
+            android:theme="@style/AppTheme"/>
         <activity android:name="com.Activities.SearchActivity"></activity>
     </application>
 

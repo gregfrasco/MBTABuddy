@@ -41,6 +41,7 @@ public class FavoritesItemsAdapter extends ArrayAdapter<FavoritesDataContainer> 
 
         ImageButton RemoveFavButton = (ImageButton) view.findViewById(R.id.UnfavoriteBtn);
         RemoveFavButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 DataStorageManager.getInstance().removeFavorite(getItem(position).favName);

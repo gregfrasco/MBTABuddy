@@ -1,5 +1,6 @@
 package com.Activities;
 
+import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -7,6 +8,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -77,6 +81,8 @@ public class FavoritesFragment extends Fragment {
         dataManager = DataStorageManager.getInstance();
         dataManager.SetContext(getActivity());
 
+        setHasOptionsMenu(true);
+
         favs = (List<FavoritesDataContainer>)
                 dataManager.LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);
     }
@@ -119,6 +125,27 @@ public class FavoritesFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater)
+    {
+        inflater.inflate(R.menu.favorites_menu, menu);
+        MenuItem removeItem = menu.findItem(R.id.action_remove);
+        removeItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                ListView favList =  (ListView) getView().findViewById(R.id.favoritesList);
+
+                //Enable the Remove button and the End Remove Button
+                for(int  i = 0; i < favList.getChildCount(); i++)
+                {
+                    favList.getChildAt(i).findViewById(R.id.UnfavoriteBtn).setVisibility(View.VISIBLE);
+                }
+                return false;
+            }
+        });
     }
 
     @Override
