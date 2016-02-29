@@ -6,11 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
 
+import DataManagement.DataStorageManager;
 import DataManagement.FavoritesDataContainer;
+import mbta.mbtabuddy.R;
 
 /**
  * Created by Joey on 2/26/2016.
@@ -25,15 +29,24 @@ public class FavoritesItemsAdapter extends ArrayAdapter<FavoritesDataContainer> 
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inf = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inf.inflate(android.R.layout.simple_list_item_1, null);
+        View view = inf.inflate(R.layout.favorites_item, null);
 
         Log.v("FavoritesItemsAdapter", getItem(position).favName);
 
         //Set our text
-        TextView theText = (TextView) view.findViewById(android.R.id.text1);
+        TextView theText = (TextView) view.findViewById(R.id.Favorite_Name);
         theText.setText(getItem(position).favName);
+
+        ImageButton RemoveFavButton = (ImageButton) view.findViewById(R.id.UnfavoriteBtn);
+        RemoveFavButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataStorageManager.getInstance().removeFavorite(getItem(position).favName);
+                remove(getItem(position));
+            }
+        });
         return view;
     }
 

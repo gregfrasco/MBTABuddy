@@ -83,6 +83,16 @@ public class DataStorageManager {
         return favs;
     }
 
+    public void removeFavorite(String favName)
+    {
+        SQLiteDatabase userData = context.openOrCreateDatabase("user_data", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+        userData.execSQL("CREATE TABLE IF NOT EXISTS Favorites(Name VARCHAR," +
+                " Type VARCHAR, StationID VARCHAR);");
+        userData.execSQL("DELETE FROM Favorites WHERE Name='" + favName + "'");
+
+        userData.close();
+    }
+
     public boolean checkStationIsInDB(String stationID)
     {
         SQLiteDatabase userData = context.openOrCreateDatabase("user_data", SQLiteDatabase.CREATE_IF_NECESSARY, null);

@@ -74,6 +74,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+
         this.drawStations(this.station.getLines());
         this.drawTrainLines(this.station.getLines());
         this.addTrains(this.station.getLines(), station);

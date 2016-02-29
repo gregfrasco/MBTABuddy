@@ -69,7 +69,7 @@ public class MBTAStaticMapFragment extends Fragment {
         }
         catch(Exception e)
         {
-            Log.e("MBTAStaticMapFragment", "Error in onCreatView()");
+            Log.e("MBTAStaticMapFragment", "Error in onCreateView()");
         }
 
         return view;
