@@ -43,7 +43,7 @@ public class MBTAStaticMapFragment extends Fragment {
                     try {
                         //If this doesn't work out we just use a local static image, idea is
                         //this image may be updated some day
-                        final String mbtaMapImageURL = "http://www.mbta.com/images/subway-spider.jpg";
+                        final String mbtaMapImageURL = "http://www.mbta.com/images/subway_spider.jpg";
 
                         //Get the url object for the image source
                         URL url = new URL(mbtaMapImageURL);

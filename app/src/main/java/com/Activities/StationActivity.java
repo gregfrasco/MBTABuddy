@@ -28,6 +28,7 @@ import directions.RouteException;
 import directions.Routing;
 import directions.RoutingListener;
 import DataManagement.DataStorageManager;
+import gmap.MapManager;
 import gmap.StationMarker;
 import gmap.TrainMarker;
 import mbta.Line;

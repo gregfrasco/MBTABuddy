@@ -18,4 +18,27 @@ public enum Lines {
     public static Lines getLine(String lineID){
         return MBTARoutes.getInstance().getLine(lineID);
     }
+
+    @Override public String toString(){
+        switch(this){
+            case Red_Line:
+                return "Red Line";
+            case Orange_Line:
+                return "Orange Line";
+            case Green_Line_B:
+                return "Green Line: B";
+            case Green_Line_C:
+                return "Green Line: C";
+            case Green_Line_D:
+                return "Green Line: D";
+            case Green_Line_E:
+                return "Green Line: E";
+            case Blue_Line:
+                return "Blue Line";
+            case Mattapan_Line:
+                return  "Mattapan Line";
+            default:
+                return "";
+        }
+    }
 }
