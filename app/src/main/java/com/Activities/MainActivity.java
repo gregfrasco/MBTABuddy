@@ -1,7 +1,9 @@
 package com.Activities;
 
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import gmap.MapManager;
 import mbta.Line;
 import mbta.Lines;
 import mbta.MBTA;
@@ -121,8 +124,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
 
         //If this is request for location services from the tracker fragment
         if (requestCode == PermissionConstants.LOCATION_TrackerFragment.getValue()) {
@@ -140,5 +142,11 @@ public class MainActivity extends ActionBarActivity {
             return;
         }
     }
+
+
+    /**
+     * Class to run the login process in the background while running the
+     * loading screen in the main thread
+     */
 
 }

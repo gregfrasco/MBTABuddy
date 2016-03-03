@@ -65,6 +65,10 @@ public class Vehicle {
         this.vehicleLat = Double.parseDouble(vehicleLat);
     }
 
+    public void setVehicleLat(double vehicleLat) {
+        this.vehicleLat = vehicleLat;
+    }
+
     /**
      * 
      * @return
@@ -80,7 +84,11 @@ public class Vehicle {
      *     The vehicle_lon
      */
     public void setVehicleLon(String vehicleLon) {
-        this.vehicleLon = Double.parseDouble(vehicleLon);;
+        this.vehicleLon = Double.parseDouble(vehicleLon);
+    }
+
+    public void setVehicleLon(double vehicleLon) {
+        this.vehicleLon = vehicleLon;
     }
 
     /**

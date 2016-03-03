@@ -45,7 +45,7 @@ public class TrainInfoWindow implements GoogleMap.InfoWindowAdapter {
 
         //Get our train marker which we can use for getting information
         TextView snippet = (TextView) window.findViewById(R.id.ETA  );
-        TrainMarker tMarker = mapManager.GetTrainMarkerFromId(marker.getId());
+        TrainMarker tMarker = mapManager.getTrainMarkerFromId(marker.getId());
 
         //TODO: for now just set the content to the color....
         snippet.setText(tMarker.GetRouteEnum().toString());

@@ -121,7 +121,6 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         protected Boolean doInBackground(String... params) {
             try{
                 this.mapManager.drawTrainLines(station.getLines());
-                this.mapManager.drawStations(station.getLine());
             }catch (Exception e){
                 e.printStackTrace();
                 return false;
@@ -134,6 +133,9 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
             if(this.dialog.isShowing()){
                 this.dialog.dismiss();
             }
+            this.mapManager.drawAdjustedStations(station.getLine());
+            this.mapManager.addTrains(station.getLines(),station);
+            this.mapManager.zoomToStationMarker(station.getStationID(),16);
         }
     }
 

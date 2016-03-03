@@ -1,9 +1,11 @@
 package com.Activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -89,8 +91,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         return retView;
     }
 
-    public void enableLocationManager()
-    {
+    public void enableLocationManager() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
@@ -134,6 +135,9 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
             gpsManager.InitLocationManager(getActivity(), locationManager);
             Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
         }
+        Station station = Lines.getLine(Lines.Green_Line_E).getStations().get(0);
+        mapManager.zoomToStationMarker(station.getStationID(),18);
     }
+
 }
 

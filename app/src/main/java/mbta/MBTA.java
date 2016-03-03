@@ -257,7 +257,7 @@ public class MBTA{
     }
 
     public List<Vehicle> getVehiclesByRoute(Line line) {
-        String apiResult = run(mbtaAPI + "vehiclesbyroute" + apiKey + "&route="+ line.getLineID() + format);
+        String apiResult = run(mbtaAPI + "vehiclesbyroute" + apiKey + "&route=" + line.getLineID() + format);
         Gson gson = new Gson();
         VehiclesByRoute vehiclesByRoute = gson.fromJson(apiResult, VehiclesByRoute.class);
         List<Vehicle> vehicles = new ArrayList<Vehicle>();
@@ -297,5 +297,4 @@ public class MBTA{
         AlertsByRoute alertsByRoute = gson.fromJson(apiResult, AlertsByRoute.class);
         return alertsByRoute.getAlerts();
     }
-
 }

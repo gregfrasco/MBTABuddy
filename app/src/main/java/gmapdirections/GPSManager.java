@@ -57,7 +57,7 @@ public class GPSManager implements LocationListener {
      */
     @Override
     public void onLocationChanged(Location location) {
-        Log.v("GPSManager", "Device GPS Location Changed to: " + location.getLatitude() + " " + location.getLongitude());
+        //Log.v("GPSManager", "Device GPS Location Changed to: " + location.getLatitude() + " " + location.getLongitude());
         mapManager.moveMyLocationMarker(new LatLng(location.getLatitude(), location.getLongitude()));
     }
 

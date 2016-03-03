@@ -18,6 +18,7 @@ import directions.Routing;
 import directions.RoutingListener;
 import mbta.mbtaAPI.MBTARoutes;
 import mbta.mbtaAPI.Route;
+import mbta.mbtaAPI.Vehicle;
 import mbta.mbtabuddy.R;
 
 /**
@@ -172,5 +173,25 @@ public class Line {
             station.setLongitude(closestPoint.longitude);
             station.setLatitue(closestPoint.latitude);
         }
+    }
+
+    public void adjustVehicles(Vehicle vehicle){
+        Location vehicleLocation = new Location("");
+        vehicleLocation.setLongitude(vehicle.getVehicleLon());
+        vehicleLocation.setLatitude(vehicle.getVehicleLat());
+        LatLng closestPoint = null;
+        float distance = 10000;
+        for(LatLng point: this.getMapPoints()){
+            Location testLocation = new Location("");
+            testLocation.setLatitude(point.latitude);
+            testLocation.setLongitude(point.longitude);
+            float testDistance = vehicleLocation.distanceTo(testLocation);
+            if(testDistance < distance){
+                distance = testDistance;
+                closestPoint = point;
+            }
+        }
+        vehicle.setVehicleLon(closestPoint.longitude);
+        vehicle.setVehicleLat(closestPoint.latitude);
     }
 }
