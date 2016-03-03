@@ -1,5 +1,6 @@
 package gmap;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
 /**
@@ -25,5 +26,9 @@ public class StationMarker
     public Marker getMarker()
     {
         return marker;
+    }
+
+    public void move(LatLng latLng){
+        marker.setPosition(latLng);
     }
 }

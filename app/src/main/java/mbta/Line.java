@@ -2,8 +2,10 @@ package mbta;
 
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.location.Location;
 import android.util.Log;
 
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -30,9 +32,8 @@ public class Line {
     private LineType type;
     private Station terminalStation1;
     private Station terminalStation2;
-    private List<LatLng> points;
+    private List<LatLng> mapPoints;
 
-    //TODO
     public Line(Route route) {
         MBTA mbta = MBTA.getInstance();
         this.lineID = route.getRouteId();
@@ -130,5 +131,46 @@ public class Line {
 
     public Lines getLines() {
         return this.lines;
+    }
+
+    public List<LatLng> getMapPoints(){
+        if(mapPoints == null){
+
+        }
+        return this.mapPoints;
+    }
+
+
+    public void setMapPoints(List<LatLng> mapPoints) {
+        this.mapPoints = mapPoints;
+    }
+
+    public void drawLine(GoogleMap map) {
+        //line
+        map.addPolyline(new PolylineOptions().width(20).color(this.getColor()).zIndex(1).addAll(this.mapPoints));
+        //line border
+        map.addPolyline(new PolylineOptions().width(30).color(Color.BLACK).zIndex(0).addAll(this.mapPoints));
+    }
+
+    public void adjustStations(){
+        for(Station station: this.getStations()){
+            Location stationLocation = new Location("");
+            stationLocation.setLongitude(station.getLongitude());
+            stationLocation.setLatitude(station.getLatitue());
+            LatLng closestPoint = null;
+            float distance = 10000;
+            for(LatLng point: this.getMapPoints()){
+                Location testLocation = new Location("");
+                testLocation.setLatitude(point.latitude);
+                testLocation.setLongitude(point.longitude);
+                float testDistance = stationLocation.distanceTo(testLocation);
+                if(testDistance < distance){
+                    distance = testDistance;
+                    closestPoint = point;
+                }
+            }
+            station.setLongitude(closestPoint.longitude);
+            station.setLatitue(closestPoint.latitude);
+        }
     }
 }

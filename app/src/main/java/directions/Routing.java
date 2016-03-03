@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import mbta.Line;
+
 /**
  * Async Task to access the Google Direction API and return the routing data.
  */
@@ -28,7 +30,7 @@ public class Routing extends AbstractRouting {
         this.alternativeRoutes = builder.alternativeRoutes;
         this.language = builder.language;
         this.key = builder.key;
-        this.color = builder.color;
+        this.line = builder.line;
     }
 
     protected String constructURL () {
@@ -102,7 +104,7 @@ public class Routing extends AbstractRouting {
         private boolean optimize;
         private String language;
         private String key;
-        private int color;
+        private Line line;
 
         public Builder () {
             this.travelMode = TravelMode.DRIVING;
@@ -163,8 +165,8 @@ public class Routing extends AbstractRouting {
             return this;
         }
 
-        public Builder withColor(int color){
-            this.color = color;
+        public Builder withLine(Line line){
+            this.line = line;
             return this;
         }
 

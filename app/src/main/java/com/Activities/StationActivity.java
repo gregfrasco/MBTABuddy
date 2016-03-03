@@ -75,10 +75,9 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-
-        this.drawStations(this.station.getLines());
         this.drawTrainLines(this.station.getLines());
         this.addTrains(this.station.getLines(), station);
+        this.drawStations(this.station.getLines());
         this.zoomToStationMarker(station.getStationID(), 17);
     }
 
@@ -93,6 +92,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
 
     public void drawStations(List<Line> lines) {
         for(Line line: lines){
+            line.adjustStations();
             for(Station station : line.getStations()){
                 this.addStationMarker(station.getStationID(), station.getLatLan());
             }
@@ -106,14 +106,16 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     public void drawLine(Line line) {
-        Routing routing = new Routing.Builder()
-                .travelMode(AbstractRouting.TravelMode.TRANSIT)
-                .waypoints(line.getTerminalStation1().getLatLan(), line.getTerminalStation2().getLatLan())
-                .key("AIzaSyAuq6B6ktEChZCEfB-LbwyxshF44bWKItM")
-                .withListener(this)
-                .withColor(line.getColor())
-                .build();
-        routing.execute();
+        if(line.getMapPoints()== null) {
+            Routing routing = new Routing.Builder()
+                    .travelMode(AbstractRouting.TravelMode.TRANSIT)
+                    .waypoints(line.getTerminalStation1().getLatLan(), line.getTerminalStation2().getLatLan())
+                    .key("AIzaSyAuq6B6ktEChZCEfB-LbwyxshF44bWKItM")
+                    .withListener(this)
+                    .withLine(line)
+                    .build();
+            routing.execute();
+        }
     }
 
     @Override
@@ -127,15 +129,11 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     @Override
-    public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex, int color) {
+    public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex, Line line) {
         route.get(0).getPoints().remove(0);
         route.get(0).getPoints().remove(route.get(0).getPoints().size() - 1);
-        //line
-        this.map.addPolyline(new PolylineOptions()
-                .width(20).color(color).zIndex(1).addAll(route.get(0).getPoints()));
-        //line border
-        this.map.addPolyline(new PolylineOptions()
-                .width(30).color(Color.BLACK).zIndex(0).addAll(route.get(0).getPoints()));
+        line.setMapPoints(route.get(0).getPoints());
+        line.drawLine(this.map);
     }
 
     @Override
@@ -149,7 +147,6 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
                         .title(stationName)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_station))
         );
-
         StationMarker newsm = new StationMarker(stationName, newMarker);
         stationMarkers.add(newsm);
     }
@@ -191,7 +188,6 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
                 return train;
             }
         }
-
         return null;
     }
 

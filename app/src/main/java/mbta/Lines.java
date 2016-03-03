@@ -1,5 +1,7 @@
 package mbta;
 
+import java.util.HashMap;
+
 import mbta.mbtaAPI.MBTARoutes;
 
 /**
@@ -39,6 +41,22 @@ public enum Lines {
                 return  "Mattapan Line";
             default:
                 return "";
+        }
+    }
+
+    private static HashMap<Lines,Line> lines;
+
+    public static Line getLine(Lines line){
+        if(lines == null){
+            initLines();
+        }
+        return lines.get(line);
+    }
+
+    private static void initLines() {
+        lines = new HashMap<Lines, Line>();
+        for(Lines line: Lines.values()){
+            lines.put(line,new Line(line));
         }
     }
 }

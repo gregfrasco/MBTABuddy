@@ -87,9 +87,6 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
                 startActivity(searchIntent);
             }
         });
-
-
-
         return retView;
     }
 
@@ -121,7 +118,6 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         mapManager.SetMap(mMap);
         //Set up gpsManager with context
         gpsManager = GPSManager.getInstance();
-
         //Get the location manager service
         locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
 
@@ -131,18 +127,15 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                     PermissionConstants.LOCATION_TrackerFragment.getValue());
-        }
-        else
-        {
+        } else {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, gpsManager);
             gpsManager.InitLocationManager(getActivity(), locationManager);
             Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
         }
 
-        //Test Code
-        mapManager.addTrainMarker("1234", new LatLng(42.3394899, -71.087803), "Test Train", Lines.Blue_Line);
-        mapManager.zoomToTrainMarker("1234", 16);
+        mapManager.zoomToStationMarker("70246",15);
+
     }
 }
 

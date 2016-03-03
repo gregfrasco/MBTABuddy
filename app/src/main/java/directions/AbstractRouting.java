@@ -14,6 +14,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 
+import mbta.Line;
+
 
 public abstract class AbstractRouting extends AsyncTask<Void, Void, ArrayList<Route>> {
     protected ArrayList<RoutingListener> _aListeners;
@@ -22,7 +24,7 @@ public abstract class AbstractRouting extends AsyncTask<Void, Void, ArrayList<Ro
 
     /* Private member variable that will hold the RouteException instance created in the background thread */
     private RouteException mException = null;
-    public int color;
+    public Line line;
 
     public enum TravelMode {
         BIKING("bicycling"),
@@ -95,7 +97,7 @@ public abstract class AbstractRouting extends AsyncTask<Void, Void, ArrayList<Ro
 
     protected void dispatchOnSuccess(ArrayList<Route> route, int shortestRouteIndex) {
         for (RoutingListener mListener : _aListeners) {
-            mListener.onRoutingSuccess(route, shortestRouteIndex,this.color);
+            mListener.onRoutingSuccess(route, shortestRouteIndex,this.line);
         }
     }
 

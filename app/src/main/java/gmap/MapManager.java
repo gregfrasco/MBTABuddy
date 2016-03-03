@@ -76,6 +76,7 @@ public class MapManager implements RoutingListener{
         });
         this.drawAllTrainLines();
         this.drawAllStations();
+
     }
 
     public void ZoomToLocation(LatLng location, int zoomAmnt) {
@@ -193,9 +194,9 @@ public class MapManager implements RoutingListener{
     {
         //TODO: Make icon smaller
         Marker meMarker = map.addMarker(new MarkerOptions()
-            .position(location)
-            .title(title)
-            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_myloc))
+                        .position(location)
+                        .title(title)
+                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_myloc))
         );
         myMarker = meMarker;
     }
@@ -207,7 +208,7 @@ public class MapManager implements RoutingListener{
                 .waypoints(line.getTerminalStation1().getLatLan(), line.getTerminalStation2().getLatLan())
                 .key("AIzaSyAuq6B6ktEChZCEfB-LbwyxshF44bWKItM")
                 .withListener(this)
-                .withColor(line.getColor())
+                .withLine(line)
                 .build();
         routing.execute();
     }
@@ -223,16 +224,20 @@ public class MapManager implements RoutingListener{
     }
 
     @Override
-    public void onRoutingSuccess(ArrayList<directions.Route> route, int shortestRouteIndex,int color) {
+    public void onRoutingSuccess(ArrayList<directions.Route> route, int shortestRouteIndex,Line line) {
         route.get(0).getPoints().remove(0);
         route.get(0).getPoints().remove(route.get(0).getPoints().size() - 1);
-        //line
-        this.map.addPolyline(new PolylineOptions()
-                .width(20).color(color).zIndex(1).addAll(route.get(0).getPoints()));
-        //line border
-        this.map.addPolyline(new PolylineOptions()
-                .width(30).color(Color.BLACK).zIndex(0).addAll(route.get(0).getPoints()));
+        line.setMapPoints(route.get(0).getPoints());
+        line.drawLine(map);
+        //line.adjustStations(); //TODO ADD LATER
+        this.moveStations(line);
+    }
 
+    private void moveStations(Line line) {
+        for(Station station:line.getStations()){
+            StationMarker stationMarker = this.getStationMarker(station.getStationID());
+            stationMarker.move(station.getLatLan());
+        }
     }
 
     @Override
@@ -242,13 +247,13 @@ public class MapManager implements RoutingListener{
 
     public void drawAllTrainLines(){
         for(Lines lines: Lines.values()){
-            this.drawLine(new Line(lines));
+            this.drawLine(Lines.getLine(lines));
         }
     }
 
     public void drawAllStations(){
         for(Lines lines: Lines.values()){
-            Line line = new Line(lines);
+            Line line = Lines.getLine(lines);
             for(Station station : line.getStations()){
                 this.addStationMarker(station.getStationID(), station.getLatLan());
             }

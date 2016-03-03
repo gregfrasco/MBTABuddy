@@ -39,8 +39,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MBTA mbta = MBTA.getInstance();
-        Line redline = mbta.getLine(Lines.Red_Line);
 
         //Get handles on all of our drawer elements
         drawerMainLayout = (DrawerLayout) findViewById(R.id.mainLayout);
