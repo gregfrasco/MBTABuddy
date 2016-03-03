@@ -26,7 +26,7 @@ public class TrainInfoWindow implements GoogleMap.InfoWindowAdapter {
     TrainInfoWindow(Context context)
     {
         cont = context;
-        mapManager = MapManager.getInstance();
+        mapManager = new MapManager(context);
         LayoutInflater inf = (LayoutInflater)cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         window = inf.inflate(R.layout.train_info_window, null);
     }

@@ -49,7 +49,7 @@ public class GPSManager implements LocationListener {
     public void InitLocationManager(Context context, LocationManager _locationManager) {
         myContext = context;
         locationManager = _locationManager;
-        mapManager = MapManager.getInstance();
+        mapManager = new MapManager(myContext);
     }
 
     /*

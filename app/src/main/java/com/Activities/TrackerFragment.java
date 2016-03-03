@@ -60,8 +60,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         gDirections.Test();
 
         //Get our mapManager singleton and give it the context
-        mapManager = MapManager.getInstance();
-        mapManager.SetContext(getActivity());
+        mapManager = new MapManager(getActivity(),mMap);
 
         Button searchButton = (Button) retView.findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +114,9 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mapManager.SetMap(mMap);
+        mapManager.setMap(mMap);
+        mapManager.drawAllStations();
+        mapManager.drawAllTrainLines();
         //Set up gpsManager with context
         gpsManager = GPSManager.getInstance();
         //Get the location manager service
@@ -133,9 +134,6 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
             gpsManager.InitLocationManager(getActivity(), locationManager);
             Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
         }
-
-        mapManager.zoomToStationMarker("70246",15);
-
     }
 }
 

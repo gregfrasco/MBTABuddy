@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import directions.AbstractRouting;
 import directions.RouteException;
@@ -32,7 +33,7 @@ import mbta.mbtabuddy.R;
  * Created by cruzj6 on 2/10/2016.
  */
 public class MapManager implements RoutingListener{
-    static MapManager instance;
+
     private Context context;
     private GoogleMap map;
     private Marker myMarker;
@@ -41,17 +42,24 @@ public class MapManager implements RoutingListener{
     private List<TrainMarker> trainMarkers = new ArrayList<TrainMarker>();
     private List<StationMarker> stationMarkers = new ArrayList<StationMarker>();
 
-    public static MapManager getInstance() {
-        if (instance == null)
-            instance = new MapManager();
-        return instance;
+    public MapManager(){
+
+    }
+
+    public MapManager(Context context){
+        this.context = context;
+    }
+
+    public MapManager(Context context, GoogleMap map){
+        this.context = context;
+        this.map = map;
     }
 
     public void SetContext(Context con) {
         context = con;
     }
 
-    public void SetMap(GoogleMap map) {
+    public void setMap(GoogleMap map) {
         this.map = map;
         this.map.setInfoWindowAdapter(new TrainInfoWindow(context));
         this.map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -67,16 +75,13 @@ public class MapManager implements RoutingListener{
                 if (GetStationMarkerById(marker.getId()) != null) {
                     //...
                     Intent intent = new Intent(context, StationActivity.class);
-                    intent.putExtra("ID",marker.getTitle());
+                    intent.putExtra("ID", marker.getTitle());
                     context.startActivity(intent);
                 }
 
                 return true;//True overrides default behavior
             }
         });
-        this.drawAllTrainLines();
-        this.drawAllStations();
-
     }
 
     public void ZoomToLocation(LatLng location, int zoomAmnt) {
@@ -190,15 +195,16 @@ public class MapManager implements RoutingListener{
         }
     }
 
-    public void addMyLocationMarker(String title, LatLng location)
-    {
+    public void addMyLocationMarker(String title, LatLng location) {
         //TODO: Make icon smaller
-        Marker meMarker = map.addMarker(new MarkerOptions()
-                        .position(location)
-                        .title(title)
-                        .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_myloc))
-        );
-        myMarker = meMarker;
+        if(map != null) {
+            Marker meMarker = map.addMarker(new MarkerOptions()
+                            .position(location)
+                            .title(title)
+                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_myloc))
+            );
+            myMarker = meMarker;
+        }
     }
     //endregion
 
@@ -230,7 +236,7 @@ public class MapManager implements RoutingListener{
         line.setMapPoints(route.get(0).getPoints());
         line.drawLine(map);
         //line.adjustStations(); //TODO ADD LATER
-        this.moveStations(line);
+        //this.moveStations(line);
     }
 
     private void moveStations(Line line) {
@@ -273,4 +279,5 @@ public class MapManager implements RoutingListener{
             this.drawLine(line);
         }
     }
+
 }
