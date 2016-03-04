@@ -1,6 +1,5 @@
 package com.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -46,8 +45,7 @@ public class SearchActivity extends AppCompatActivity {
             searchBar.setText(searchString);
 
             //Perform the search and listView data
-           // PerformSearchAndList(searchString);
-            new SearchAsync(getBaseContext(), searchString).execute();
+            new SearchStationsAsync(getBaseContext(), searchString).execute();
         }
 
         //Set up search button
@@ -60,26 +58,24 @@ public class SearchActivity extends AppCompatActivity {
                 String searchTerms = searchBar.getText().toString();
 
                 //Perform the search
-                //PerformSearchAndList(searchTerms);
-                new SearchAsync(getBaseContext(), searchTerms).execute();
+                new SearchStationsAsync(getBaseContext(), searchTerms).execute();
             }
         });
     }
 
-    class SearchAsync extends AsyncTask<Void, Void, Void> {
+    class SearchStationsAsync extends AsyncTask<Void, Void, Void> {
 
         Context context;
         HashMap<String, String> matchStation;
         String searchString;
 
-        public SearchAsync(Context cont, String searchTerms){
+        public SearchStationsAsync(Context cont, String searchTerms){
             searchString = searchTerms;
             context = cont;
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-
             HashMap<String, String> results = new HashMap<>();
 
             //Search for the Input station
@@ -103,14 +99,15 @@ public class SearchActivity extends AppCompatActivity {
             ArrayList<String> matchStrings = new ArrayList<String>(matchStation.keySet());
 
             //Create the adapter with that list and give it to the ListView as adapter
-            ArrayAdapter<String> matches =
-                    new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, matchStrings);
+            SearchResultListItemAdapter matches =
+                    new SearchResultListItemAdapter(context, R.layout.search_item_station, matchStrings, matchStation);
 
             stationList.setAdapter(matches);
 
             //When user clicks a station on the results list, we open the StationActivity
             //with that station
             stationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String stationName = parent.getItemAtPosition(position).toString();

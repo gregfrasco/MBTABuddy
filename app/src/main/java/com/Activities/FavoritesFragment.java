@@ -154,7 +154,9 @@ public class FavoritesFragment extends Fragment {
         addItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                //TODO: need a view
+                //Start search activity for adding favorites
+                Intent searchIntent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(searchIntent);
 
                 return false;
             }
