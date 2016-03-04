@@ -68,23 +68,13 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Get the search string
                 EditText searchBox = (EditText) getActivity().findViewById(R.id.destSearch);
                 String searchString = searchBox.getText().toString();
 
-                HashMap<String, String> matches = new HashMap<String, String>();
-
-                for (Lines lines : Lines.values()) {
-                    Line line = new Line(lines);
-                    for (Station station : line.getStations()) {
-                        if (station.getStationName().toLowerCase().contains(searchString.toLowerCase())) {
-                            //Add to the list
-                            matches.put(station.getStationName(), station.getStationID());
-                        }
-                    }
-                }
-
+                //Send it to search activity
                 Intent searchIntent = new Intent(getActivity(), SearchActivity.class);
-                searchIntent.putExtra("matches", matches);
+                searchIntent.putExtra("searchString", searchString);
                 startActivity(searchIntent);
             }
         });

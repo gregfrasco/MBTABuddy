@@ -20,5 +20,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="remove_menu_favorites">Remove Favorites</string>
     <string name="add_menu_favorites">Add Favorite</string>
+    <string name="search_text">Search</string>
 
 </resources>

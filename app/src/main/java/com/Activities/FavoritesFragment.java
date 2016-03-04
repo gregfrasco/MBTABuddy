@@ -133,6 +133,8 @@ public class FavoritesFragment extends Fragment {
     {
         inflater.inflate(R.menu.favorites_menu, menu);
         MenuItem removeItem = menu.findItem(R.id.action_remove);
+
+        //Remove item mode toggle
         removeItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -143,6 +145,17 @@ public class FavoritesFragment extends Fragment {
                 {
                     favList.getChildAt(i).findViewById(R.id.UnfavoriteBtn).setVisibility(View.VISIBLE);
                 }
+                return false;
+            }
+        });
+
+        //Add item menu button
+        MenuItem addItem = menu.findItem(R.id.action_add);
+        addItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                //TODO: need a view
+
                 return false;
             }
         });
