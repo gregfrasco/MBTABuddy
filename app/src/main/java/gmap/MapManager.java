@@ -63,7 +63,7 @@ public class MapManager implements RoutingListener{
 
     public void setMap(GoogleMap map) {
         this.map = map;
-        this.map.setInfoWindowAdapter(new TrainInfoWindow(context));
+        this.map.setInfoWindowAdapter(new TrainInfoWindow(context, this));
         this.map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {

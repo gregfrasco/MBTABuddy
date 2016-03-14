@@ -83,6 +83,7 @@ public class FavoritesFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
+        //Get our favorites from the database
         favs = (List<FavoritesDataContainer>)
                 dataManager.LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);
     }
@@ -134,17 +135,48 @@ public class FavoritesFragment extends Fragment {
         inflater.inflate(R.menu.favorites_menu, menu);
         MenuItem removeItem = menu.findItem(R.id.action_remove);
 
-        //Remove item mode toggle
+        //Remove item mode toggle for removing favorites
         removeItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 ListView favList =  (ListView) getView().findViewById(R.id.favoritesList);
 
-                //Enable the Remove button and the End Remove Button
-                for(int  i = 0; i < favList.getChildCount(); i++)
-                {
-                    favList.getChildAt(i).findViewById(R.id.UnfavoriteBtn).setVisibility(View.VISIBLE);
+                //If no favorites do nothing
+                if(favList.getCount() <= 0 )
+                    return false;
+
+                try {
+                    //if there are favorites
+                    switch (favList.getChildAt(0).findViewById(R.id.UnfavoriteBtn).getVisibility()) {
+                        case View.VISIBLE:
+                            //Set our menu button title
+                            item.setTitle(getString(R.string.remove_menu_favorites));
+
+                            //Disable the Remove button
+                            for (int i = 0; i < favList.getChildCount(); i++) {
+                                favList.getChildAt(i).findViewById(R.id.UnfavoriteBtn).setVisibility(View.INVISIBLE);
+                            }
+                            break;
+
+                        case View.INVISIBLE:
+                            //Set title to be "done removing"
+                            item.setTitle(getString(R.string.done_remove_menu_favorites));
+
+                            //Enable the Remove button and the End Remove Button
+                            for (int i = 0; i < favList.getChildCount(); i++) {
+                                favList.getChildAt(i).findViewById(R.id.UnfavoriteBtn).setVisibility(View.VISIBLE);
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
+                catch(Exception e)
+                {
+                    Log.e("FavoritesFragment", "Error in processing menu Item click: " + e.getMessage());
+                }
+
                 return false;
             }
         });
