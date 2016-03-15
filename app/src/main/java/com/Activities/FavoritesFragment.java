@@ -44,6 +44,7 @@ public class FavoritesFragment extends Fragment {
     private String mParam2;
     private DataStorageManager dataManager;
     private List<FavoritesDataContainer> favs;
+    private FavoritesItemsAdapter favAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -99,8 +100,7 @@ public class FavoritesFragment extends Fragment {
             ListView favoritesList = (ListView) view.findViewById(R.id.favoritesList);
 
             //Finally set up adapter and ListView
-            FavoritesItemsAdapter favAdapter =
-                    new FavoritesItemsAdapter(getActivity(), android.R.layout.simple_list_item_1, favs);
+            favAdapter = new FavoritesItemsAdapter(getActivity(), android.R.layout.simple_list_item_1, favs);
             favoritesList.setAdapter(favAdapter);
 
             //Set up on click listeners
@@ -152,6 +152,8 @@ public class FavoritesFragment extends Fragment {
                             //Set our menu button title
                             item.setTitle(getString(R.string.remove_menu_favorites));
 
+                            favAdapter.setIsRemoving(false);
+
                             //Disable the Remove button
                             for (int i = 0; i < favList.getChildCount(); i++) {
                                 favList.getChildAt(i).findViewById(R.id.UnfavoriteBtn).setVisibility(View.INVISIBLE);
@@ -161,6 +163,8 @@ public class FavoritesFragment extends Fragment {
                         case View.INVISIBLE:
                             //Set title to be "done removing"
                             item.setTitle(getString(R.string.done_remove_menu_favorites));
+
+                            favAdapter.setIsRemoving(true);
 
                             //Enable the Remove button and the End Remove Button
                             for (int i = 0; i < favList.getChildCount(); i++) {

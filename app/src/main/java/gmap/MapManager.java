@@ -140,6 +140,17 @@ public class MapManager implements RoutingListener{
         trainMarkers.add(newtm);
     }
 
+    public void addTrainMarker(String vehicleNum, LatLng location, String title, Lines line, String statId){
+        Marker newMarker = map.addMarker(new MarkerOptions()
+                        .position(location)
+                        .title(title)
+        );
+        TrainMarker newtm = new TrainMarker(line, newMarker, vehicleNum);
+        newtm.SetSetStationId(statId);
+        trainMarkers.add(newtm);
+    }
+
+
     //endregion
 
     //region StationMarkers
@@ -290,7 +301,7 @@ public class MapManager implements RoutingListener{
             line = Lines.getLine(line.getLines());
             for (Vehicle vehicle : MBTA.getInstance().getVehiclesByRoute(line)) {
                 line.adjustVehicles(vehicle);
-                this.addTrainMarker(vehicle.getVehicleId(), vehicle.getLatLng(), "TESTING", line.getLines());
+                this.addTrainMarker(vehicle.getVehicleId(), vehicle.getLatLng(), "TESTING", line.getLines(), station.getStationID());
             }
         }
     }

@@ -21,6 +21,7 @@ import mbta.mbtabuddy.R;
  */
 public class FavoritesItemsAdapter extends ArrayAdapter<FavoritesDataContainer> {
 
+    private Boolean isRemoving = false;
     private Context cont;
 
     public FavoritesItemsAdapter(Context context, int resource, List<FavoritesDataContainer> objects) {
@@ -39,6 +40,7 @@ public class FavoritesItemsAdapter extends ArrayAdapter<FavoritesDataContainer> 
         TextView theText = (TextView) view.findViewById(R.id.Favorite_Name);
         theText.setText(getItem(position).favName);
 
+        //Set up the button for removing this item as a favorite
         ImageButton RemoveFavButton = (ImageButton) view.findViewById(R.id.UnfavoriteBtn);
         RemoveFavButton.setOnClickListener(new View.OnClickListener() {
 
@@ -48,7 +50,18 @@ public class FavoritesItemsAdapter extends ArrayAdapter<FavoritesDataContainer> 
                 remove(getItem(position));
             }
         });
+
+        //The view is refreshed when an item is removed, need to cache the state
+        if(isRemoving)
+        {
+            RemoveFavButton.setVisibility(View.VISIBLE);
+        }
         return view;
+    }
+
+    public void setIsRemoving(Boolean IsRemoving)
+    {
+        isRemoving = IsRemoving;
     }
 
 }

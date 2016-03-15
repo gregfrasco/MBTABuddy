@@ -17,6 +17,7 @@ public class TrainMarker
     private Marker mapMarker;
     private Lines trainRoute;
     private String vehicleNum;
+    private String setStationId;
 
     public TrainMarker(Lines lines, Marker marker, String VehicleNum)
     {
@@ -24,14 +25,30 @@ public class TrainMarker
         mapMarker = marker;
         trainRoute = lines;
 
+
         //Get out bitmapDescriptor (icon bmp) based on the color of the train
         BitmapDescriptor bmp = GetIcon();
         marker.setIcon(bmp);
     }
 
+    public void SetSetStationId(String statId)
+    {
+        setStationId = statId;
+    }
+
+    public String GetSetStationId()
+    {
+        return setStationId;
+    }
+
     public String GetVehicleNum()
     {
         return vehicleNum;
+    }
+
+    public Lines GetLines()
+    {
+        return trainRoute;
     }
 
     public Marker GetMarker()

@@ -5,6 +5,8 @@ import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 @Generated("org.jsonschema2pojo")
 public class Trip {
 
@@ -32,8 +34,21 @@ public class Trip {
     @SerializedName("vehicle")
     @Expose
     private Vehicle vehicle;
+    @SerializedName("stop")
+    @Expose
+    private List<Stop> stop;
 
 
+
+    public void setStop(List<Stop> _stop)
+    {
+        stop = stop;
+    }
+
+    public List<Stop> getStop()
+    {
+        return stop;
+    }
     /**
      *
      * @return

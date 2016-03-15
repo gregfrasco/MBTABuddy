@@ -42,6 +42,49 @@ public class Stop {
     @SerializedName("stop_sequence")
     @Expose
     private String stopSequence;
+    @SerializedName("pre_dt")
+    @Expose
+    private String preDt;
+    @SerializedName("pre_away")
+    @Expose
+    private String preAway;
+
+    /**
+     *
+     * @return
+     * The preDt
+     */
+    public String getPreDt() {
+        return preDt;
+    }
+
+    /**
+     *
+     * @param preDt
+     * The pre_dt
+     */
+    public void setPreDt(String preDt) {
+        this.preDt = preDt;
+    }
+
+    /**
+     *
+     * @return
+     * The preAway
+     */
+    public String getPreAway() {
+        return preAway;
+    }
+
+    /**
+     *
+     * @param preAway
+     * The pre_away
+     */
+    public void setPreAway(String preAway) {
+        this.preAway = preAway;
+    }
+
 
     /**
      * @return The stopOrder

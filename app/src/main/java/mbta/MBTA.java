@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -129,7 +130,12 @@ public class MBTA{
                     URL url = new URL(query);
                     is = url.openStream();  // throws an IOException
                     BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                    MBTA.this.results = br.readLine();
+                    MBTA.this.results = "";
+                    String readLine;
+                    while((readLine = br.readLine()) != null)
+                    {
+                        MBTA.this.results += readLine;
+                    }
                 } catch (MalformedURLException mue) {
                     mue.printStackTrace();
                 } catch (IOException ioe) {
@@ -213,8 +219,49 @@ public class MBTA{
         return trips;
     }
 
+    public VehiclesByRoute GetVehiclesByRouteItem(String routeId)
+    {
+        String apiResult = run(mbtaAPI + "vehiclesbyroute" + apiKey + "&route=" + routeId + format);
+        Gson gson = new Gson();
+        VehiclesByRoute vehiclesByRoute = gson.fromJson(apiResult, VehiclesByRoute.class);
+        return vehiclesByRoute;
+    }
+
+    public HashMap<String, String> getRemTime(String routeID, String VehicleId, String stopId)
+    {
+       /* String apiResult = run(mbtaAPI + "routesbystop" + apiKey + "&stop="+ stationName + format);
+        Gson gson = new Gson();
+        RoutesByStop routesByStop = gson.fromJson(apiResult, RoutesByStop.class);*/
+        HashMap<String, String> remTimeForTripId = new HashMap<>();
+
+        String apiResult = run(mbtaAPI + "predictionsbystop" + apiKey + "&stop=" + stopId + format);
+        Gson gson = new Gson();
+        PredictionsByStop routesByStop = gson.fromJson(apiResult, PredictionsByStop.class);
+
+        for(Mode mode : routesByStop.getMode())
+        {
+            for(Route route : mode.getRoute())
+            {
+                for(Direction direction : route.getDirection())
+                {
+                    for(Trip trip : direction.getTrip()) {
+                        Vehicle vehicle = trip.getVehicle();
+                        if(vehicle != null) {
+                            if (vehicle.getVehicleId().equals(VehicleId))
+                            {
+                                Log.v("MBTA", trip.getPreAway());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return remTimeForTripId;
+    }
+
     public String[] getPredictionsByStop(Station station){
-        String apiResult = run(mbtaAPI + "predictionsbystop" + apiKey + "&stop="+ station.getStationID() + format);
+        String apiResult = run(mbtaAPI + "predictionsbystop" + apiKey + "&stop=" + station.getStationID() + format);
         Gson gson = new Gson();
         PredictionsByStop predictionsByStop = gson.fromJson(apiResult, PredictionsByStop.class);
         List<String> times = new ArrayList<String>();
