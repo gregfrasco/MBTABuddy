@@ -10,16 +10,37 @@ import java.util.List;
  */
 public class Lines {
 
-    public static Line RedLine = new Line("Red", Color.RED);
-    public static Line OrangeLine = new Line("Orange", Color.rgb(255,140,0));
-    public static Line GreenLineB = new Line("Green-B", Color.GREEN);
-    public static Line GreenLineC = new Line("Green-C", Color.GREEN);
-    public static Line GreenLineD = new Line("Green-D", Color.GREEN);
-    public static Line GreenLineE = new Line("Green-E", Color.GREEN);
-    public static Line BlueLine = new Line("Blue", Color.BLUE);
-    public static Line MattapanLine = new Line("Mattapan", Color.RED);
+    private static Lines instance;
+    //Lines
+    public final Line RedLine;
+    public final Line OrangeLine;
+    public final Line GreenLineB;
+    public final Line GreenLineC;
+    public final Line GreenLineD;
+    public final Line GreenLineE;
+    public final Line BlueLine;
+    public final Line MattapanLine;
 
-    public static List<Line> values() {
+    public Lines() {
+        this.RedLine       = new Line("Red", Color.RED);
+        this.OrangeLine    = new Line("Orange", Color.rgb(255,140,0));
+        this.GreenLineB    = new Line("Green-B", Color.GREEN);
+        this.GreenLineC    = new Line("Green-C", Color.GREEN);
+        this.GreenLineD    = new Line("Green-D", Color.GREEN);
+        this.GreenLineE    = new Line("Green-E", Color.GREEN);
+        this.BlueLine      = new Line("Blue", Color.BLUE);
+        this.MattapanLine  = new Line("Mattapan", Color.RED);
+    }
+
+    public static Lines getInstance(){
+        if(instance == null){
+            instance = new Lines();
+        }
+        return instance;
+    }
+
+    public List<Line> values() {
+        new Lines();
         List<Line> lines = new ArrayList<Line>();
         lines.add(RedLine);
         lines.add(OrangeLine);
@@ -30,5 +51,14 @@ public class Lines {
         lines.add(BlueLine);
         lines.add(MattapanLine);
         return lines;
+    }
+
+    public Line getLine(String routeId) {
+        for(Line line: this.values()){
+            if(line.getLineID().equals(routeId)){
+                return line;
+            }
+        }
+        return null;
     }
 }

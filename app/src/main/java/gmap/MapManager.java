@@ -260,13 +260,13 @@ public class MapManager implements RoutingListener{
     }
 
     public void drawAllTrainLines(){
-        for(Line line: Lines.values()){
+        for(Line line: Lines.getInstance().values()){
             this.drawLine(line);
         }
     }
 
     public void drawAllStations(){
-        for(Line line: Lines.values()){
+        for(Line line: Lines.getInstance().values()){
             this.drawStations(line);
         }
     }

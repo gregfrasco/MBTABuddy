@@ -16,6 +16,7 @@ public class Station {
 
     private List<Line> lines;
     private String stationID;
+    private List<String> stopIDs;
     private String stationName;
     private double latitue;
     private double longitude;
@@ -23,12 +24,9 @@ public class Station {
 
     public Station(Stop stop) {
         this.setStationID(stop.getStopId());
-        this.setStationName(stop.getStopName());
+        this.setStationName(stop.getParentStationName());
         this.setLatitue(Double.parseDouble(stop.getStopLat()));
         this.setLongitude(Double.parseDouble(stop.getStopLon()));
-    }
-
-    public Station() {
     }
 
     public List<Line> getLine() {
@@ -82,11 +80,11 @@ public class Station {
         return new LatLng(this.getLatitue(),this.getLongitude());
     }
 
-    private void setStation(Station station) {
-        this.setArrivalTimes(station.getArrivalTimes());
-        this.setLatitue(station.getLatitue());
-        this.setLongitude(station.getLongitude());
-        this.setStationID(station.getStationID());
-        this.setStationName(station.getStationName());
+    public List<String> getStopIDs() {
+        if(stopIDs == null) {
+            this.stopIDs = new ArrayList<String>();
+            this.stopIDs = MBTA.getInstance().getAllStops(this, this.getLine());
+        }
+        return stopIDs;
     }
 }

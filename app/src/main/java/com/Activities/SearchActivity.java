@@ -79,7 +79,7 @@ public class SearchActivity extends AppCompatActivity {
             HashMap<String, String> results = new HashMap<>();
 
             //Search for the Input station
-            for (Line line : Lines.values()) {
+            for (Line line : Lines.getInstance().values()) {
                 for (Station station : line.getStations()) {
                     if (station.getStationName().toLowerCase().contains(searchString.toLowerCase())) {
                         //Add to the map
@@ -111,7 +111,7 @@ public class SearchActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String stationName = parent.getItemAtPosition(position).toString();
                     String stationId = matchStation.get(stationName);
-                    for (Line line : Lines.values()) {
+                    for (Line line : Lines.getInstance().values()) {
                         for (Station station : line.getStations()) {
                             if (station.getStationID().equals(stationId)) {
                                 Intent intent = new Intent(SearchActivity.this, StationActivity.class);

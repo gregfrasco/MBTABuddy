@@ -123,7 +123,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
             Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
         }
         mapManager.drawAllStations();
-        Station station = Lines.GreenLineE.getStations().get(0);
+        Station station = Lines.getInstance().GreenLineE.getStations().get(0);
         mapManager.zoomToStationMarker(station.getStationID(),18);
     }
 

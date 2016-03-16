@@ -38,18 +38,20 @@
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:textAppearance="?android:attr/textAppearanceLarge"
-                     android:text="Large Text"
+                     android:text=""
                      android:id="@+id/station1"
-                     android:textColor="#f49827" />
+                     android:textColor="#f49827"
+                     android:typeface="monospace" />
 
                  <TextView
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
                      android:textAppearance="?android:attr/textAppearanceLarge"
-                     android:text="Large Text"
+                     android:text=""
                      android:id="@+id/station1min"
                      android:gravity="right"
-                     android:textColor="#f49827"/>
+                     android:textColor="#f49827"
+                     android:typeface="monospace" />
              </LinearLayout>
 
              <LinearLayout
@@ -61,33 +63,65 @@
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:textAppearance="?android:attr/textAppearanceLarge"
-                     android:text="Large Text"
+                     android:text=""
                      android:id="@+id/station2"
-                     android:textColor="#f49827"/>
+                     android:textColor="#f49827"
+                     android:typeface="monospace" />
 
                  <TextView
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
                      android:textAppearance="?android:attr/textAppearanceLarge"
-                     android:text="Large Text"
+                     android:text=""
                      android:id="@+id/station2min"
                      android:gravity="right"
-                     android:textColor="#f49827"/>
+                     android:textColor="#f49827"
+                     android:typeface="monospace" />
              </LinearLayout>
          </LinearLayout>
 
-     <ImageButton
-         android:layout_width="70dp"
-         android:layout_height="70dp"
-         android:text="Favorite Station"
-         android:id="@+id/favoriteButton"
-         android:onClick="addFavoriteStation"
-         android:src="@drawable/ic_star_24dp"
+     <LinearLayout
+         android:orientation="vertical"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_weight="1"
          android:layout_alignParentBottom="false"
-         android:layout_alignParentEnd="true"
-         android:layout_alignParentTop="true"
-         android:layout_alignParentStart="false" />
+         android:id="@+id/stationHeader"
+         android:layout_alignParentTop="true">
 
+         <LinearLayout
+             android:orientation="horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+             <TextView
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:textAppearance="?android:attr/textAppearanceLarge"
+                 android:text="Station Name"
+                 android:id="@+id/stationName"
+                 android:textAlignment="center"
+                 android:layout_marginTop="10dp"
+                 android:textColor="#ffffff"
+                 android:typeface="monospace"
+                 android:textSize="25dp" />
+
+         </LinearLayout>
+
+         <ImageButton
+             android:layout_width="70dp"
+             android:layout_height="70dp"
+             android:text="Favorite Station"
+             android:id="@+id/favoriteButton"
+             android:onClick="addFavoriteStation"
+             android:src="@drawable/ic_star_24dp"
+             android:layout_alignParentBottom="false"
+             android:layout_alignParentEnd="true"
+             android:layout_alignParentTop="true"
+             android:layout_alignParentStart="false"
+             android:layout_gravity="right" />
+
+     </LinearLayout>
 
 
  </RelativeLayout>

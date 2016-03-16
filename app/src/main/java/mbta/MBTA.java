@@ -59,7 +59,7 @@ public class MBTA{
     }
 
     public Line getLine(String lines){
-        for (Line line:Lines.values()){
+        for (Line line:Lines.getInstance().values()){
             if(line.getLineID().equals(lines)){
                 return line;
             }
@@ -179,7 +179,11 @@ public class MBTA{
         String apiResult = run(mbtaAPI + "routesbystop" + apiKey + "&stop="+ stationID + format);
         Gson gson = new Gson();
         RoutesByStop routesByStop = gson.fromJson(apiResult, RoutesByStop.class);
-        return routesByStop.getLines(stationName);
+        List<Line> lines = new ArrayList<Line>();
+        for(Route route: routesByStop.getRoutes()){
+            lines.add(this.getLine(route.getRouteId()));
+        }
+        return lines;
     }
 
     public List<Trip> getScheduleByStop(Station station) {
@@ -260,34 +264,23 @@ public class MBTA{
         return remTimeForTripId;
     }
 
-    public String[] getPredictionsByStop(Station station){
-        String apiResult = run(mbtaAPI + "predictionsbystop" + apiKey + "&stop=" + station.getStationID() + format);
+    public List<String> getPredictionsByStop(String stopID){
+        String apiResult = run(mbtaAPI + "predictionsbystop" + apiKey + "&stop=" + stopID + format);
         Gson gson = new Gson();
         PredictionsByStop predictionsByStop = gson.fromJson(apiResult, PredictionsByStop.class);
         List<String> times = new ArrayList<String>();
-        for(Mode mode: predictionsByStop.getMode()){
-            for(Route route: mode.getRoute()){
-                for(Direction direction: route.getDirection()){
-                    for(Trip trip: direction.getTrip()){
-                        times.add(trip.getPreAway());
-                    }
-                }
-            }
+        List<Trip> trips = predictionsByStop.getMode().get(0).getRoute().get(0).getDirection().get(0).getTrip();
+        for(Trip trip: trips){
+            times.add(trip.getPreAway());
         }
-        String[] strings = new String[times.size()];
-        return times.toArray(strings);
+        return times;
     }
 
-    //TODO Return Something
-    private void getPredictionsByRoute(Route route){
-        String apiResult = run(mbtaAPI + "predictionsbyroute" + apiKey + "&route="+ route.getRouteId() + format);
+    private PredictionsByRoute getPredictionsByRoute(String lineID){
+        String apiResult = run(mbtaAPI + "predictionsbyroute" + apiKey + "&route="+ lineID + format);
         Gson gson = new Gson();
-        PredictionsByRoute predictionsByRoute = gson.fromJson(apiResult, PredictionsByRoute.class);
-        for(Direction direction: predictionsByRoute.getDirection()){
-            for(Trip trip: direction.getTrip()){
-                Log.v("MBTA", trip + " mph " + trip.getPreAway());
-            }
-        }
+        return gson.fromJson(apiResult, PredictionsByRoute.class);
+
     }
 
     public List<Vehicle> getVehiclesByRoute(Route route){
@@ -346,7 +339,7 @@ public class MBTA{
     }
 
     public Station getStopByID(String stationID) {
-        for(Line line : Lines.values()){
+        for(Line line : Lines.getInstance().values()){
             for(Station station:line.getStations()){
                 if(station.getStationID().equals(stationID)){
                     return station;
@@ -354,5 +347,17 @@ public class MBTA{
             }
         }
         return null;
+    }
+
+    public List<String> getAllStops(Station station, List<Line> lines) {
+        List<String> stopIDs = new ArrayList<String>();
+        for(Line line:lines){
+            for(Stop stop:this.getStopsByRoute(line)){
+                if(station.getStationName().equals(stop.getParentStationName())){
+                    stopIDs.add(stop.getStopId());
+                }
+            }
+        }
+        return stopIDs;
     }
 }
