@@ -1,6 +1,7 @@
 package mbta;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,50 +16,24 @@ public class Station {
 
     private List<Line> lines;
     private String stationID;
+    private List<String> stopIDs;
     private String stationName;
     private double latitue;
     private double longitude;
     private ArrivalTime arrivalTimes;
 
     public Station(Stop stop) {
-        this(stop,null);
-    }
-
-    public Station(Stop stop,Line line) {
         this.setStationID(stop.getStopId());
-        this.setStationName(stop.getStopName());
+        this.setStationName(stop.getParentStationName());
         this.setLatitue(Double.parseDouble(stop.getStopLat()));
         this.setLongitude(Double.parseDouble(stop.getStopLon()));
-        this.lines = new ArrayList<Line>();
-        this.lines.add(line);
-    }
-
-    public Station(String stationID) {
-        MBTA mbta = MBTA.getInstance();
-        Station s = new Station();
-        s.setStationID(stationID);
-        List<Route> routes = mbta.getRoutesByStop(s);
-        this.lines = new ArrayList<Line>();
-        for(Route route: routes){
-            this.lines.add(new Line(route));
-        }
-        for(Station station: lines.get(0).getStations()){
-            if(station.getStationID().equals(stationID)){
-                this.setStation(station);
-                break;
-            }
-        }
-    }
-
-    public Station() {
     }
 
     public List<Line> getLine() {
+        if(lines == null) {
+            this.lines = MBTA.getInstance().getRoutesByStop(this.stationID,this.stationName);
+        }
         return lines;
-    }
-
-    public List<Line> getLines(){
-        return MBTA.getInstance().getRoutesByStop(this.stationID,this.stationName);
     }
 
     public String getStationID() {
@@ -105,11 +80,11 @@ public class Station {
         return new LatLng(this.getLatitue(),this.getLongitude());
     }
 
-    private void setStation(Station station) {
-        this.setArrivalTimes(station.getArrivalTimes());
-        this.setLatitue(station.getLatitue());
-        this.setLongitude(station.getLongitude());
-        this.setStationID(station.getStationID());
-        this.setStationName(station.getStationName());
+    public List<String> getStopIDs() {
+        if(stopIDs == null) {
+            this.stopIDs = new ArrayList<String>();
+            this.stopIDs = MBTA.getInstance().getAllStops(this, this.getLine());
+        }
+        return stopIDs;
     }
 }

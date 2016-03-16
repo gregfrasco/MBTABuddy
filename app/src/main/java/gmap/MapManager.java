@@ -131,7 +131,7 @@ public class MapManager implements RoutingListener{
     }
 
     //Add a train to the map
-    public void addTrainMarker(String vehicleNum, LatLng location, String title, Lines line) {
+    public void addTrainMarker(String vehicleNum, LatLng location, String title, Line line) {
         Marker newMarker = map.addMarker(new MarkerOptions()
                         .position(location)
                         .title(title)
@@ -140,7 +140,7 @@ public class MapManager implements RoutingListener{
         trainMarkers.add(newtm);
     }
 
-    public void addTrainMarker(String vehicleNum, LatLng location, String title, Lines line, String statId){
+    public void addTrainMarker(String vehicleNum, LatLng location, String title, Line line, String statId){
         Marker newMarker = map.addMarker(new MarkerOptions()
                         .position(location)
                         .title(title)
@@ -214,14 +214,18 @@ public class MapManager implements RoutingListener{
     //endregion
 
     public void drawLine(Line line) {
-        Routing routing = new Routing.Builder()
-                .travelMode(AbstractRouting.TravelMode.TRANSIT)
-                .waypoints(line.getTerminalStation1().getLatLan(), line.getTerminalStation2().getLatLan())
-                .key("AIzaSyAuq6B6ktEChZCEfB-LbwyxshF44bWKItM")
-                .withListener(this)
-                .withLine(line)
-                .build();
-        routing.execute();
+        if(line.getMapPoints() == null) {
+            Routing routing = new Routing.Builder()
+                    .travelMode(AbstractRouting.TravelMode.TRANSIT)
+                    .waypoints(line.getTerminalStation1().getLatLan(), line.getTerminalStation2().getLatLan())
+                    .key("AIzaSyAuq6B6ktEChZCEfB-LbwyxshF44bWKItM")
+                    .withListener(this)
+                    .withLine(line)
+                    .build();
+            routing.execute();
+        } else {
+            line.drawLine(map);
+        }
     }
 
     @Override
@@ -238,10 +242,9 @@ public class MapManager implements RoutingListener{
     public void onRoutingSuccess(ArrayList<directions.Route> route, int shortestRouteIndex,Line line) {
         route.get(0).getPoints().remove(0);
         route.get(0).getPoints().remove(route.get(0).getPoints().size() - 1);
-        Lines.getLine(line.getLines()).setMapPoints(route.get(0).getPoints());
-        Lines.getLine(line.getLines()).drawLine(map);
-        //line.adjustStations(); //TODO ADD LATER
-        //this.moveStations(line);
+        line.setMapPoints(route.get(0).getPoints());
+        line.drawLine(map);
+        line.adjustStations();
     }
 
     private void moveStations(Line line) {
@@ -257,17 +260,20 @@ public class MapManager implements RoutingListener{
     }
 
     public void drawAllTrainLines(){
-        for(Lines lines: Lines.values()){
-            this.drawLine(Lines.getLine(lines));
+        for(Line line: Lines.getInstance().values()){
+            this.drawLine(line);
         }
     }
 
     public void drawAllStations(){
-        for(Lines lines: Lines.values()){
-            Line line = Lines.getLine(lines);
-            for(Station station : line.getStations()){
-                this.addStationMarker(station.getStationID(), station.getLatLan());
-            }
+        for(Line line: Lines.getInstance().values()){
+            this.drawStations(line);
+        }
+    }
+
+    private void drawStations(Line line) {
+        for(Station station : line.getStations()){
+            this.addStationMarker(station.getStationID(), station.getLatLan());
         }
     }
 
@@ -287,7 +293,6 @@ public class MapManager implements RoutingListener{
 
     public void drawAdjustedStations(List<Line> lines) {
         for(Line line: lines){
-            line = Lines.getLine(line.getLines());
             line.adjustStations();
             for(Station station : line.getStations()){
                 this.addStationMarker(station.getStationID(), station.getLatLan());
@@ -295,13 +300,19 @@ public class MapManager implements RoutingListener{
         }
     }
 
+    public void drawAdjustedStations(Line line) {
+        line.adjustStations();
+        for(Station station : line.getStations()){
+            this.addStationMarker(station.getStationID(), station.getLatLan());
+        }
+    }
+
     public void addTrains(List<Line> lines, Station station) {
         MBTA mbta = MBTA.getInstance();
         for(Line line: lines) {
-            line = Lines.getLine(line.getLines());
             for (Vehicle vehicle : MBTA.getInstance().getVehiclesByRoute(line)) {
                 line.adjustVehicles(vehicle);
-                this.addTrainMarker(vehicle.getVehicleId(), vehicle.getLatLng(), "TESTING", line.getLines(), station.getStationID());
+                this.addTrainMarker(vehicle.getVehicleId(), vehicle.getLatLng(), "TESTING", line, station.getStationID());
             }
         }
     }

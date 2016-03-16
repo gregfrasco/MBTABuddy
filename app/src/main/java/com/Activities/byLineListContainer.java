@@ -1,5 +1,6 @@
 package com.Activities;
 
+import mbta.Line;
 import mbta.Lines;
 
 /**
@@ -8,5 +9,5 @@ import mbta.Lines;
 public class ByLineListContainer {
 
     public String lineName;
-    public Lines lineColor;
+    public Line lineColor;
 }

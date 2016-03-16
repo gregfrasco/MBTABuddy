@@ -49,7 +49,6 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstancetate) {
-
         Log.v("Tracker", "View Created");
         View retView = inflater.inflate(R.layout.activity_tracker, container, false);
 
@@ -58,13 +57,11 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
         //Get our GDirections instance, give it context
         gDirections = GDirections.getInstance();
         gDirections.setContext(getActivity());
         gDirections.Test();
-
-        //Get our mapManager singleton and give it the context
-        mapManager = new MapManager(getActivity(),mMap);
 
         Button searchButton = (Button) retView.findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -90,11 +87,12 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
     {
         //Create our list of lines for each lines enum
         List<ByLineListContainer> lineItems = new ArrayList<>();
-        for(Lines line : Lines.values())
+        final List<Line> lineVals = Lines.getInstance().values();
+        for(Line line : lineVals)
         {
             ByLineListContainer newLineItem = new ByLineListContainer();
             newLineItem.lineColor = line;
-            newLineItem.lineName = line.name();
+            newLineItem.lineName = line.getLineName();
             lineItems.add(newLineItem);
         }
         //Create adapter
@@ -129,9 +127,10 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mapManager.setMap(mMap);
-        mapManager.drawAllStations();
+        //Get our mapManager singleton and give it the context
+        mapManager = new MapManager(getActivity(),mMap);
         mapManager.drawAllTrainLines();
+        mapManager.setMap(mMap);
         //Set up gpsManager with context
         gpsManager = GPSManager.getInstance();
         //Get the location manager service
@@ -149,7 +148,9 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
             gpsManager.InitLocationManager(getActivity(), locationManager);
             Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
         }
-        Station station = Lines.getLine(Lines.Green_Line_E).getStations().get(0);
+
+        mapManager.drawAllStations();
+        Station station = Lines.getInstance().GreenLineE.getStations().get(0);
         mapManager.zoomToStationMarker(station.getStationID(),18);
     }
 

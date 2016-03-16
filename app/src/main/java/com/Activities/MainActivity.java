@@ -30,8 +30,6 @@ import mbta.mbtabuddy.R;
 
 public class MainActivity extends ActionBarActivity {
 
-    //TODO Change MBTARoutes to route
-
     static final String TAG = "MainActivity";
     private DrawerLayout drawerMainLayout;
     private ListView drawerList;
@@ -44,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Lines.getInstance(); // Init Lines First
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

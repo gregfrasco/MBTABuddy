@@ -2,10 +2,13 @@ package gmap;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
+
+import mbta.Line;
 import mbta.Lines;
 import mbta.mbtabuddy.R;
 
@@ -15,15 +18,15 @@ import mbta.mbtabuddy.R;
 public class TrainMarker
 {
     private Marker mapMarker;
-    private Lines trainRoute;
+    private Line trainRoute;
     private String vehicleNum;
     private String setStationId;
 
-    public TrainMarker(Lines lines, Marker marker, String VehicleNum)
+    public TrainMarker(Line line, Marker marker, String VehicleNum)
     {
         vehicleNum = VehicleNum;
         mapMarker = marker;
-        trainRoute = lines;
+        trainRoute = line;
 
 
         //Get out bitmapDescriptor (icon bmp) based on the color of the train
@@ -46,7 +49,7 @@ public class TrainMarker
         return vehicleNum;
     }
 
-    public Lines GetLines()
+    public Line GetLines()
     {
         return trainRoute;
     }
@@ -56,46 +59,35 @@ public class TrainMarker
         return mapMarker;
     }
 
-    public Lines GetRouteEnum()
+    public Line GetRouteEnum()
     {
         return trainRoute;
     }
 
-    public static BitmapDescriptor GetIcon(Lines line) {
-        switch(line){
-            case Red_Line:
-            case Mattapan_Line:
+
+    public static BitmapDescriptor GetIcon(Line line) {
+        switch(line.getColor()){
+            case Color.RED:
                 return BitmapDescriptorFactory.fromResource(R.drawable.ic_red);
-            case Orange_Line:
-                return BitmapDescriptorFactory.fromResource(R.drawable.ic_orange);
-            case Green_Line_B:
-            case Green_Line_C:
-            case Green_Line_D:
-            case Green_Line_E:
+            case Color.GREEN:
                 return BitmapDescriptorFactory.fromResource(R.drawable.ic_green);
-            case Blue_Line:
+            case Color.BLUE:
                 return BitmapDescriptorFactory.fromResource(R.drawable.ic_blue);
             default:
-                return BitmapDescriptorFactory.fromResource(R.drawable.ic_green);
+                return BitmapDescriptorFactory.fromResource(R.drawable.ic_orange);
         }
     }
 
-    public static int GetIconResource(Lines line) {
-        switch(line){
-            case Red_Line:
-            case Mattapan_Line:
+    public static int GetIconResource(Line line) {
+        switch(line.getColor()){
+            case Color.RED:
                 return R.drawable.ic_red;
-            case Orange_Line:
-                return R.drawable.ic_orange;
-            case Green_Line_B:
-            case Green_Line_C:
-            case Green_Line_D:
-            case Green_Line_E:
+            case Color.GREEN:
                 return R.drawable.ic_green;
-            case Blue_Line:
+            case Color.BLUE:
                 return R.drawable.ic_blue;
             default:
-                return R.drawable.ic_green;
+                return R.drawable.ic_orange;
         }
     }
 

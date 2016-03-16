@@ -50,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
         //When we are requesting all of the stations for a line
         else if(intent.hasExtra("stationsForLine"))
         {
-            Lines stations = (Lines) intent.getExtras().get("stationsForLine");
+            int stations = (int) intent.getExtras().get("stationsForLine");
             new AllStationsForLineAsync(getBaseContext(), stations).execute();
         }
 
@@ -70,9 +70,9 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     class AllStationsForLineAsync extends SearchStationsAsync {
-        private Lines line;
+        private int line;
 
-        public AllStationsForLineAsync(Context cont, Lines theLine) {
+        public AllStationsForLineAsync(Context cont, int theLine) {
             super(cont, "");
             line = theLine;
         }
@@ -80,7 +80,16 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             final HashMap<String, String> stationsAndIds = new HashMap<>();
-            for (Station station : new Line(line).getStations()) {
+            Line lineobj = null;
+            for(Line aline : Lines.getInstance().values())
+            {
+                if(aline.getColor() == line)
+                {
+                    lineobj = aline;
+                }
+            }
+
+            for (Station station : lineobj.getStations()) {
                 //Add the station
                 stationsAndIds.put(station.getStationName(), station.getStationID());
             }
@@ -105,8 +114,7 @@ public class SearchActivity extends AppCompatActivity {
             HashMap<String, String> results = new HashMap<>();
 
             //Search for the Input station
-            for (Lines lines : Lines.values()) {
-                Line line = new Line(lines);
+            for (Line line : Lines.getInstance().values()) {
                 for (Station station : line.getStations()) {
                     if (station.getStationName().toLowerCase().contains(searchString.toLowerCase())) {
                         //Add to the map
@@ -138,9 +146,7 @@ public class SearchActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String stationName = parent.getItemAtPosition(position).toString();
                     String stationId = matchStation.get(stationName);
-
-                    for (Lines lines : Lines.values()) {
-                        Line line = new Line(lines);
+                    for (Line line : Lines.getInstance().values()) {
                         for (Station station : line.getStations()) {
                             if (station.getStationID().equals(stationId)) {
                                 Intent intent = new Intent(SearchActivity.this, StationActivity.class);

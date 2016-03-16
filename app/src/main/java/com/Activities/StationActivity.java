@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,6 +39,7 @@ import DataManagement.DataStorageManager;
 import gmap.MapManager;
 import gmap.StationMarker;
 import gmap.TrainMarker;
+import mbta.ArrivalTime;
 import mbta.Line;
 import mbta.Lines;
 import mbta.MBTA;
@@ -67,7 +70,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         //Get our id of the station from the intent
         Bundle bundle = getIntent().getExtras();
         String stationID = bundle.getString("ID");
-        this.station = new Station(stationID);
+        this.station = MBTA.getInstance().getStopByID(stationID);
         setTitle(station.getStationName());
         this.mapManager = new MapManager(this);
 
@@ -81,6 +84,12 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
                 favoritesButton.setImageBitmap(IconHelper.drawableToBitmap(filledStarDrawable));
             }
         }
+
+        TextView name = (TextView) findViewById(R.id.stationName);
+        name.setText(this.station.getStationName());
+        LinearLayout stationHeader = (LinearLayout) findViewById(R.id.stationHeader);
+        stationHeader.setBackgroundColor(this.station.getLine().get(0).getColor());
+
     }
 
 
@@ -141,7 +150,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         @Override
         protected Boolean doInBackground(String... params) {
             try{
-                this.mapManager.drawTrainLines(station.getLines());
+
             }catch (Exception e){
                 e.printStackTrace();
                 return false;
@@ -154,9 +163,40 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
             if(this.dialog.isShowing()){
                 this.dialog.dismiss();
             }
+            this.mapManager.drawTrainLines(station.getLine());
             this.mapManager.drawAdjustedStations(station.getLine());
-            this.mapManager.addTrains(station.getLines(),station);
-            this.mapManager.zoomToStationMarker(station.getStationID(),16);
+            this.mapManager.addTrains(station.getLine(), station);
+            this.mapManager.zoomToStationMarker(station.getStationID(), 16);
+            TextView station1 = (TextView) findViewById(R.id.station1);
+            station1.setText(this.station.getLine().get(0).getTerminalStation1().getStationName());
+            TextView station2 = (TextView) findViewById(R.id.station2);
+            station2.setText(this.station.getLine().get(0).getTerminalStation2().getStationName());
+            ArrivalTime times = this.station.getArrivalTimes();
+            TextView station1time = (TextView) findViewById(R.id.station1min);
+            TextView station2time = (TextView) findViewById(R.id.station2min);
+            List<String> time1 = times.getTimes().get(this.station.getStopIDs().get(0));
+            List<String> time2 = times.getTimes().get(this.station.getStopIDs().get(1));
+            if(time1.size() < 1){
+                station1time.setText("No Prediction");
+            } else {
+                station1time.setText(formatTime(time1.get(0)));
+            }
+            if(time2.size() < 1){
+                station2time.setText("No Prediction");
+            } else {
+                station2time.setText(formatTime(time2.get(0)));
+            }
+
+
+        }
+    }
+
+    private String formatTime(String time) {
+        int seconds = Integer.parseInt(time);
+        if(seconds < 60){
+            return "ARR";
+        } else {
+            return ((seconds/60) + 1) + " min";
         }
     }
 

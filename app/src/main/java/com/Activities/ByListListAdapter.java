@@ -55,7 +55,7 @@ public class ByListListAdapter extends ArrayAdapter<ByLineListContainer> {
             @Override
             public void onClick(View v) {
                 Intent searchActIntent = new Intent(cont, SearchActivity.class);
-                searchActIntent.putExtra("stationsForLine", getItem(position).lineColor);
+                searchActIntent.putExtra("stationsForLine", getItem(position).lineColor.getColor());
                 cont.startActivity(searchActIntent);
             }
         });
