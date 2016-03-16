@@ -18,6 +18,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import DataManagement.DataStorageManager;
 import gmap.MapManager;
 import mbta.Line;
@@ -64,8 +67,50 @@ public class MainActivity extends ActionBarActivity {
         //Get our menu item strings array
         Resources res = getResources();
         drawerLabels = getResources().getStringArray(R.array.drawer_menu_labels);
-        final ArrayAdapter<String> drawerMenuAdapter =
-                new ArrayAdapter<String>(this, R.layout.drawer_menu_item_layout,drawerLabels);
+
+        //Build list of drawerMenuItems
+        List<DrawerMenuItem> drawerMenuItems = new ArrayList<DrawerMenuItem>();
+        for(int i = 0; i < drawerLabels.length; i++)
+        {
+            //Build our menu item
+            //First assign menu item name
+            DrawerMenuItem newItem = new DrawerMenuItem();
+            newItem.menuItemName = drawerLabels[i];
+
+            //Give appropriate icons
+            switch(i)
+            {
+                //Map
+                case 0:
+                    newItem.menuItemResource = R.drawable.ic_public_24dp;
+                    break;
+
+                //Favorites
+                case 1:
+                    newItem.menuItemResource = R.drawable.ic_star_24dp;
+                    break;
+
+                //MBTA Static Map
+                case 2:
+                    newItem.menuItemResource = R.drawable.ic_directions_train_24dp;
+                    break;
+
+                //Settings
+                case 3:
+                    newItem.menuItemResource = R.drawable.ic_settings_24dp;
+                    break;
+
+                //default icon
+                default:
+                    newItem.menuItemResource = R.drawable.ic_forward_24dp;
+                    break;
+            }
+
+            drawerMenuItems.add(newItem);
+        }
+
+        final DrawerMenuItemAdapter drawerMenuAdapter =
+                new DrawerMenuItemAdapter(this, 0, drawerMenuItems);
 
         //Set the adapter
         drawerList.setAdapter(drawerMenuAdapter);

@@ -12,12 +12,13 @@
     tools:context="com.Activities.StationActivity" />
 
      <ImageButton
+         android:background="@android:color/holo_blue_dark"
          android:layout_width="70dp"
          android:layout_height="70dp"
          android:text="Favorite Station"
          android:id="@+id/favoriteButton"
          android:onClick="addFavoriteStation"
-         android:src="@drawable/ic_star_24dp"
+         android:src="@drawable/ic_star_outline_24dp"
          android:layout_alignParentBottom="true"
          android:layout_alignParentEnd="true" />
 

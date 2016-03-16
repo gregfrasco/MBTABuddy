@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/lineListItem_image"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+    <TextView
+        android:text="Place_holder"
+        android:id="@+id/lineListItem_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:src="@drawable/ic_forward_24dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+</LinearLayout>

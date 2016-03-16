@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -23,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import gmap.MapManager;
 import gmapdirections.GDirections;
@@ -78,7 +80,29 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
                 startActivity(searchIntent);
             }
         });
+
+        //Build station list
+        createStationList(retView);
         return retView;
+    }
+
+    private void createStationList(View view)
+    {
+        //Create our list of lines for each lines enum
+        List<ByLineListContainer> lineItems = new ArrayList<>();
+        for(Lines line : Lines.values())
+        {
+            ByLineListContainer newLineItem = new ByLineListContainer();
+            newLineItem.lineColor = line;
+            newLineItem.lineName = line.name();
+            lineItems.add(newLineItem);
+        }
+        //Create adapter
+        ByListListAdapter adapter = new ByListListAdapter(getActivity(), 0, lineItems);
+        ListView lineList = (ListView) view.findViewById(R.id.byLineList);
+
+        //Set adapter
+        lineList.setAdapter(adapter);
     }
 
     public void enableLocationManager() {

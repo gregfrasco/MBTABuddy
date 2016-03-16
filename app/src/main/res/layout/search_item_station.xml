@@ -16,12 +16,13 @@
         android:textColor="#040303" />
 
     <ImageButton
+        android:background="@android:color/holo_blue_dark"
         android:layout_gravity="center"
         android:layout_weight="6"
         android:id = "@+id/FavoriteBtn"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:src="@drawable/ic_star_24dp"/>
+        android:src="@drawable/ic_star_outline_24dp"/>
 
     <ImageView
         android:layout_gravity="center"

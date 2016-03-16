@@ -59,7 +59,7 @@ public class MBTAStaticMapFragment extends Fragment {
                         link.setText("Image From: " + mbtaMapImageURL);
                     } catch (Exception e) {
                         Log.e("MBTAStaticMapFragment", "Error in getting map bitmap thread, using default image");
-                        img.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.subway_spider));
+                        //img.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.subway_spider));
                     }
                 }
             });

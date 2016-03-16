@@ -51,7 +51,7 @@ public class TrainInfoWindow implements GoogleMap.InfoWindowAdapter {
 
         ImageView image = (ImageView) window.findViewById(R.id.mImage);
         //TODO: change icon based on train (route Enum maybe)
-        image.setImageBitmap(BitmapFactory.decodeResource(cont.getResources(), tMarker.GetIconResource()));
+        image.setImageBitmap(BitmapFactory.decodeResource(cont.getResources(), tMarker.GetIconResource(tMarker.GetLines())));
 
         //Get our Vehicles on the route
         MBTA mbta = MBTA.getInstance();

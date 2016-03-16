@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -48,6 +47,13 @@ public class SearchActivity extends AppCompatActivity {
             new SearchStationsAsync(getBaseContext(), searchString).execute();
         }
 
+        //When we are requesting all of the stations for a line
+        else if(intent.hasExtra("stationsForLine"))
+        {
+            Lines stations = (Lines) intent.getExtras().get("stationsForLine");
+            new AllStationsForLineAsync(getBaseContext(), stations).execute();
+        }
+
         //Set up search button
         Button searchButton = (Button) findViewById(R.id.search_for_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -63,11 +69,31 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    class AllStationsForLineAsync extends SearchStationsAsync {
+        private Lines line;
+
+        public AllStationsForLineAsync(Context cont, Lines theLine) {
+            super(cont, "");
+            line = theLine;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            final HashMap<String, String> stationsAndIds = new HashMap<>();
+            for (Station station : new Line(line).getStations()) {
+                //Add the station
+                stationsAndIds.put(station.getStationName(), station.getStationID());
+            }
+            matchStation = stationsAndIds;
+            return null;
+        }
+    }
+
     class SearchStationsAsync extends AsyncTask<Void, Void, Void> {
 
-        Context context;
-        HashMap<String, String> matchStation;
-        String searchString;
+        protected Context context;
+        protected HashMap<String, String> matchStation;
+        private String searchString;
 
         public SearchStationsAsync(Context cont, String searchTerms){
             searchString = searchTerms;
@@ -99,8 +125,8 @@ public class SearchActivity extends AppCompatActivity {
             ArrayList<String> matchStrings = new ArrayList<String>(matchStation.keySet());
 
             //Create the adapter with that list and give it to the ListView as adapter
-            SearchResultListItemAdapter matches =
-                    new SearchResultListItemAdapter(context, R.layout.search_item_station, matchStrings, matchStation);
+            ResultListItemAdapter matches =
+                    new ResultListItemAdapter(context, R.layout.search_item_station, matchStrings, matchStation);
 
             stationList.setAdapter(matches);
 

@@ -3,6 +3,7 @@ package com.Activities;
 import android.app.ProgressDialog;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import DataManagement.FavoritesDataContainer;
+import DataManagement.IconHelper;
 import directions.AbstractRouting;
 import directions.Route;
 import directions.RouteException;
@@ -58,12 +61,26 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
                 .findFragmentById(R.id.stationMap);
         mapFragment.getMapAsync(this);
 
+        List<FavoritesDataContainer> favs = (List<FavoritesDataContainer>)
+                DataStorageManager.getInstance().LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);
+
         //Get our id of the station from the intent
         Bundle bundle = getIntent().getExtras();
         String stationID = bundle.getString("ID");
         this.station = new Station(stationID);
         setTitle(station.getStationName());
         this.mapManager = new MapManager(this);
+
+        //Check if this is already a favorite, if it is give it the full star icon
+        for(FavoritesDataContainer fav : favs)
+        {
+            if(fav.favName.equals(station.getStationName()))
+            {
+                Drawable filledStarDrawable = getResources().getDrawable(R.drawable.ic_star_24dp);
+                ImageButton favoritesButton = (ImageButton) findViewById(R.id.favoriteButton);
+                favoritesButton.setImageBitmap(IconHelper.drawableToBitmap(filledStarDrawable));
+            }
+        }
     }
 
 
@@ -86,6 +103,10 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         if(dataManager == null)
             dataManager = DataStorageManager.getInstance();
         dataManager.SetContext(this); //TODO: Move to onResume()? or other method?
+
+        Drawable filledStarDrawable = getResources().getDrawable(R.drawable.ic_star_24dp);
+        ImageButton favoritesButton = (ImageButton) findViewById(R.id.favoriteButton);
+        favoritesButton.setImageBitmap(IconHelper.drawableToBitmap(filledStarDrawable));
 
         //Save it
         dataManager.SaveStationFavorite(station.getStationID(), station.getStationName());

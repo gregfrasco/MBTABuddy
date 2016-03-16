@@ -27,7 +27,7 @@ public class TrainMarker
 
 
         //Get out bitmapDescriptor (icon bmp) based on the color of the train
-        BitmapDescriptor bmp = GetIcon();
+        BitmapDescriptor bmp = GetIcon(trainRoute);
         marker.setIcon(bmp);
     }
 
@@ -61,8 +61,8 @@ public class TrainMarker
         return trainRoute;
     }
 
-    public BitmapDescriptor GetIcon() {
-        switch(trainRoute){
+    public static BitmapDescriptor GetIcon(Lines line) {
+        switch(line){
             case Red_Line:
             case Mattapan_Line:
                 return BitmapDescriptorFactory.fromResource(R.drawable.ic_red);
@@ -80,8 +80,8 @@ public class TrainMarker
         }
     }
 
-    public int GetIconResource() {
-        switch(trainRoute){
+    public static int GetIconResource(Lines line) {
+        switch(line){
             case Red_Line:
             case Mattapan_Line:
                 return R.drawable.ic_red;
