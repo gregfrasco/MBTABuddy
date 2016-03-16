@@ -61,7 +61,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         //Get our id of the station from the intent
         Bundle bundle = getIntent().getExtras();
         String stationID = bundle.getString("ID");
-        this.station = new Station(stationID);
+        this.station = MBTA.getInstance().getStopByID(stationID);
         setTitle(station.getStationName());
         this.mapManager = new MapManager(this);
     }
@@ -120,7 +120,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         @Override
         protected Boolean doInBackground(String... params) {
             try{
-                this.mapManager.drawTrainLines(station.getLines());
+
             }catch (Exception e){
                 e.printStackTrace();
                 return false;
@@ -133,8 +133,9 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
             if(this.dialog.isShowing()){
                 this.dialog.dismiss();
             }
+            this.mapManager.drawTrainLines(station.getLine());
             this.mapManager.drawAdjustedStations(station.getLine());
-            this.mapManager.addTrains(station.getLines(),station);
+            this.mapManager.addTrains(station.getLine(),station);
             this.mapManager.zoomToStationMarker(station.getStationID(),16);
         }
     }

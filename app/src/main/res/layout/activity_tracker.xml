@@ -34,49 +34,10 @@
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="383dp"
+            android:layout_height="match_parent"
             tools:context="com.Activities.TrackerFragment"
 
             android:layout_alignParentStart="true" />
-
-        <!--We can make this expanable and retractable to have fullscreen map-->
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/destinationInfo" >
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="DestName"
-                    android:id="@+id/destname"
-                    android:layout_gravity="center_horizontal" />
-
-                <TextView
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Est Time to Dest: "
-                    android:id="@+id/destTime"
-                    android:layout_gravity="center_horizontal" />
-
-                <TextView
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ETA"
-                    android:id="@+id/ETADest"
-                    android:layout_gravity="center_horizontal" />
-
-            </LinearLayout>
-        </ScrollView>
-
     </LinearLayout>
 
 </FrameLayout>

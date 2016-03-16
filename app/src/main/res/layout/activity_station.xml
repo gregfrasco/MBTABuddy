@@ -2,14 +2,79 @@
        xmlns:android="http://schemas.android.com/apk/res/android"
        android:layout_height="match_parent"
        android:layout_width="match_parent">
-<fragment
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/stationMap"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.Activities.StationActivity" />
+
+     <LinearLayout
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:weightSum="1">
+
+         <fragment
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/stationMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        tools:context="com.Activities.StationActivity"
+             android:layout_weight="0.74" />
+
+     </LinearLayout>
+
+     <LinearLayout
+             android:orientation="vertical"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+         android:layout_alignParentBottom="true"
+         android:background="#000000">
+
+             <LinearLayout
+                 android:orientation="horizontal"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:textAppearance="?android:attr/textAppearanceLarge"
+                     android:text="Large Text"
+                     android:id="@+id/station1"
+                     android:textColor="#f49827" />
+
+                 <TextView
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:textAppearance="?android:attr/textAppearanceLarge"
+                     android:text="Large Text"
+                     android:id="@+id/station1min"
+                     android:gravity="right"
+                     android:textColor="#f49827"/>
+             </LinearLayout>
+
+             <LinearLayout
+                 android:orientation="horizontal"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent" >
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:textAppearance="?android:attr/textAppearanceLarge"
+                     android:text="Large Text"
+                     android:id="@+id/station2"
+                     android:textColor="#f49827"/>
+
+                 <TextView
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:textAppearance="?android:attr/textAppearanceLarge"
+                     android:text="Large Text"
+                     android:id="@+id/station2min"
+                     android:gravity="right"
+                     android:textColor="#f49827"/>
+             </LinearLayout>
+         </LinearLayout>
 
      <ImageButton
          android:layout_width="70dp"
@@ -18,7 +83,11 @@
          android:id="@+id/favoriteButton"
          android:onClick="addFavoriteStation"
          android:src="@drawable/ic_star_24dp"
-         android:layout_alignParentBottom="true"
-         android:layout_alignParentEnd="true" />
+         android:layout_alignParentBottom="false"
+         android:layout_alignParentEnd="true"
+         android:layout_alignParentTop="true"
+         android:layout_alignParentStart="false" />
+
+
 
  </RelativeLayout>

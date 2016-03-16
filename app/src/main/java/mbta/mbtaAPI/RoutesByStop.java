@@ -89,8 +89,7 @@ public class RoutesByStop {
         stationName = stationName.split("-")[0];
         List<Line> lines = new ArrayList<Line>();
         MBTA mbta = MBTA.getInstance();
-        for(Lines testLine: Lines.values()){
-            Line line = new Line(testLine);
+        for(Line line: Lines.values()){
             for(mbta.Station station: line.getStations()){
                 if(station.getStationName().contains(stationName)){
                     lines.add(line);

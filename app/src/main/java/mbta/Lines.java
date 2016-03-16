@@ -1,62 +1,34 @@
 package mbta;
 
-import java.util.HashMap;
+import android.graphics.Color;
 
-import mbta.mbtaAPI.MBTARoutes;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by frascog on 2/17/16.
  */
-public enum Lines {
-    Red_Line,
-    Orange_Line,
-    Green_Line_B,
-    Green_Line_C,
-    Green_Line_D,
-    Green_Line_E,
-    Blue_Line,
-    Mattapan_Line;
+public class Lines {
 
-    public static Lines getLine(String lineID){
-        return MBTARoutes.getInstance().getLine(lineID);
-    }
+    public static Line RedLine = new Line("Red", Color.RED);
+    public static Line OrangeLine = new Line("Orange", Color.rgb(255,140,0));
+    public static Line GreenLineB = new Line("Green-B", Color.GREEN);
+    public static Line GreenLineC = new Line("Green-C", Color.GREEN);
+    public static Line GreenLineD = new Line("Green-D", Color.GREEN);
+    public static Line GreenLineE = new Line("Green-E", Color.GREEN);
+    public static Line BlueLine = new Line("Blue", Color.BLUE);
+    public static Line MattapanLine = new Line("Mattapan", Color.RED);
 
-    @Override public String toString(){
-        switch(this){
-            case Red_Line:
-                return "Red Line";
-            case Orange_Line:
-                return "Orange Line";
-            case Green_Line_B:
-                return "Green Line: B";
-            case Green_Line_C:
-                return "Green Line: C";
-            case Green_Line_D:
-                return "Green Line: D";
-            case Green_Line_E:
-                return "Green Line: E";
-            case Blue_Line:
-                return "Blue Line";
-            case Mattapan_Line:
-                return  "Mattapan Line";
-            default:
-                return "";
-        }
-    }
-
-    private static HashMap<Lines,Line> lines;
-
-    public static Line getLine(Lines line){
-        if(lines == null){
-            initLines();
-        }
-        return lines.get(line);
-    }
-
-    private static void initLines() {
-        lines = new HashMap<Lines, Line>();
-        for(Lines line: Lines.values()){
-            lines.put(line,new Line(line));
-        }
+    public static List<Line> values() {
+        List<Line> lines = new ArrayList<Line>();
+        lines.add(RedLine);
+        lines.add(OrangeLine);
+        lines.add(GreenLineB);
+        lines.add(GreenLineC);
+        lines.add(GreenLineD);
+        lines.add(GreenLineE);
+        lines.add(BlueLine);
+        lines.add(MattapanLine);
+        return lines;
     }
 }

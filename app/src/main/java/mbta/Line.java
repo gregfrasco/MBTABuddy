@@ -1,32 +1,22 @@
 package mbta;
 
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
-import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import directions.AbstractRouting;
-import directions.RouteException;
-import directions.Routing;
-import directions.RoutingListener;
-import mbta.mbtaAPI.MBTARoutes;
 import mbta.mbtaAPI.Route;
 import mbta.mbtaAPI.Vehicle;
-import mbta.mbtabuddy.R;
 
 /**
  * Created by frascog on 2/17/16.
  */
 public class Line {
 
-    private Lines lines;
     private String lineID;
     private String lineName;
     private List<Station> stations;
@@ -34,8 +24,9 @@ public class Line {
     private Station terminalStation1;
     private Station terminalStation2;
     private List<LatLng> mapPoints;
+    private int color;
 
-    public Line(Route route) {
+    public Line(Route route,int color) {
         MBTA mbta = MBTA.getInstance();
         this.lineID = route.getRouteId();
         this.lineName = route.getRouteName();
@@ -44,18 +35,11 @@ public class Line {
         Station[] stations = mbta.getTerminalStations(this);
         this.setTerminalStation1(stations[0]);
         this.setTerminalStation2(stations[1]);
-        this.lines = Lines.getLine(this.lineID);
+        this.color = color;
     }
 
-    public Line(Lines lines){
-        Line line = MBTA.getInstance().getLine(lines);
-        this.lines = lines;
-        this.setLineID(line.getLineID());
-        this.setLineName(line.getLineName());
-        this.setType(line.getType());
-        this.setStations(line.getStations());
-        this.setTerminalStation1(line.getTerminalStation1());
-        this.setTerminalStation2(line.getTerminalStation2());
+    public Line(String lines,int color){
+        this(MBTA.getInstance().getRoute(lines),color);
     }
 
     public String getLineID() {
@@ -107,31 +91,7 @@ public class Line {
     }
 
     public int getColor() {
-        int color = Color.BLUE;
-        switch (lines){
-            case Red_Line:
-            case Mattapan_Line:
-                color = Color.RED;
-                break;
-            case Orange_Line:
-                color = Color.rgb(255,165,0);
-                break;
-            case Green_Line_B:
-            case Green_Line_C:
-            case Green_Line_D:
-            case Green_Line_E:
-                color = Color.GREEN;
-                break;
-            case Blue_Line:
-                color = Color.BLUE;
-                break;
-
-        }
         return color;
-    }
-
-    public Lines getLines() {
-        return this.lines;
     }
 
     public List<LatLng> getMapPoints(){

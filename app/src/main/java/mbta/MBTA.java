@@ -9,19 +9,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 import mbta.mbtaAPI.Alert;
 import mbta.mbtaAPI.AlertsByRoute;
 import mbta.mbtaAPI.Direction;
-import mbta.mbtaAPI.MBTARoutes;
 import mbta.mbtaAPI.Mode;
-import mbta.mbtaAPI.ParentStation;
 import mbta.mbtaAPI.PredictionsByRoute;
 import mbta.mbtaAPI.PredictionsByStop;
 import mbta.mbtaAPI.PredictionsByTrip;
@@ -62,9 +58,13 @@ public class MBTA{
 
     }
 
-    public Line getLine(Lines lines){
-        MBTARoutes mbtaRoutes = MBTARoutes.getInstance();
-        return new Line(this.getRoute(mbtaRoutes.getLineID(lines)));
+    public Line getLine(String lines){
+        for (Line line:Lines.values()){
+            if(line.getLineID().equals(lines)){
+                return line;
+            }
+        }
+        return null;
     }
 
     private List<Route> getRoutes(){
@@ -81,7 +81,7 @@ public class MBTA{
         List<Stop> stops = this.getStopsByRoute(line);
         List<Station> stations = new ArrayList<Station>();
         for(Stop stop:  stops){
-            stations.add(new Station(stop,line));
+            stations.add(new Station(stop));
         }
         return stations;
     }
@@ -105,7 +105,7 @@ public class MBTA{
         Gson gson = new Gson();
         StopsByRoute stopsByRoute = gson.fromJson(apiResult, StopsByRoute.class);
         for(int i = 0;i < stopsByRoute.getDirection().size();i++){
-            stations[i] = new Station(stopsByRoute.getDirection().get(i).getStop().get(0),line);
+            stations[i] = new Station(stopsByRoute.getDirection().get(i).getStop().get(0));
         }
         return stations;
     }
@@ -343,5 +343,16 @@ public class MBTA{
         Gson gson = new Gson();
         AlertsByRoute alertsByRoute = gson.fromJson(apiResult, AlertsByRoute.class);
         return alertsByRoute.getAlerts();
+    }
+
+    public Station getStopByID(String stationID) {
+        for(Line line : Lines.values()){
+            for(Station station:line.getStations()){
+                if(station.getStationID().equals(stationID)){
+                    return station;
+                }
+            }
+        }
+        return null;
     }
 }

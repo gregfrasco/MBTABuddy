@@ -55,8 +55,7 @@ public class TrainInfoWindow implements GoogleMap.InfoWindowAdapter {
 
         //Get our Vehicles on the route
         MBTA mbta = MBTA.getInstance();
-        VehiclesByRoute vehiclesByRoute =
-                mbta.GetVehiclesByRouteItem(Lines.getLine(tMarker.GetLines()).getLineID());
+        VehiclesByRoute vehiclesByRoute = mbta.GetVehiclesByRouteItem(tMarker.GetLines().getLineID());
 
         //Look for the corresponding vehicle
         for(Direction direction : vehiclesByRoute.getDirection())

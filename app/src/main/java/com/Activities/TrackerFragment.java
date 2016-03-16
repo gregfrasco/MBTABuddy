@@ -47,9 +47,11 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstancetate) {
-
         Log.v("Tracker", "View Created");
         View retView = inflater.inflate(R.layout.activity_tracker, container, false);
+        //Get our mapManager singleton and give it the context
+        mapManager = new MapManager(getActivity(),mMap);
+        mapManager.drawAllTrainLines();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
@@ -60,9 +62,6 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         gDirections = GDirections.getInstance();
         gDirections.setContext(getActivity());
         gDirections.Test();
-
-        //Get our mapManager singleton and give it the context
-        mapManager = new MapManager(getActivity(),mMap);
 
         Button searchButton = (Button) retView.findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -106,8 +105,6 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mapManager.setMap(mMap);
-        mapManager.drawAllStations();
-        mapManager.drawAllTrainLines();
         //Set up gpsManager with context
         gpsManager = GPSManager.getInstance();
         //Get the location manager service
@@ -125,7 +122,8 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
             gpsManager.InitLocationManager(getActivity(), locationManager);
             Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
         }
-        Station station = Lines.getLine(Lines.Green_Line_E).getStations().get(0);
+        mapManager.drawAllStations();
+        Station station = Lines.GreenLineE.getStations().get(0);
         mapManager.zoomToStationMarker(station.getStationID(),18);
     }
 
