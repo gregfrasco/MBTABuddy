@@ -1,5 +1,6 @@
 package com.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,6 +105,7 @@ public class SearchActivity extends AppCompatActivity {
         protected Context context;
         protected HashMap<String, String> matchStation;
         private String searchString;
+        private RelativeLayout pg;
 
         public SearchStationsAsync(Context cont, String searchTerms){
             searchString = searchTerms;
@@ -127,6 +130,12 @@ public class SearchActivity extends AppCompatActivity {
             return null;
         }
 
+        @Override protected void onPreExecute()
+        {
+            pg = (RelativeLayout) findViewById(R.id.loadingPanel);
+            pg.setVisibility(View.VISIBLE);
+        }
+
         @Override protected void onPostExecute(Void params)
         {
             //Now create an array list of just the station names to show to user
@@ -136,6 +145,8 @@ public class SearchActivity extends AppCompatActivity {
             ResultListItemAdapter matches =
                     new ResultListItemAdapter(context, R.layout.search_item_station, matchStrings, matchStation);
 
+
+            pg.setVisibility(View.GONE);
             stationList.setAdapter(matches);
 
             //When user clicks a station on the results list, we open the StationActivity
@@ -152,11 +163,13 @@ public class SearchActivity extends AppCompatActivity {
                                 Intent intent = new Intent(SearchActivity.this, StationActivity.class);
                                 intent.putExtra("ID", stationId);
                                 startActivity(intent);
+                                finish();
                             }
                         }
                     }
                 }
             });
+
         }
     }
 }

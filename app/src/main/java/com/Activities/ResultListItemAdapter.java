@@ -26,7 +26,7 @@ import mbta.mbtabuddy.R;
  * Created by cruzj6 on 3/4/2016.
  */
 public class ResultListItemAdapter extends ArrayAdapter<String> {
-    Context cont;
+    final Context cont;
     HashMap<String,String> stationIds;
 
     public ResultListItemAdapter(Context context, int resource, List<String> objects,
@@ -48,6 +48,8 @@ public class ResultListItemAdapter extends ArrayAdapter<String> {
         //Give it the result Name
         TextView theText = (TextView) view.findViewById(R.id.result_Name);
         theText.setText(stationName);
+
+        DataStorageManager.getInstance().SetContext(cont);
 
         List<FavoritesDataContainer> favs = (List<FavoritesDataContainer>)
                 DataStorageManager.getInstance().LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);

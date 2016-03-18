@@ -77,8 +77,9 @@ public class DataStorageManager {
         }
         catch(Exception e)
         {
-            Log.e("DataStorageManager", "Error in LoadUserFavoritesData: " +
+            Log.e("DataStorageManager", "Error in LoadUserFavoritesData: "  +
                     ((e.getMessage() != null)? e.getMessage() : ""));
+            e.printStackTrace();
         }
         return favs;
     }

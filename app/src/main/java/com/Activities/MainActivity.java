@@ -1,9 +1,10 @@
 package com.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.os.AsyncTask;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,18 +15,13 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import DataManagement.DataStorageManager;
-import gmap.MapManager;
-import mbta.Line;
 import mbta.Lines;
-import mbta.MBTA;
 import mbta.mbtabuddy.R;
 
 public class MainActivity extends ActionBarActivity {
@@ -42,9 +38,29 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Lines.getInstance(); // Init Lines First
+
+        boolean isNoConnection = false;
+        //Check if there is a network connection
+        FragmentManager fm = getSupportFragmentManager();
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        if(cm.getActiveNetworkInfo() == null || !cm.getActiveNetworkInfo().isConnected() ||
+                !(cm.getActiveNetworkInfo().getTypeName().equalsIgnoreCase("WIFI") ||
+                        cm.getActiveNetworkInfo().getTypeName().equalsIgnoreCase("MOBILE")))
+        {
+           isNoConnection = true;
+        }
+        else {
+            Lines.getInstance(); // Init Lines First
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //If no connection insert our no connection fragment
+        if(isNoConnection) {
+            Fragment noConnectFrag = new NoConnectionFragment();
+            fm.beginTransaction().replace(R.id.fragmentContent, noConnectFrag).commit();
+        }
 
         //Get handles on all of our drawer elements
         drawerMainLayout = (DrawerLayout) findViewById(R.id.mainLayout);
@@ -112,46 +128,66 @@ public class MainActivity extends ActionBarActivity {
                 new DrawerMenuItemAdapter(this, 0, drawerMenuItems);
 
         //Set the adapter
+        final MBTADrawerListener drawerListener = new MBTADrawerListener(getSupportFragmentManager(), this);
         drawerList.setAdapter(drawerMenuAdapter);
+        drawerMainLayout.setDrawerListener(drawerListener);
 
         drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             Fragment newFragment;
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    //Tracker fragment
-                    case 0:
-                        Log.v(TAG,"Fragment Switched to Map");
-                        setTitle(getResources().getStringArray(R.array.drawer_menu_labels)[0]);
-                        newFragment = new TrackerFragment();
-                        break;
-
-                    case 1:
-                        Log.v(TAG,"Fragment Switched to Favorites");
-                        setTitle(getResources().getStringArray(R.array.drawer_menu_labels)[1]);
-                        newFragment = new FavoritesFragment();
-                        break;
-
-                    case 2:
-                        Log.v(TAG,"Fragment Switched to Static Map");
-                        setTitle(getResources().getStringArray(R.array.drawer_menu_labels)[2]);
-                        newFragment = new MBTAStaticMapFragment();
-                        break;
-
-                    default: //Return, do nothing
-                        return;
+                //Check if we have a network connection
+                ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+                if(cm.getActiveNetworkInfo() == null || !cm.getActiveNetworkInfo().isConnected())
+                {
+                    newFragment = new NoConnectionFragment();
                 }
-                //Replace the frame with the fragment
-                FragmentManager fm = getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.fragmentContent, newFragment).commit();
+                else {
+                    switch (position) {
+                        //Tracker fragment
+                        case 0:
+                            Log.v(TAG, "Fragment Switched to Map");
+                            setTitle(getResources().getStringArray(R.array.drawer_menu_labels)[0]);
+                            newFragment = new TrackerFragment();
+                            break;
+
+                        case 1:
+                            Log.v(TAG, "Fragment Switched to Favorites");
+                            setTitle(getResources().getStringArray(R.array.drawer_menu_labels)[1]);
+                            newFragment = new FavoritesFragment();
+                            break;
+
+                        case 2:
+                            Log.v(TAG, "Fragment Switched to Static Map");
+                            setTitle(getResources().getStringArray(R.array.drawer_menu_labels)[2]);
+                            newFragment = new MBTAStaticMapFragment();
+                            break;
+
+                        default: //Return, do nothing
+                            return;
+                    }
+                }
+                //Let it know to switch when the drawer closes
+                drawerListener.setNextFrag(newFragment);
+
+                //Close the drawer
+                drawerMainLayout.closeDrawers();
+
             }
         });
         if(savedInstanceState == null){
-            FragmentManager fm = getSupportFragmentManager();
-            trackerFrag = new TrackerFragment();
-            fm.beginTransaction().replace(R.id.fragmentContent, trackerFrag).commit();
-            setTitle(drawerLabels[0]);
+            //Check if there is a network connection
+            if(cm.getActiveNetworkInfo() == null || !cm.getActiveNetworkInfo().isConnected())
+            {
+                Fragment noConnectFrag = new NoConnectionFragment();
+                fm.beginTransaction().replace(R.id.fragmentContent, noConnectFrag).commit();
+            }
+            else {
+                trackerFrag = new TrackerFragment();
+                fm.beginTransaction().replace(R.id.fragmentContent, trackerFrag).commit();
+                setTitle(drawerLabels[0]);
+            }
         }
     }
 
@@ -194,4 +230,59 @@ public class MainActivity extends ActionBarActivity {
      * loading screen in the main thread
      */
 
+}
+
+class MBTADrawerListener implements DrawerLayout.DrawerListener
+{
+    private android.support.v4.app.FragmentManager fm;
+    private android.support.v4.app.Fragment nextFrag;
+    private boolean switchNext = false;
+    private Context context;
+
+    public MBTADrawerListener(android.support.v4.app.FragmentManager fManager, Context cont)
+    {
+        context = cont;
+        fm = fManager;
+    }
+
+    public void setNextFrag(Fragment nextFragment)
+    {
+        nextFrag = nextFragment;
+        switchNext = true;
+    }
+
+    @Override
+    public void onDrawerSlide(View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(View drawerView) {
+
+    }
+
+    @Override public void onDrawerClosed(View view)
+    {
+        final ProgressDialog pd = new ProgressDialog(context);
+        pd.setMessage("Loading...");
+        pd.setIndeterminate(true);
+        pd.setCancelable(false);
+        pd.show();
+
+        new Thread(){
+
+            @Override public void run(){
+                if(!pd.isShowing())
+                    pd.show();
+                fm.beginTransaction().replace(R.id.fragmentContent, nextFrag).commit();
+                switchNext = false;
+                pd.dismiss();
+            }
+        }.start();
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
+    }
 }
