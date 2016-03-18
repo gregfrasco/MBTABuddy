@@ -41,7 +41,7 @@ public class Line {
         this.lineID = route.getRouteId();
         this.lineName = route.getRouteName();
         this.type = route.getLineType();
-        this.stations = mbta.getStationsByLine(this);
+        this.stations = getStations();
         Station[] stations = mbta.getTerminalStations(this);
         this.setTerminalStation1(stations[0]);
         this.setTerminalStation2(stations[1]);
@@ -69,6 +69,9 @@ public class Line {
     }
 
     public List<Station> getStations() {
+        if(stations == null){
+            this.stations = MBTA.getInstance().getStationsByLine(this);
+        }
         return stations;
     }
 
