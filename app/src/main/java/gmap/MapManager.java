@@ -214,7 +214,7 @@ public class MapManager implements RoutingListener{
     //endregion
 
     public void drawLine(Line line) {
-        if(line.getMapPoints() == null) {
+        if(line.getMapPoints(this.context) == null) {
             Routing routing = new Routing.Builder()
                     .travelMode(AbstractRouting.TravelMode.TRANSIT)
                     .waypoints(line.getTerminalStation1().getLatLan(), line.getTerminalStation2().getLatLan())
