@@ -1,12 +1,10 @@
 package mbta;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import mbta.mbtaAPI.Route;
 import mbta.mbtaAPI.Stop;
 
 /**
@@ -25,8 +23,16 @@ public class Station {
     public Station(Stop stop) {
         this.setStationID(stop.getStopId());
         this.setStationName(stop.getParentStationName());
-        this.setLatitue(Double.parseDouble(stop.getStopLat()));
+        this.setLatitude(Double.parseDouble(stop.getStopLat()));
         this.setLongitude(Double.parseDouble(stop.getStopLon()));
+    }
+
+    public Station(List<String> stationInfo) {
+        this.setStationID(stationInfo.get(0));
+        this.setStationName(stationInfo.get(1));
+        this.setLatitude(Double.parseDouble(stationInfo.get(2)));
+        this.setLongitude(Double.parseDouble(stationInfo.get(3)));
+
     }
 
     public List<Line> getLine() {
@@ -52,12 +58,12 @@ public class Station {
         this.stationName = stationName;
     }
 
-    public double getLatitue() {
+    public double getLatitude() {
         return latitue;
     }
 
-    public void setLatitue(double latitue) {
-        this.latitue = latitue;
+    public void setLatitude(double latitude) {
+        this.latitue = latitude;
     }
 
     public double getLongitude() {
@@ -77,7 +83,7 @@ public class Station {
     }
 
     public LatLng getLatLan() {
-        return new LatLng(this.getLatitue(),this.getLongitude());
+        return new LatLng(this.getLatitude(),this.getLongitude());
     }
 
     public List<String> getStopIDs() {
@@ -86,5 +92,10 @@ public class Station {
             this.stopIDs = MBTA.getInstance().getAllStops(this, this.getLine());
         }
         return stopIDs;
+    }
+
+    @Override
+    public String toString() {
+        return this.getStopIDs()+ "," + this.getStationName() + "," + this.getLatitude() + "," + this.getLongitude();
     }
 }

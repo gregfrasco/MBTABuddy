@@ -1,6 +1,7 @@
 package com.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -36,12 +37,15 @@ public class MainActivity extends ActionBarActivity {
     private RelativeLayout drawerRelativeLayout;
     private ActionBarDrawerToggle drawerToggle;
     private String[] drawerLabels;
+    //for assets reasons
+    private static Context context;
 
     //TODO: Store this some other way
     TrackerFragment trackerFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        context = this.getApplicationContext();
         Lines.getInstance(); // Init Lines First
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -188,10 +192,8 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-
-    /**
-     * Class to run the login process in the background while running the
-     * loading screen in the main thread
-     */
+    public static Context getContext(){
+        return context;
+    }
 
 }

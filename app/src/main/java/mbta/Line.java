@@ -1,11 +1,10 @@
 package mbta;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
-import android.util.Log;
 
+import com.Activities.MainActivity;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -14,13 +13,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import mbta.mbtaAPI.Route;
 import mbta.mbtaAPI.Vehicle;
-import mbta.mbtabuddy.R;
 
 /**
  * Created by frascog on 2/17/16.
@@ -70,7 +68,21 @@ public class Line {
 
     public List<Station> getStations() {
         if(stations == null){
-            this.stations = MBTA.getInstance().getStationsByLine(this);
+            try{
+                List<Station> stations = new ArrayList<Station>();
+                InputStream is = MainActivity.getContext().getAssets().open("Stations.txt");
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                String line = br.readLine(); // remove headers
+                while((line = br.readLine()) != null){
+                    List<String> stationInfo = new ArrayList<String>(Arrays.asList(line.split(",")));
+                    if(stationInfo.contains(this.getLineID())){
+                        stations.add(new Station(stationInfo));
+                    }
+                }
+                this.stations = stations;
+            } catch (IOException e) {
+                this.stations = MBTA.getInstance().getStationsByLine(this);
+            }
         }
         return stations;
     }
@@ -107,11 +119,11 @@ public class Line {
         return color;
     }
 
-    public List<LatLng> getMapPoints(Context context){
+    public List<LatLng> getMapPoints(){
         if(mapPoints == null) {
             try {
                 List<LatLng> points = new ArrayList<LatLng>();
-                InputStream is = context.getAssets().open(lineID+".txt");
+                InputStream is = MainActivity.getContext().getAssets().open(lineID+".txt");
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 String line = "";
                 while((line = br.readLine()) != null){
@@ -142,10 +154,10 @@ public class Line {
         for(Station station: this.getStations()){
             Location stationLocation = new Location("");
             stationLocation.setLongitude(station.getLongitude());
-            stationLocation.setLatitude(station.getLatitue());
+            stationLocation.setLatitude(station.getLatitude());
             LatLng closestPoint = null;
             float distance = 10000;
-            for(LatLng point: this.getMapPoints(null)){
+            for(LatLng point: this.getMapPoints()){
                 Location testLocation = new Location("");
                 testLocation.setLatitude(point.latitude);
                 testLocation.setLongitude(point.longitude);
@@ -156,7 +168,7 @@ public class Line {
                 }
             }
             station.setLongitude(closestPoint.longitude);
-            station.setLatitue(closestPoint.latitude);
+            station.setLatitude(closestPoint.latitude);
         }
     }
 
@@ -166,7 +178,7 @@ public class Line {
         vehicleLocation.setLatitude(vehicle.getVehicleLat());
         LatLng closestPoint = null;
         float distance = 10000;
-        for(LatLng point: this.getMapPoints(null)){
+        for(LatLng point: this.getMapPoints()){
             Location testLocation = new Location("");
             testLocation.setLatitude(point.latitude);
             testLocation.setLongitude(point.longitude);
