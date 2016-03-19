@@ -129,8 +129,9 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         mMap = googleMap;
         //Get our mapManager singleton and give it the context
         mapManager = new MapManager(getActivity(),mMap);
-        mapManager.drawAllTrainLines();
-        mapManager.setMap(mMap);
+        /*mapManager.drawAllTrainLines();
+        mapManager.setMap(mMap);*/
+
         //Set up gpsManager with context
         gpsManager = GPSManager.getInstance();
         //Get the location manager service
@@ -148,9 +149,57 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
             gpsManager.InitLocationManager(getActivity(), locationManager);
             Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
         }
-        mapManager.drawAllStations();
-        //Station station = Lines.getInstance().GreenLineE.getStations().get(0);
-        //mapManager.zoomToStationMarker(station.getStationID(),18);
+      //  mapManager.drawAllStations();
+        new LoadMapLines(mMap, mapManager).execute();
+
+    }
+
+    class LoadMapLines extends AsyncTask<Void, Void, Void>
+    {
+        private ProgressDialog pd;
+        private GoogleMap mMap;
+        private MapManager mManager;
+        LoadMapLines(GoogleMap map, MapManager manager)
+        {
+            mMap = map;
+            mManager = manager;
+
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            pd = new ProgressDialog(getActivity());
+            pd.setMessage("Loading Map...");
+            pd.setIndeterminate(true);
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            getActivity().runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    if(!pd.isShowing())
+                        pd.show();
+                    mManager.setMap(mMap);
+                    mManager.drawAllTrainLines();
+                    mManager.drawAllStations();
+                }
+            });
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            Station station = Lines.getInstance().GreenLineE.getStations().get(0);
+            mapManager.zoomToStationMarker(station.getStationID(),17);
+            pd.dismiss();
+        }
     }
 
 }

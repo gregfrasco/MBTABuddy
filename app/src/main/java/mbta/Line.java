@@ -70,7 +70,7 @@ public class Line {
         if(stations == null){
             try{
                 List<Station> stations = new ArrayList<Station>();
-                InputStream is = MainActivity.getContext().getAssets().open("Stations.txt");
+                InputStream is = MainActivity.context.getAssets().open("stations.txt");
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 String line = br.readLine(); // remove headers
                 while((line = br.readLine()) != null){
@@ -123,7 +123,7 @@ public class Line {
         if(mapPoints == null) {
             try {
                 List<LatLng> points = new ArrayList<LatLng>();
-                InputStream is = MainActivity.getContext().getAssets().open(lineID+".txt");
+                InputStream is = MainActivity.context.getAssets().open(lineID+".txt");
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 String line = "";
                 while((line = br.readLine()) != null){

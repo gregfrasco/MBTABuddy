@@ -64,9 +64,6 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
                 .findFragmentById(R.id.stationMap);
         mapFragment.getMapAsync(this);
 
-        List<FavoritesDataContainer> favs = (List<FavoritesDataContainer>)
-                DataStorageManager.getInstance().LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);
-
         //Get our id of the station from the intent
         Bundle bundle = getIntent().getExtras();
         String stationID = bundle.getString("ID");
@@ -74,16 +71,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         setTitle(station.getStationName());
         this.mapManager = new MapManager(this);
 
-        //Check if this is already a favorite, if it is give it the full star icon
-        for(FavoritesDataContainer fav : favs)
-        {
-            if(fav.favName.equals(station.getStationName()))
-            {
-                Drawable filledStarDrawable = getResources().getDrawable(R.drawable.ic_star_24dp);
-                ImageButton favoritesButton = (ImageButton) findViewById(R.id.favoriteButton);
-                favoritesButton.setImageBitmap(IconHelper.drawableToBitmap(filledStarDrawable));
-            }
-        }
+
 
         TextView name = (TextView) findViewById(R.id.stationName);
         name.setText(this.station.getStationName());
@@ -150,6 +138,26 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         @Override
         protected Boolean doInBackground(String... params) {
             try{
+                DataStorageManager.getInstance().SetContext(activity);
+                List<FavoritesDataContainer> favs = (List<FavoritesDataContainer>)
+                        DataStorageManager.getInstance().LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);
+
+                //Check if this is already a favorite, if it is give it the full star icon
+                for(FavoritesDataContainer fav : favs)
+                {
+                    if(fav.favName.equals(station.getStationName()))
+                    {
+                        final Drawable filledStarDrawable = getResources().getDrawable(R.drawable.ic_star_24dp);
+                        final ImageButton favoritesButton = (ImageButton) findViewById(R.id.favoriteButton);
+
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                favoritesButton.setImageBitmap(IconHelper.drawableToBitmap(filledStarDrawable));
+                            }
+                        });
+                    }
+                }
 
             }catch (Exception e){
                 e.printStackTrace();

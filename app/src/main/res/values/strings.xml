@@ -22,5 +22,6 @@
     <string name="done_remove_menu_favorites">Done Removing</string>
     <string name="add_menu_favorites">Add Favorite</string>
     <string name="search_text">Search</string>
+    <string name="no_network_string">No Network Connection</string>
 
 </resources>
