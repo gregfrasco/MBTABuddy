@@ -7,7 +7,7 @@ stationID,stationName,latitude,longitude,lineIDs
 70071,Kendall/MIT,42.3625441,-71.0864435,Red
 70073,Charles/MGH,42.3611374,-71.0705278,Red
 70076,Park Street,42.356357,-71.0623345,Red
-70078,Downtown Crossing,42.355518,-71.060225,Red
+70078,Downtown Crossing,42.3554099,-71.0604765,Red,Orange
 70080,South Station,42.352057,-71.0551524,Red
 70081,Broadway,42.3425726,-71.056945,Red
 70083,Andrew,42.330154,-71.057655,Red
@@ -21,3 +21,22 @@ stationID,stationName,latitude,longitude,lineIDs
 70090,Fields Corner,42.2999406,-71.0618518,Red
 70092,Shawmut,42.2931284,-71.0658033,Red
 70093,Ashmont,42.2844548,-71.0637444,Red
+70036,Oak Grove,42.43668,-71.071097,Orange
+70035,Malden Center,42.426632,-71.07411,Orange
+70032,Wellington,42.40237,-71.077082,Orange
+70278,Assembly,42.392811,-71.077257,Orange
+70031,Sullivan Square,42.383975,-71.076994,Orange
+70029,Community College,42.373622,-71.069533,Orange
+70026,North Station,42.365577,-71.06129,Orange
+70024,Haymarket,42.363021,-71.05829,Orange
+70022,State Street,42.358978,-71.057598,Orange
+70018,Chinatown,42.352547,-71.062752,Orange
+70017,Tufts Medical Center,42.349662,-71.063917,Orange
+70015,Back Bay,42.34735,-71.075727,Orange
+70012,Massachusetts Ave.,42.341512,-71.083423,Orange
+70010,Ruggles,42.336377,-71.088961,Orange
+70009,Roxbury Crossing,42.331397,-71.095451,Orange
+70007,Jackson Square,42.323132,-71.099592,Orange
+70004,Stony Brook,42.317062,-71.104248,Orange
+70003,Green Street,42.310525,-71.107414,Orange
+70001,Forest Hills,42.300523,-71.113686,Orange

@@ -194,14 +194,12 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
             } else {
                 station2time.setText(formatTime(time2.get(0)));
             }
-
-
         }
     }
 
     private String formatTime(String time) {
         int seconds = Integer.parseInt(time);
-        if(seconds < 60){
+        if(seconds < 30){
             return "ARR";
         } else {
             return ((seconds/60) + 1) + " min";
