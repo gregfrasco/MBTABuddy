@@ -135,6 +135,7 @@ public class MapManager implements RoutingListener{
         Marker newMarker = map.addMarker(new MarkerOptions()
                         .position(location)
                         .title(title)
+                        .anchor(0.5f,0.5f)
         );
         TrainMarker newtm = new TrainMarker(line, newMarker, vehicleNum);
         trainMarkers.add(newtm);
@@ -183,9 +184,10 @@ public class MapManager implements RoutingListener{
 
     public void addStationMarker(String stationName, LatLng location) {
         Marker newMarker = map.addMarker(new MarkerOptions()
-                        .position(location)
-                        .title(stationName)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_station)));
+                .position(location)
+                .title(stationName)
+                .anchor(0.5f, 0.5f)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_station)));
         StationMarker newsm = new StationMarker(stationName, newMarker);
         stationMarkers.add(newsm);
     }
@@ -206,8 +208,9 @@ public class MapManager implements RoutingListener{
         if(map != null) {
             Marker meMarker = map.addMarker(new MarkerOptions()
                             .position(location)
-                            .title(title)
-                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_myloc)));
+                    .title(title)
+                    .anchor(0.5f,0.5f)
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_myloc)));
             myMarker = meMarker;
         }
     }
