@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 
+import com.Activities.MainActivity;
 import com.Activities.StationActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,7 +17,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -269,8 +275,20 @@ public class MapManager implements RoutingListener{
     }
 
     public void drawAllStations(){
-        for(Line line: Lines.getInstance().values()){
-            this.drawStations(line);
+
+        try{
+            InputStream is = MainActivity.context.getAssets().open("stations.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String line = br.readLine(); // remove headers
+            while((line = br.readLine()) != null){
+                List<String> stationInfo = new ArrayList<String>(Arrays.asList(line.split(",")));
+                Station station = new Station(stationInfo);
+                this.addStationMarker(station.getStationID(),station.getLatLan());
+            }
+        } catch (IOException e) {
+            for(Line line: Lines.getInstance().values()){
+                this.drawStations(line);
+            }
         }
     }
 
