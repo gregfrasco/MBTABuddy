@@ -269,7 +269,14 @@ public class MBTA{
         Gson gson = new Gson();
         PredictionsByStop predictionsByStop = gson.fromJson(apiResult, PredictionsByStop.class);
         List<String> times = new ArrayList<String>();
-        List<Trip> trips = predictionsByStop.getMode().get(0).getRoute().get(0).getDirection().get(0).getTrip();
+        List<Trip> trips = new ArrayList<Trip>();
+        if(predictionsByStop.getMode().size() > 0){
+            if(predictionsByStop.getMode().get(0).getRoute().size() > 0){
+                if(predictionsByStop.getMode().get(0).getRoute().get(0).getDirection().size() > 0) {
+                     trips = predictionsByStop.getMode().get(0).getRoute().get(0).getDirection().get(0).getTrip();
+                }
+            }
+        }
         for(Trip trip: trips){
             times.add(trip.getPreAway());
         }

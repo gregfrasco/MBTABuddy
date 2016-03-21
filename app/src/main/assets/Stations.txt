@@ -27,8 +27,8 @@ stationID,stationName,latitude,longitude,lineIDs
 70278,Assembly,42.392811,-71.077257,Orange
 70031,Sullivan Square,42.383975,-71.076994,Orange
 70029,Community College,42.373622,-71.069533,Orange
-70026,North Station,42.365577,-71.06129,Orange
-70024,Haymarket,42.363021,-71.05829,Orange
+70026,North Station,42.365577,-71.06129,Orange,Green-C,Green-E
+70024,Haymarket,42.363021,-71.05829,Orange,Green-C,Green-E
 70022,State Street,42.3588898,-71.0577078,Orange,Blue
 70018,Chinatown,42.352547,-71.062752,Orange
 70017,Tufts Medical Center,42.349662,-71.063917,Orange
@@ -51,3 +51,34 @@ stationID,stationName,latitude,longitude,lineIDs
 70044,Aquarium,42.359784,-71.051652,Blue
 70040,Government Center,42.3592469,-71.0594724,Blue,Green-C,Green-D,Green-E
 70038,Bowdoin,42.361365,-71.062037,Blue
+70210,Lechmere,42.37116,-71.07715,Green-E
+70208,Science Park,42.366664,-71.067666,Green-E
+70159,Boylston,42.35302,-71.06459,Green-B,Green-C,Green-D,Green-E
+70157,Arlington,42.351902,-71.070893,Green-B,Green-C,Green-D,Green-E
+70155,Copley,42.349974,-71.077447,Green-B,Green-C,Green-D,Green-E
+70239,Prudential,42.34557,-71.081696,Green-E
+70241,Symphony,42.342687,-71.085056,Green-E
+70243,Northeastern University,42.340401,-71.088806,Green-E
+70245,Museum of Fine Arts,42.337711,-71.095512,Green-E
+70247,Longwood Medical Area,42.33596,-71.100052,Green-E
+70249,Brigham Circle,42.334229,-71.104609,Green-E
+70251,Fenwood Road,42.333706,-71.105728,Green-E
+70253,Mission Park,42.333195,-71.109756,Green-E
+70255,Riverway,42.331684,-71.111931,Green-E
+70257,Back of the Hill,42.330139,-71.111313,Green-E
+70259,Heath Street,42.328681,-71.110559,Green-E
+70153,Hynes Convention Center,42.347888,-71.087903,Green-B,Green-C,Green-D
+70151,Kenmore,42.348949,-71.095169,Green-B,Green-C,Green-D
+70187,Fenway,42.345394,-71.104187,Green-D
+70183,Longwood,42.341145,-71.110451,Green-D
+70181,Brookline Village,42.332774,-71.116296,Green-D
+70179,Brookline Hills,42.331333,-71.126999,Green-D
+70177,Beaconsfield,42.335846,-71.140823,Green-D
+70175,Reservoir,42.335027,-71.148952,Green-D
+70173,Chestnut Hill,42.326653,-71.165314,Green-D
+70171,Newton Centre,42.329391,-71.192429,Green-D
+70169,Newton Highlands,42.321735,-71.206116,Green-D
+70167,Eliot,42.319023,-71.216713,Green-D
+70165,Waban,42.325943,-71.230728,Green-D
+70163,Woodland,42.333374,-71.244301,Green-D
+70161,Riverside,42.33737,-71.2526,Green-D
