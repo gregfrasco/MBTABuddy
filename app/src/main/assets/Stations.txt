@@ -1,5 +1,5 @@
 stationID,stationName,latitude,longitude,lineIDs
-70061,Alewife,42.3961025,-71.1395901,Red
+70061,Alewife,42.3961496,-71.1420806,Red
 70063,Davis,42.3967488,-71.1218155,Red
 70066,Porter,42.3883876,-71.1191476,Red
 70068,Harvard,42.3733738,-71.1189549,Red
@@ -16,12 +16,12 @@ stationID,stationName,latitude,longitude,lineIDs
 70099,Wollaston,42.2667694,-71.0205142,Red
 70101,Quincy Center,42.2519916,-71.0055016,Red
 70104,Quincy Adams,42.233391,-71.007153,Red
-70105,Braintree,42.2072678,-71.0012343,Red
+70105,Braintree,42.2083708,-71.0014228,Red
 70088,Savin Hill,42.3112534,-71.0533316,Red
 70090,Fields Corner,42.2999406,-71.0618518,Red
 70092,Shawmut,42.2931284,-71.0658033,Red
 70093,Ashmont,42.2844548,-71.0637444,Red
-70036,Oak Grove,42.43668,-71.071097,Orange
+70036,Oak Grove,42.4366626,-71.0709152,Orange
 70035,Malden Center,42.426632,-71.07411,Orange
 70032,Wellington,42.40237,-71.077082,Orange
 70278,Assembly,42.392811,-71.077257,Orange
@@ -39,7 +39,7 @@ stationID,stationName,latitude,longitude,lineIDs
 70007,Jackson Square,42.323132,-71.099592,Orange
 70004,Stony Brook,42.317062,-71.104248,Orange
 70003,Green Street,42.310525,-71.107414,Orange
-70001,Forest Hills,42.300523,-71.113686,Orange
+70001,Forest Hills,42.3007313,-71.1141017,Orange
 70060,Wonderland,42.41342,-70.991648,Blue
 70058,Revere Beach,42.40784254,-70.99253321,Blue
 70056,Beachmont,42.39754234,-70.99231944,Blue
