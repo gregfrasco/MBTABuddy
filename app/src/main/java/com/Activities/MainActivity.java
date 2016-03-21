@@ -1,6 +1,5 @@
 package com.Activities;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -21,6 +20,7 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import DataManagement.LoadingDialogManager;
 import mbta.Lines;
 import mbta.mbtabuddy.R;
 
@@ -137,6 +137,10 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //Show loading box
+                LoadingDialogManager.getInstance().ShowLoading(view.getContext());
+
                 //Check if we have a network connection
                 ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
                 if(cm.getActiveNetworkInfo() == null || !cm.getActiveNetworkInfo().isConnected())
@@ -191,6 +195,8 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -239,7 +245,7 @@ class MBTADrawerListener implements DrawerLayout.DrawerListener
     private boolean switchNext = false;
     private Context context;
 
-    public MBTADrawerListener(android.support.v4.app.FragmentManager fManager, Context cont)
+    public MBTADrawerListener(android.support.v4.app.FragmentManager fManager, MainActivity cont)
     {
         context = cont;
         fm = fManager;
@@ -263,23 +269,17 @@ class MBTADrawerListener implements DrawerLayout.DrawerListener
 
     @Override public void onDrawerClosed(View view)
     {
-        final ProgressDialog pd = new ProgressDialog(context);
-        pd.setMessage("Loading...");
-        pd.setIndeterminate(true);
-        pd.setCancelable(false);
-        pd.show();
-
         new Thread(){
 
             @Override public void run(){
-                if(!pd.isShowing())
-                    pd.show();
                 fm.beginTransaction().replace(R.id.fragmentContent, nextFrag).commit();
                 switchNext = false;
-                pd.dismiss();
+                LoadingDialogManager.getInstance().DismissLoading();
             }
         }.start();
     }
+
+
 
     @Override
     public void onDrawerStateChanged(int newState) {
