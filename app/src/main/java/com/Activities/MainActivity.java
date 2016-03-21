@@ -269,6 +269,7 @@ class MBTADrawerListener implements DrawerLayout.DrawerListener
 
     @Override public void onDrawerClosed(View view)
     {
+        //Start next fragment when the drawer closes
         new Thread(){
 
             @Override public void run(){
