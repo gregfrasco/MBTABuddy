@@ -56,6 +56,9 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Set AB color
+        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ab_color));
+
         //If no connection insert our no connection fragment
         if(isNoConnection) {
             Fragment noConnectFrag = new NoConnectionFragment();
@@ -269,15 +272,18 @@ class MBTADrawerListener implements DrawerLayout.DrawerListener
 
     @Override public void onDrawerClosed(View view)
     {
-        //Start next fragment when the drawer closes
-        new Thread(){
+        if(switchNext) {
+            //Start next fragment when the drawer closes
+            new Thread() {
 
-            @Override public void run(){
-                fm.beginTransaction().replace(R.id.fragmentContent, nextFrag).commit();
-                switchNext = false;
-                LoadingDialogManager.getInstance().DismissLoading();
-            }
-        }.start();
+                @Override
+                public void run() {
+                    fm.beginTransaction().replace(R.id.fragmentContent, nextFrag).commit();
+                    switchNext = false;
+                    LoadingDialogManager.getInstance().DismissLoading();
+                }
+            }.start();
+        }
     }
 
 

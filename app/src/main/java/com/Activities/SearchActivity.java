@@ -15,7 +15,9 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import DataManagement.LoadingDialogManager;
 import mbta.Line;
 import mbta.Lines;
 import mbta.Station;
@@ -53,7 +55,7 @@ public class SearchActivity extends AppCompatActivity {
         else if(intent.hasExtra("stationsForLine"))
         {
             int stations = (int) intent.getExtras().get("stationsForLine");
-            new AllStationsForLineAsync(getBaseContext(), stations).execute();
+            new AllStationsForLineAsync(this, stations).execute();
         }
 
         //Set up search button
@@ -155,21 +157,18 @@ public class SearchActivity extends AppCompatActivity {
 
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    LoadingDialogManager.getInstance().ShowLoading(view.getContext());
                     String stationName = parent.getItemAtPosition(position).toString();
                     String stationId = matchStation.get(stationName);
-                    for (Line line : Lines.getInstance().values()) {
-                        for (Station station : line.getStations()) {
-                            if (station.getStationID().equals(stationId)) {
-                                Intent intent = new Intent(SearchActivity.this, StationActivity.class);
-                                intent.putExtra("ID", stationId);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-                    }
+                    List<Line> lines = Lines.getInstance().values();
+
+                    //Start station Activity with the stationId
+                    Intent intent = new Intent(SearchActivity.this, StationActivity.class);
+                    intent.putExtra("ID", stationId);
+                    startActivity(intent);
+                    finish();
                 }
             });
-
         }
     }
 }

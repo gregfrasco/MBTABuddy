@@ -14,6 +14,7 @@ import java.lang.reflect.Array;
 import java.util.List;
 import java.util.zip.Inflater;
 
+import DataManagement.LoadingDialogManager;
 import gmap.TrainMarker;
 import mbta.Line;
 import mbta.Lines;
@@ -54,9 +55,12 @@ public class ByListListAdapter extends ArrayAdapter<ByLineListContainer> {
         listItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoadingDialogManager.getInstance().ShowLoading(cont);
                 Intent searchActIntent = new Intent(cont, SearchActivity.class);
                 searchActIntent.putExtra("stationsForLine", getItem(position).lineColor.getColor());
+                LoadingDialogManager.getInstance().DismissLoading();
                 cont.startActivity(searchActIntent);
+
             }
         });
 

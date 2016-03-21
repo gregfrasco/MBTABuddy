@@ -30,6 +30,7 @@ import java.util.List;
 
 import DataManagement.FavoritesDataContainer;
 import DataManagement.IconHelper;
+import DataManagement.LoadingDialogManager;
 import directions.AbstractRouting;
 import directions.Route;
 import directions.RouteException;
@@ -59,6 +60,9 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station);
+
+        LoadingDialogManager.getInstance().ShowLoading(this);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.stationMap);
@@ -71,13 +75,14 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         setTitle(station.getStationName());
         this.mapManager = new MapManager(this);
 
-
-
+        //Set our view components
         TextView name = (TextView) findViewById(R.id.stationName);
         name.setText(this.station.getStationName());
         LinearLayout stationHeader = (LinearLayout) findViewById(R.id.stationHeader);
         stationHeader.setBackgroundColor(this.station.getLine().get(0).getColor());
 
+        //We are done loading
+        LoadingDialogManager.getInstance().DismissLoading();
     }
 
 

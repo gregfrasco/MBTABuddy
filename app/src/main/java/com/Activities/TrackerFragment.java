@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -98,7 +99,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         }
         //Create adapter
         ByListListAdapter adapter = new ByListListAdapter(getActivity(), 0, lineItems);
-        ListView lineList = (ListView) view.findViewById(R.id.byLineList);
+        GridView lineList = (GridView) view.findViewById(R.id.byLineList);
 
         //Set adapter
         lineList.setAdapter(adapter);
