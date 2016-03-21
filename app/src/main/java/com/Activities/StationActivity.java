@@ -172,7 +172,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
                 this.dialog.dismiss();
             }
             this.mapManager.drawTrainLines(station.getLine());
-            this.mapManager.drawAdjustedStations(station.getLine());
+            this.mapManager.drawStations(station.getLine());
             this.mapManager.addTrains(station.getLine(), station);
             this.mapManager.zoomToStationMarker(station.getStationID(), 16);
             TextView station1 = (TextView) findViewById(R.id.station1);

@@ -196,7 +196,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
 
         @Override
         protected void onPostExecute(Void result) {
-            Line line = Lines.getInstance().OrangeLine; // Deleate Later
+            Line line = Lines.getInstance().BlueLine; // Deleate Later
             Station station = Lines.getInstance().OrangeLine.getStations().get(0);
             mapManager.zoomToStationMarker(station.getStationID(),17);
             pd.dismiss();
