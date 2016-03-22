@@ -1,6 +1,5 @@
 package com.Activities;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -21,25 +20,26 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import DataManagement.LoadingDialogManager;
 import mbta.Lines;
 import mbta.mbtabuddy.R;
 
 public class MainActivity extends ActionBarActivity {
 
-    public static Context context;
     static final String TAG = "MainActivity";
     private DrawerLayout drawerMainLayout;
     private ListView drawerList;
     private RelativeLayout drawerRelativeLayout;
     private ActionBarDrawerToggle drawerToggle;
     private String[] drawerLabels;
+    public static Context context;
 
     //TODO: Store this some other way
     TrackerFragment trackerFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        context = this.getApplicationContext(); // to get assets file later;
+
         boolean isNoConnection = false;
         //Check if there is a network connection
         FragmentManager fm = getSupportFragmentManager();
@@ -49,11 +49,15 @@ public class MainActivity extends ActionBarActivity {
                         cm.getActiveNetworkInfo().getTypeName().equalsIgnoreCase("MOBILE"))) {
             isNoConnection = true;
         } else {
+            context = this.getApplicationContext();
             Lines.getInstance(); // Init Lines First
         }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Set AB color
+        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ab_color));
 
         //If no connection insert our no connection fragment
         if (isNoConnection) {
@@ -134,6 +138,10 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //Show loading box
+                LoadingDialogManager.getInstance().ShowLoading(view.getContext());
+
                 //Check if we have a network connection
                 ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
                 if (cm.getActiveNetworkInfo() == null || !cm.getActiveNetworkInfo().isConnected()) {
@@ -184,6 +192,7 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -224,13 +233,14 @@ public class MainActivity extends ActionBarActivity {
      * loading screen in the main thread
      */
 
+
     private class MBTADrawerListener implements DrawerLayout.DrawerListener {
         private android.support.v4.app.FragmentManager fm;
         private android.support.v4.app.Fragment nextFrag;
         private boolean switchNext = false;
         private Context context;
 
-        public MBTADrawerListener(android.support.v4.app.FragmentManager fManager, Context cont) {
+        public MBTADrawerListener(android.support.v4.app.FragmentManager fManager, MainActivity cont) {
             context = cont;
             fm = fManager;
         }
@@ -252,24 +262,20 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public void onDrawerClosed(View view) {
-            final ProgressDialog pd = new ProgressDialog(context);
-            pd.setMessage("Loading...");
-            pd.setIndeterminate(true);
-            pd.setCancelable(false);
-            pd.show();
+            if (switchNext) {
+                //Start next fragment when the drawer closes
+                new Thread() {
 
-            new Thread() {
-
-                @Override
-                public void run() {
-                    if (!pd.isShowing())
-                        pd.show();
-                    fm.beginTransaction().replace(R.id.fragmentContent, nextFrag).commit();
-                    switchNext = false;
-                    pd.dismiss();
-                }
-            }.start();
+                    @Override
+                    public void run() {
+                        fm.beginTransaction().replace(R.id.fragmentContent, nextFrag).commit();
+                        switchNext = false;
+                        LoadingDialogManager.getInstance().DismissLoading();
+                    }
+                }.start();
+            }
         }
+
 
         @Override
         public void onDrawerStateChanged(int newState) {

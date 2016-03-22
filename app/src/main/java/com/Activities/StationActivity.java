@@ -32,6 +32,8 @@ import java.util.List;
 
 import DataManagement.FavoritesDataContainer;
 import DataManagement.IconHelper;
+import DataManagement.LoadingDialogManager;
+import DataManagement.StationFavContainer;
 import directions.AbstractRouting;
 import directions.Route;
 import directions.RouteException;
@@ -42,8 +44,6 @@ import gmap.MapManager;
 import gmap.StationMarker;
 import gmap.TrainMarker;
 import mbta.ArrivalTime;
-import mbta.CountdownTimer;
-import mbta.CountdownTimerListener;
 import mbta.Line;
 import mbta.Lines;
 import mbta.MBTA;
@@ -70,6 +70,8 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station);
 
+        LoadingDialogManager.getInstance().ShowLoading(this);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.stationMap);
@@ -89,11 +91,30 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         station1.setText(this.station.getLine().get(0).getTerminalStation1().getStationName());
         station2.setText(this.station.getLine().get(0).getTerminalStation2().getStationName());
 
+        //Set our view components
         TextView name = (TextView) findViewById(R.id.stationName);
         name.setText(this.station.getStationName());
         LinearLayout stationHeader = (LinearLayout) findViewById(R.id.stationHeader);
         stationHeader.setBackgroundColor(this.station.getLine().get(0).getColor());
         initCountDownClicks();
+
+        List<FavoritesDataContainer> favs =
+                (List<FavoritesDataContainer>)DataStorageManager.getInstance().LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);
+
+        for(FavoritesDataContainer fav : favs)
+        {
+            if(fav.getClass().equals(StationFavContainer.class)) {
+                if (((StationFavContainer)fav).StationId.equals(station.getStationID()))
+                {
+                    Drawable filledStarDrawable = getResources().getDrawable(R.drawable.ic_star_24dp);
+                    ImageButton favoritesButton = (ImageButton) findViewById(R.id.favoriteButton);
+                    favoritesButton.setImageBitmap(IconHelper.drawableToBitmap(filledStarDrawable));
+                }
+            }
+        }
+
+        //We are done loading
+        LoadingDialogManager.getInstance().DismissLoading();
     }
 
 

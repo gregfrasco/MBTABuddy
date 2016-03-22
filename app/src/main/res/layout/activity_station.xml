@@ -80,12 +80,24 @@
              </LinearLayout>
          </LinearLayout>
 
+     <ImageButton
+         android:layout_width="70dp"
+         android:layout_height="70dp"
+         android:text="Favorite Station"
+         android:background="@drawable/buttonshape"
+         android:shadowColor="#ff388519"
+         android:id="@+id/favoriteButton"
+         android:onClick="addFavoriteStation"
+         android:src="@drawable/ic_star_outline_24dp"
+         android:layout_gravity="right"
+         android:layout_below="@+id/stationHeader"
+         android:layout_alignParentEnd="true" />
+
      <LinearLayout
          android:orientation="vertical"
          android:layout_width="fill_parent"
          android:layout_height="wrap_content"
          android:layout_weight="1"
-         android:layout_alignParentBottom="false"
          android:id="@+id/stationHeader"
          android:layout_alignParentTop="true">
 
@@ -95,6 +107,7 @@
              android:layout_height="match_parent">
 
              <TextView
+                 android:layout_marginBottom="5dp"
                  android:layout_width="fill_parent"
                  android:layout_height="wrap_content"
                  android:textAppearance="?android:attr/textAppearanceLarge"
@@ -103,24 +116,10 @@
                  android:textAlignment="center"
                  android:layout_marginTop="10dp"
                  android:textColor="#ffffff"
-                 android:typeface="monospace"
+                 android:fontFamily="sans-serif"
                  android:textSize="25dp" />
 
          </LinearLayout>
-
-         <ImageButton
-             android:background="@android:color/holo_blue_dark"
-             android:layout_width="70dp"
-             android:layout_height="70dp"
-             android:text="Favorite Station"
-             android:id="@+id/favoriteButton"
-             android:onClick="addFavoriteStation"
-             android:src="@drawable/ic_star_24dp"
-             android:layout_alignParentBottom="false"
-             android:layout_alignParentEnd="true"
-             android:layout_alignParentTop="true"
-             android:layout_alignParentStart="false"
-             android:layout_gravity="right" />
 
      </LinearLayout>
 

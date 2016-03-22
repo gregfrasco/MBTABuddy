@@ -3,6 +3,7 @@ package com.Activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,12 +11,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import DataManagement.IconHelper;
+import DataManagement.LoadingDialogManager;
 import mbta.Line;
 import mbta.Lines;
 import mbta.Station;
@@ -48,12 +53,17 @@ public class SearchActivity extends AppCompatActivity {
             //Perform the search and listView data
             new SearchStationsAsync(getBaseContext(), searchString).execute();
         }
-
-        //When we are requesting all of the stations for a line
         else if(intent.hasExtra("stationsForLine"))
         {
+            //When we are requesting all of the stations for a line
             int stations = (int) intent.getExtras().get("stationsForLine");
-            new AllStationsForLineAsync(getBaseContext(), stations).execute();
+            new AllStationsForLineAsync(this, stations).execute();
+        }
+        else
+        {
+            //If there is no intent get rid of the loading circle because we will not be loading anything
+            RelativeLayout pg = (RelativeLayout) findViewById(R.id.loadingPanel);
+            pg.setVisibility(View.GONE);
         }
 
         //Set up search button
@@ -155,21 +165,18 @@ public class SearchActivity extends AppCompatActivity {
 
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    LoadingDialogManager.getInstance().ShowLoading(view.getContext());
                     String stationName = parent.getItemAtPosition(position).toString();
                     String stationId = matchStation.get(stationName);
-                    for (Line line : Lines.getInstance().values()) {
-                        for (Station station : line.getStations()) {
-                            if (station.getStationID().equals(stationId)) {
-                                Intent intent = new Intent(SearchActivity.this, StationActivity.class);
-                                intent.putExtra("ID", stationId);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-                    }
+                    List<Line> lines = Lines.getInstance().values();
+
+                    //Start station Activity with the stationId
+                    Intent intent = new Intent(SearchActivity.this, StationActivity.class);
+                    intent.putExtra("ID", stationId);
+                    startActivity(intent);
+                    finish();
                 }
             });
-
         }
     }
 }

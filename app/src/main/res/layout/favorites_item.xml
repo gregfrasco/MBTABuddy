@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:layout_marginLeft="10dp"
         android:textStyle="bold"
         android:fontFamily="Helvetica"
         android:text="PlaceHolder"
@@ -15,6 +16,7 @@
         android:textColor="#040303" />
 
     <ImageButton
+        android:background="#00ffffff"
         android:visibility="invisible"
         android:layout_gravity="right"
         android:layout_weight="6"
