@@ -14,7 +14,7 @@
 
     <RelativeLayout
         android:id = "@+id/left_drawerLayout"
-        android:layout_width="240dp"
+        android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_gravity="start">
 
@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"
             android:divider="@android:color/holo_blue_dark"
-            android:dividerHeight="1dp"
+            android:dividerHeight="2dp"
             android:background="@android:color/white">
 
         </ListView>

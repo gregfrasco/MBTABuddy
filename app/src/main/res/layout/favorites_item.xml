@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:layout_marginLeft="10dp"
         android:textStyle="bold"
         android:fontFamily="Helvetica"
         android:text="PlaceHolder"

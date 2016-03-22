@@ -31,6 +31,7 @@ import java.util.List;
 import DataManagement.FavoritesDataContainer;
 import DataManagement.IconHelper;
 import DataManagement.LoadingDialogManager;
+import DataManagement.StationFavContainer;
 import directions.AbstractRouting;
 import directions.Route;
 import directions.RouteException;
@@ -80,6 +81,21 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         name.setText(this.station.getStationName());
         LinearLayout stationHeader = (LinearLayout) findViewById(R.id.stationHeader);
         stationHeader.setBackgroundColor(this.station.getLine().get(0).getColor());
+
+        List<FavoritesDataContainer> favs =
+                (List<FavoritesDataContainer>)DataStorageManager.getInstance().LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);
+
+        for(FavoritesDataContainer fav : favs)
+        {
+            if(fav.getClass().equals(StationFavContainer.class)) {
+                if (((StationFavContainer)fav).StationId.equals(station.getStationID()))
+                {
+                    Drawable filledStarDrawable = getResources().getDrawable(R.drawable.ic_star_24dp);
+                    ImageButton favoritesButton = (ImageButton) findViewById(R.id.favoriteButton);
+                    favoritesButton.setImageBitmap(IconHelper.drawableToBitmap(filledStarDrawable));
+                }
+            }
+        }
 
         //We are done loading
         LoadingDialogManager.getInstance().DismissLoading();

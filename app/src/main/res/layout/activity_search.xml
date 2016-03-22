@@ -22,13 +22,20 @@
 
             <EditText
                 android:id="@+id/searchBar"
-                android:layout_width="270dp"
+                android:layout_weight="8"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content">
+
             </EditText>
 
             <Button
+                android:background="@drawable/buttonshape"
+                android:shadowColor="#ff388519"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
                 android:text="@string/search_text"
-                android:layout_width="90dp"
+                android:layout_width="0dp"
+                android:layout_weight="3"
                 android:layout_height="match_parent"
                 android:id="@+id/search_for_button" />
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import DataManagement.DataStorageManager;
 import DataManagement.FavoritesDataContainer;
+import DataManagement.LoadingDialogManager;
 import DataManagement.StationFavContainer;
 import mbta.mbtabuddy.R;
 
@@ -118,6 +120,22 @@ public class FavoritesFragment extends Fragment {
             });
         }
 
+        //Floating action button for adding a favorite
+        FloatingActionButton addFav = (FloatingActionButton) view.findViewById(R.id.addFavButton);
+        addFav.setBackgroundTintList(getResources().getColorStateList(R.color.primary_UI_blue));
+        addFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoadingDialogManager.getInstance().ShowLoading(getContext());
+                //Start search activity for adding favorites
+                Intent searchIntent = new Intent(getActivity(), SearchActivity.class);
+                LoadingDialogManager.getInstance().DismissLoading();
+                startActivity(searchIntent);
+            }
+        });
+
+
+
         return view;
     }
 
@@ -130,7 +148,7 @@ public class FavoritesFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(
-            Menu menu, MenuInflater inflater)
+            Menu menu, final MenuInflater inflater)
     {
         inflater.inflate(R.menu.favorites_menu, menu);
         MenuItem removeItem = menu.findItem(R.id.action_remove);
@@ -190,9 +208,11 @@ public class FavoritesFragment extends Fragment {
         addItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                LoadingDialogManager.getInstance().ShowLoading(getContext());
                 //Start search activity for adding favorites
                 Intent searchIntent = new Intent(getActivity(), SearchActivity.class);
                 startActivity(searchIntent);
+                LoadingDialogManager.getInstance().DismissLoading();
 
                 return false;
             }

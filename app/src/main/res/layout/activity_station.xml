@@ -88,7 +88,7 @@
          android:shadowColor="#ff388519"
          android:id="@+id/favoriteButton"
          android:onClick="addFavoriteStation"
-         android:src="@drawable/ic_star_24dp"
+         android:src="@drawable/ic_star_outline_24dp"
          android:layout_gravity="right"
          android:layout_below="@+id/stationHeader"
          android:layout_alignParentEnd="true" />
