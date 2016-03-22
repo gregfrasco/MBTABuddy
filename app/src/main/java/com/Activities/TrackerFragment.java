@@ -1,6 +1,7 @@
 package com.Activities;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,13 +12,20 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.google.android.gms.ads.formats.NativeAd;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -52,13 +60,12 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstancetate) {
         Log.v("Tracker", "View Created");
-        View retView = inflater.inflate(R.layout.activity_tracker, container, false);
+        final View retView = inflater.inflate(R.layout.activity_tracker, container, false);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
 
         //Get our GDirections instance, give it context
         gDirections = GDirections.getInstance();
@@ -77,6 +84,73 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
                 Intent searchIntent = new Intent(getActivity(), SearchActivity.class);
                 searchIntent.putExtra("searchString", searchString);
                 startActivity(searchIntent);
+            }
+        });
+
+        final Animation animShow, animHide;
+        animShow = AnimationUtils.loadAnimation(getActivity(), R.anim.view_show);
+        animHide = AnimationUtils.loadAnimation(getActivity(), R.anim.view_hide);
+
+        //Sliding to open the stations by line
+        final View slide = retView.findViewById(R.id.open_stations_button);
+        final int MIN_DIST = 20;
+        final View byLineView = retView.findViewById(R.id.stations_by_line);
+        byLineView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+
+                        if(byLineView.getVisibility() == View.GONE) {
+
+                        }
+                        else{
+                            slide.setVisibility(View.VISIBLE);
+                            byLineView.setVisibility(View.GONE);
+                            byLineView.startAnimation(animHide);
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                return true;
+            }
+        });
+
+        slide.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction())
+                {
+                    case MotionEvent.ACTION_UP:
+                        if(byLineView.getVisibility() == View.GONE) {
+                            slide.setVisibility(View.INVISIBLE);
+                            byLineView.setVisibility(View.VISIBLE);
+                            byLineView.startAnimation(animShow);
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                return true;
+            }
+        });
+
+        View mapLayout = retView.findViewById(R.id.map_layout);
+        mapLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(byLineView.getVisibility() == View.VISIBLE) {
+                    byLineView.setVisibility(View.GONE);
+                    byLineView.startAnimation(animHide);
+                }
+
+                return true;
             }
         });
 
@@ -201,4 +275,3 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
     }
 
 }
-
