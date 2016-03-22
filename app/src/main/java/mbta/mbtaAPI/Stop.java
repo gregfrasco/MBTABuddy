@@ -49,6 +49,8 @@ public class Stop {
     @Expose
     private String preAway;
 
+
+
     /**
      *
      * @return

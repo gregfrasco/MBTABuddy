@@ -48,6 +48,7 @@ import mbta.Line;
 import mbta.Lines;
 import mbta.MBTA;
 import mbta.Station;
+import mbta.Stop;
 import mbta.mbtaAPI.Vehicle;
 import mbta.mbtabuddy.R;
 
@@ -149,20 +150,20 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     private void initCountDownClicks(){
         this.countDownClocks = new HashMap<String,TextView>();
         int count = 0;
-        for(String stopID: this.station.getStopIDs()){
+        for(Stop stop: this.station.getStopIDs()){
             if(count == 0) {
-                this.countDownClocks.put(stopID, this.station1time);
+                this.countDownClocks.put(stop.getStopID(), this.station1time);
                 count += 1;
             } else if(count == 1) {
-                this.countDownClocks.put(stopID,this.station2time);
+                this.countDownClocks.put(stop.getStopID(),this.station2time);
                 count += 1;
             } else {
                 break;
             }
-            ArrivalTime arrivalTime = this.station.getArrivalTimes(stopID);
-            CountDownClock countDownClock = new CountDownClock(arrivalTime.getFirstTime(),1000,stopID);
+            ArrivalTime arrivalTime = this.station.getArrivalTimes(stop.getStopID());
+            CountDownClock countDownClock = new CountDownClock(arrivalTime.getFirstTime(),1000,stop.getStopID());
             countDownClock.start();
-            updateCountdownClock(stopID,arrivalTime.getFirstTime());
+            updateCountdownClock(stop.getStopID(),arrivalTime.getFirstTime());
         }
     }
 

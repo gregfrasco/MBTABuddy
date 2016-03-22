@@ -356,12 +356,12 @@ public class MBTA{
         return null;
     }
 
-    public List<String> getAllStops(Station station, List<Line> lines) {
-        List<String> stopIDs = new ArrayList<String>();
+    public List<mbta.Stop> getAllStops(Station station, List<Line> lines) {
+        List<mbta.Stop> stopIDs = new ArrayList<mbta.Stop>();
         for(Line line:lines){
             for(Stop stop:this.getStopsByRoute(line)){
                 if(station.getStationName().equals(stop.getParentStationName())){
-                    stopIDs.add(stop.getStopId());
+                    stopIDs.add(new mbta.Stop(stop.getStopId()));
                 }
             }
         }

@@ -1,11 +1,17 @@
 package mbta;
 
+import com.Activities.MainActivity;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import mbta.mbtaAPI.Stop;
+import mbta.Stop;
 
 /**
  * Created by frascog on 2/17/16.
@@ -14,13 +20,13 @@ public class Station {
 
     private List<Line> lines;
     private String stationID;
-    private List<String> stopIDs;
+    private List<Stop> stopIDs;
     private String stationName;
     private double latitue;
     private double longitude;
     private ArrivalTime arrivalTimes;
 
-    public Station(Stop stop) {
+    public Station(mbta.mbtaAPI.Stop stop) {
         this.setStationID(stop.getStopId());
         this.setStationName(stop.getParentStationName());
         this.setLatitude(Double.parseDouble(stop.getStopLat()));
@@ -86,10 +92,28 @@ public class Station {
         return new LatLng(this.getLatitude(),this.getLongitude());
     }
 
-    public List<String> getStopIDs() {
+    public List<Stop> getStopIDs() {
         if(stopIDs == null) {
-            this.stopIDs = new ArrayList<String>();
-            this.stopIDs = MBTA.getInstance().getAllStops(this, this.getLine());
+            try{
+                List<Stop> stops = new ArrayList<Stop>();
+                InputStream is = MainActivity.context.getAssets().open("StopIDs.txt");
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                String line = br.readLine(); // remove headers
+                while((line = br.readLine()) != null) {
+                    if (line.contains(this.stationID)) {
+                        String[] numberOfStops = line.split(",");
+                        for (String stop : numberOfStops) {
+                            String[] newStop = line.split(";");
+                            stops.add(new Stop(newStop[0], newStop[1], newStop[2], newStop[3]));
+                        }
+                        break;
+                    }
+                }
+                this.stopIDs = stops;
+            } catch (IOException e) {
+                this.stopIDs = new ArrayList<Stop>();
+                this.stopIDs = MBTA.getInstance().getAllStops(this, this.getLine());
+            }
         }
         return stopIDs;
     }

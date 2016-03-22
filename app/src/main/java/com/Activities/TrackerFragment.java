@@ -194,7 +194,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         @Override
         protected void onPostExecute(Void result)
         {
-            Station station = Lines.getInstance().GreenLineE.getStations().get(0);
+            Station station = Lines.getInstance().RedLine.getStations().get(0);
             mapManager.zoomToStationMarker(station.getStationID(),18);
             LoadingDialogManager.getInstance().DismissLoading();
         }
