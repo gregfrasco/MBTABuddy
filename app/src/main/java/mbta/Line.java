@@ -70,7 +70,7 @@ public class Line {
         if(stations == null){
             try{
                 List<Station> stations = new ArrayList<Station>();
-                InputStream is = MainActivity.context.getAssets().open("stations.txt");
+                InputStream is = MainActivity.context.getAssets().open("Stations.txt");
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 String line = br.readLine(); // remove headers
                 while((line = br.readLine()) != null){

@@ -9,17 +9,20 @@ import java.util.List;
  */
 public class ArrivalTime {
 
-    private HashMap<String,List<String>> timesPerStop;
+    private List<Integer> countDownClockTimes;
 
-    public ArrivalTime(Station station) {
-        MBTA mbta = MBTA.getInstance();
-        this.timesPerStop = new HashMap<String,List<String>>();
-        for(String stopID :station.getStopIDs()){
-            timesPerStop.put(stopID,mbta.getPredictionsByStop(stopID));
-        }
+    public ArrivalTime(String stopID) {
+        this.countDownClockTimes = MBTA.getInstance().getPredictionsByStop(stopID);
     }
 
-    public HashMap<String,List<String>> getTimes() {
-        return timesPerStop;
+    public List<Integer> getTimes() {
+        return this.countDownClockTimes;
+    }
+
+    public Integer getFirstTime() {
+        if(countDownClockTimes.size() > 0){
+            return this.countDownClockTimes.get(0) * 1000;
+        }
+        return 60 * 1000; // Check if train info is available in 60 seconds
     }
 }

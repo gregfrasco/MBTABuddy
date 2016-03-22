@@ -74,8 +74,8 @@ public class Station {
         this.longitude = longitude;
     }
 
-    public ArrivalTime getArrivalTimes() {
-        return new ArrivalTime(this);
+    public ArrivalTime getArrivalTimes(String stopID) {
+        return new ArrivalTime(stopID);
     }
 
     public void setArrivalTimes(ArrivalTime arrivalTimes) {

@@ -264,11 +264,11 @@ public class MBTA{
         return remTimeForTripId;
     }
 
-    public List<String> getPredictionsByStop(String stopID){
+    public List<Integer> getPredictionsByStop(String stopID){
         String apiResult = run(mbtaAPI + "predictionsbystop" + apiKey + "&stop=" + stopID + format);
         Gson gson = new Gson();
         PredictionsByStop predictionsByStop = gson.fromJson(apiResult, PredictionsByStop.class);
-        List<String> times = new ArrayList<String>();
+        List<Integer> times = new ArrayList<Integer>();
         List<Trip> trips = new ArrayList<Trip>();
         if(predictionsByStop.getMode().size() > 0){
             if(predictionsByStop.getMode().get(0).getRoute().size() > 0){
@@ -278,7 +278,7 @@ public class MBTA{
             }
         }
         for(Trip trip: trips){
-            times.add(trip.getPreAway());
+            times.add(Integer.parseInt(trip.getPreAway()));
         }
         return times;
     }
