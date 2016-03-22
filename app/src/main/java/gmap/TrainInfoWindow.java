@@ -10,10 +10,6 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
-import java.util.HashMap;
-
-import mbta.Line;
-import mbta.Lines;
 import mbta.MBTA;
 import mbta.mbtaAPI.Direction;
 import mbta.mbtaAPI.Trip;
@@ -51,7 +47,7 @@ public class TrainInfoWindow implements GoogleMap.InfoWindowAdapter {
 
         ImageView image = (ImageView) window.findViewById(R.id.mImage);
         //TODO: change icon based on train (route Enum maybe)
-        image.setImageBitmap(BitmapFactory.decodeResource(cont.getResources(), tMarker.GetIconResource(tMarker.GetLines())));
+        image.setImageBitmap(BitmapFactory.decodeResource(cont.getResources(), TrainMarker.GetIconResource(tMarker.GetLines())));
 
         //Get our Vehicles on the route
         MBTA mbta = MBTA.getInstance();

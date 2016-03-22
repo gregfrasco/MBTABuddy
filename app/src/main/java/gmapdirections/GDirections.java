@@ -32,19 +32,17 @@ public class GDirections {
     private Context cont;
     static GDirections instance;
 
-    public static GDirections getInstance()
-    {
-        if(instance == null)
+    public static GDirections getInstance() {
+        if (instance == null)
             instance = new GDirections();
         return instance;
     }
 
-    public RouteInfoContainer GetRouteInfo(LatLng start, LatLng dest)
-    {
+    public RouteInfoContainer GetRouteInfo(LatLng start, LatLng dest) {
         //Create our new container and make a query for the directions information
         RouteInfoContainer newRouteInfo = new RouteInfoContainer();
         String response = RequestDirectionInfo(start.latitude + "," + start.longitude,
-                dest.latitude + "," + dest.longitude,"transit");
+                dest.latitude + "," + dest.longitude, "transit");
         try {
             //Extract the duration of each leg, of the most optimal route and add up
             double totalTimeSecs = 0;
@@ -72,14 +70,13 @@ public class GDirections {
     /**
      * Usage to get transit information out of the Google Directions API
      */
-    public void Test()
-    {
+    public void Test() {
         String response = RequestDirectionInfo("42.3499239,-71.0782962", "42.3731106,-71.1224075", "transit");
         try {
             JSONObject responseObj = new JSONObject(response);
 
             //Routes: The array of routes requested
-            JSONArray routesArray =  responseObj.getJSONArray("routes");
+            JSONArray routesArray = responseObj.getJSONArray("routes");
 
             //Get the first route (Recommended one)
             JSONObject routesObject = routesArray.getJSONObject(0);
@@ -93,56 +90,47 @@ public class GDirections {
         }
     }
 
-    public void setContext(Context context)
-    {
+    public void setContext(Context context) {
         cont = context;
     }
 
     /**
-     *
-     * @param routesObject
-     *      JSON object from routes array from Google Directions API response (So one of the Routes)
-     * @return
-     *      A string JSON object of just the steps that include public transit
+     * @param routesObject JSON object from routes array from Google Directions API response (So one of the Routes)
+     * @return A string JSON object of just the steps that include public transit
      */
-    private String GetTransitStepsJSON(JSONObject routesObject)
-    {
+    private String GetTransitStepsJSON(JSONObject routesObject) {
         String transitSteps = "";
 
         try {
-        //Gets the array of legs of the route (ie. if there is waypoints,
-        //there will be multiple legs, otherwise just one element, with
-        //steps for that leg
-        JSONArray legsArray = routesObject.getJSONArray("legs"); //Get the legs
+            //Gets the array of legs of the route (ie. if there is waypoints,
+            //there will be multiple legs, otherwise just one element, with
+            //steps for that leg
+            JSONArray legsArray = routesObject.getJSONArray("legs"); //Get the legs
 
-        //Get the first leg for testing sake (We may have more depending on how we do
-        //this, and get the array of steps from that leg
-        JSONArray stepsArray = legsArray.getJSONObject(0).getJSONArray("steps");
+            //Get the first leg for testing sake (We may have more depending on how we do
+            //this, and get the array of steps from that leg
+            JSONArray stepsArray = legsArray.getJSONObject(0).getJSONArray("steps");
 
-        //Now iterate through the steps
-        for (int i = 0; i < stepsArray.length(); i++)
-        {
-            //Get the handle on he step we are on, iterating through the steps
-            JSONObject thisStep = null;
+            //Now iterate through the steps
+            for (int i = 0; i < stepsArray.length(); i++) {
+                //Get the handle on he step we are on, iterating through the steps
+                JSONObject thisStep = null;
 
                 thisStep = stepsArray.getJSONObject(i);
 
-            //Iterate through each key in this step's JSON Object to find out if it
-            //is a transit step (can probably filter this better)
-            Iterator<String> thisStepKeys = thisStep.keys();
-            while(thisStepKeys.hasNext())
-            {
-                //If it has a transit_details key we can look at the transit
-                //departure time etc.
-                String key = thisStepKeys.next();
-                if(key.equals("transit_details"))
-                {
-                    transitSteps += thisStep.toString();
+                //Iterate through each key in this step's JSON Object to find out if it
+                //is a transit step (can probably filter this better)
+                Iterator<String> thisStepKeys = thisStep.keys();
+                while (thisStepKeys.hasNext()) {
+                    //If it has a transit_details key we can look at the transit
+                    //departure time etc.
+                    String key = thisStepKeys.next();
+                    if (key.equals("transit_details")) {
+                        transitSteps += thisStep.toString();
+                    }
                 }
             }
-        }
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
             transitSteps = "MBTABuddy GetTransitStepsJSON() Error";
         }
@@ -151,13 +139,10 @@ public class GDirections {
     }
 
     /**
-     *
      * @param origin
      * @param dest
-     * @param travelType
-     *      Use "transit" for public transit directions
-     * @return
-     *      The JSON object as a string containing the full Google Maps Direction API response
+     * @param travelType Use "transit" for public transit directions
+     * @return The JSON object as a string containing the full Google Maps Direction API response
      */
     private String RequestDirectionInfo(String origin, String dest, String travelType) {
         String gMapsApiReq = "https://maps.googleapis.com/maps/api/directions/";
@@ -167,8 +152,7 @@ public class GDirections {
         Hashtable<String, String> params = new Hashtable<String, String>();
         params.put("origin", origin);
         params.put("destination", dest);
-        if(travelType != null)
-        {
+        if (travelType != null) {
             params.put("mode", travelType);
         }
 
@@ -178,8 +162,7 @@ public class GDirections {
 
         int i = 1;
         int max = params.keySet().size();
-        for(String paramKey : params.keySet())
-        {
+        for (String paramKey : params.keySet()) {
             String value = params.get(paramKey);
             fullRequest += paramKey + "=" + value + "&";
         }
@@ -199,49 +182,45 @@ public class GDirections {
 
         return req.getResponse();
     }
-}
 
-class RequestThread implements Runnable
-{
-    private String fullRequest;
-    private String response;
 
-    RequestThread(String request)
-    {
-        fullRequest = request;
-    }
+    private class RequestThread implements Runnable {
+        private String fullRequest;
+        private String response;
 
-    @Override
-    public void run()
-    {
-        response = "";
-        URL url = null;
-        try {
-            url = new URL(fullRequest);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+        RequestThread(String request) {
+            fullRequest = request;
         }
 
-        InputStream inStream = null;  // throws an IOException
-        try {
-            inStream = url.openStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
-        try {
-            String readline = "";
-            while((readline = br.readLine()) != null)
-            {
-                response += readline;
+        @Override
+        public void run() {
+            response = "";
+            URL url = null;
+            try {
+                url = new URL(fullRequest);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public String getResponse()
-    {
-        return response;
+            InputStream inStream = null;  // throws an IOException
+            try {
+                inStream = url.openStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
+            try {
+                String readline = "";
+                while ((readline = br.readLine()) != null) {
+                    response += readline;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public String getResponse() {
+            return response;
+        }
     }
 }

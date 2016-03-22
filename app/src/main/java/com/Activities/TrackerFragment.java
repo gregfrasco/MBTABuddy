@@ -16,15 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ListView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import DataManagement.LoadingDialogManager;

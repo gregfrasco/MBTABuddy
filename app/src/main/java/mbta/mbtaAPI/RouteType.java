@@ -23,7 +23,7 @@ public class RouteType {
         Subway,
         Commuter_Rail,
         Bus,
-        Boat;
+        Boat
     }
 
     public Type getType(String mode){

@@ -10,16 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import DataManagement.LoadingDialogManager;
 import gmap.TrainMarker;
-import mbta.Line;
-import mbta.Lines;
-import mbta.MBTA;
-import mbta.Station;
 import mbta.mbtabuddy.R;
 
 /**

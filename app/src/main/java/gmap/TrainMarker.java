@@ -1,7 +1,5 @@
 package gmap;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -9,7 +7,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 
 import mbta.Line;
-import mbta.Lines;
 import mbta.mbtabuddy.R;
 
 /**

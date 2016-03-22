@@ -1,55 +1,36 @@
 package com.Activities;
 
 import android.app.ProgressDialog;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import DataManagement.DataStorageManager;
 import DataManagement.FavoritesDataContainer;
 import DataManagement.IconHelper;
 import DataManagement.LoadingDialogManager;
 import DataManagement.StationFavContainer;
-import directions.AbstractRouting;
-import directions.Route;
-import directions.RouteException;
-import directions.Routing;
-import directions.RoutingListener;
-import DataManagement.DataStorageManager;
 import gmap.MapManager;
 import gmap.StationMarker;
 import gmap.TrainMarker;
 import mbta.ArrivalTime;
-import mbta.Line;
-import mbta.Lines;
 import mbta.MBTA;
 import mbta.Station;
 import mbta.Stop;
-import mbta.mbtaAPI.Vehicle;
 import mbta.mbtabuddy.R;
 
 public class StationActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -84,6 +65,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         this.station = MBTA.getInstance().getStopByID(stationID);
         setTitle(station.getStationName());
         this.mapManager = new MapManager(this);
+        this.mapManager.setStationClickable(false);
 
         station1 = (TextView) findViewById(R.id.station1);
         station2 = (TextView) findViewById(R.id.station2);
@@ -99,21 +81,17 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         stationHeader.setBackgroundColor(this.station.getLine().get(0).getColor());
         initCountDownClicks();
 
-        List<FavoritesDataContainer> favs =
-                (List<FavoritesDataContainer>)DataStorageManager.getInstance().LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);
+        List<FavoritesDataContainer> favs = (List<FavoritesDataContainer>)DataStorageManager.getInstance().LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);
 
-        for(FavoritesDataContainer fav : favs)
-        {
+        for(FavoritesDataContainer fav : favs) {
             if(fav.getClass().equals(StationFavContainer.class)) {
-                if (((StationFavContainer)fav).StationId.equals(station.getStationID()))
-                {
+                if (((StationFavContainer)fav).StationId.equals(station.getStationID())) {
                     Drawable filledStarDrawable = getResources().getDrawable(R.drawable.ic_star_24dp);
                     ImageButton favoritesButton = (ImageButton) findViewById(R.id.favoriteButton);
                     favoritesButton.setImageBitmap(IconHelper.drawableToBitmap(filledStarDrawable));
                 }
             }
         }
-
         //We are done loading
         LoadingDialogManager.getInstance().DismissLoading();
     }

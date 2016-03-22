@@ -1,9 +1,7 @@
 package gmap;
 
 import android.content.Context;
-
 import android.content.Intent;
-import android.graphics.Color;
 import android.util.Log;
 
 import com.Activities.MainActivity;
@@ -15,7 +13,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +21,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import directions.AbstractRouting;
 import directions.RouteException;
@@ -45,6 +41,7 @@ public class MapManager implements RoutingListener{
     private Context context;
     private GoogleMap map;
     private Marker myMarker;
+    private boolean stationClickable = true;
 
     //TrainMarker objects, keys being their MBTA trip num from MBTA api
     private List<TrainMarker> trainMarkers = new ArrayList<TrainMarker>();
@@ -80,10 +77,11 @@ public class MapManager implements RoutingListener{
                 }
                 //For station markers
                 if (getStationMarkerById(marker.getId()) != null) {
-                    //...
-                    Intent intent = new Intent(context, StationActivity.class);
-                    intent.putExtra("ID", marker.getTitle());
-                    context.startActivity(intent);
+                    if(stationClickable) {
+                        Intent intent = new Intent(context, StationActivity.class);
+                        intent.putExtra("ID", marker.getTitle());
+                        context.startActivity(intent);
+                    }
                 }
                 return true;//True overrides default behavior
             }
@@ -336,5 +334,13 @@ public class MapManager implements RoutingListener{
                 this.addTrainMarker(vehicle.getVehicleId(), vehicle.getLatLng(), "TESTING", line, station.getStationID());
             }
         }
+    }
+
+    public boolean isStationClickable() {
+        return stationClickable;
+    }
+
+    public void setStationClickable(boolean stationClickable) {
+        this.stationClickable = stationClickable;
     }
 }
