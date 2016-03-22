@@ -1,5 +1,5 @@
 StationID,StopID;Destination;Direction;Line,...
-70061,70061;Braintree;Inbound;Red,//Terminal
+70061,70061;Braintree;Inbound;Red
 70063,70063;Braintree;Inbound;Red,70064;Alewife;Inbound;Red
 70065,70065;Braintree;Inbound;Red,70066;Alewife;Inbound;Red
 70067,70067;Braintree;Inbound;Red,70068;Alewife;Inbound;Red
@@ -7,11 +7,11 @@ StationID,StopID;Destination;Direction;Line,...
 70071,70071;Braintree;Inbound;Red,70072;Alewife;Inbound;Red
 70073,70073;Braintree;Inbound;Red,70074;Alewife;Inbound;Red
 70075,70075;Braintree;Ashmont/Braintree;Red,70076;Alewife;Inbound;Red
-70077,70077;Braintree;Ashmont/Braintree;Red,70078;Alewife;Inbound;Red
+70077,70077;Braintree;Ashmont/Braintree;Red,70078;Alewife;Inbound;Red,70018;Forest Hills;Outbound;Orange,70019;Oak Grove;Inbound;Orange
 70079,70079;Braintree;Outbound;Red,70080;Alewife;Inbound;Red
 70081,70081;Braintree;Outbound;Red,70082;Alewife;Inbound;Red
 70083,70083;Braintree;Outbound;Red,70084;Alewife;Inbound;Red
-70095;Braintree;Outbound;Red,70096;Alewife;Inbound;Red,70085,70085;Ashmont;Outbound;Red,70086;Alewife;Inbound;Red
+70095;Braintree;Outbound;Red,70096;Alewife;Inbound;Red,70085;Ashmont;Outbound;Red,70086;Alewife;Inbound;Red
 70087,70087;Ashmont;Outbound;Red,70088;Alewife;Inbound;Red
 70089,70089;Ashmont;Outbound;Red,70090;Alewife;Inbound;Red
 70091,70091;Ashmont;Outbound;Red,70092;Alewife;Inbound;Red
@@ -20,4 +20,34 @@ StationID,StopID;Destination;Direction;Line,...
 70099,70099;Braintree;Outbound;Red,70100;Alewife;Inbound;Red
 70101,70101;Braintree;Outbound;Red,70102;Alewife;Inbound;Red
 70103,70103;Braintree;Outbound;Red,70104;Alewife;Inbound;Red
-70105,70105;Braintree;Outbound;Red,//TERMINAL
+70105,70105;Braintree;Outbound;Red
+70036,70036;Forest Hills;Inbound;Orange
+70034,70034;Forest Hills;Inbound;Orange,70035;Oak Grove;Outbound;Orange
+70032,70032;Forest Hills;Inbound;Orange,70033;Oak Grove;Outbound;Orange
+70278,70278;Forest Hills;Inbound;Orange,70279;Oak Grove;Outbound;Orange
+70030,70030;Forest Hills;Inbound;Orange,70031;Oak Grove;Outbound;Orange
+70028,70028;Forest Hills;Inbound;Orange,70029;Oak Grove;Outbound;Orange
+70026,70026;Forest Hills;Inbound;Orange,70027;Oak Grove;Outbound;Orange
+70024,70024;Forest Hills;Inbound;Orange,70025;Oak Grove;Outbound;Orange
+70022,70022;Forest Hills;Inbound;Orange,70023;Oak Grove;Outbound;Orange,70041;Bowdoin;Inbound;Blue,70042;Bowdoin;Outbound;Blue
+70020,70020;Forest Hills;Inbound;Orange,70021;Oak Grove;Outbound;Orange
+70016,70016;Forest Hills;Outbound;Orange,70017;Oak Grove;Inbound;Orange
+70014,70014;Forest Hills;Outbound;Orange,70015;Oak Grove;Inbound;Orange
+70012,70012;Forest Hills;Outbound;Orange,70013;Oak Grove;Inbound;Orange
+70010,70010;Forest Hills;Outbound;Orange,70011;Oak Grove;Inbound;Orange
+70008,70008;Forest Hills;Outbound;Orange,70009;Oak Grove;Inbound;Orange
+70006,70006;Forest Hills;Outbound;Orange,70007;Oak Grove;Inbound;Orange
+70004,70004;Forest Hills;Outbound;Orange,70005;Oak Grove;Inbound;Orange
+70002,70002;Forest Hills;Outbound;Orange,70003;Oak Grove;Inbound;Orange
+70001,70001;Forest Hills;Inbound;Orange
+70060;70060;Bowdoin;Inbound;Blue
+70057;70057;Bowdoin;Inbound;Blue,70058;Bowdoin;Outbound;Blue
+70055;70055;Bowdoin;Inbound;Blue,70056;Bowdoin;Outbound;Blue
+70053;70053;Bowdoin;Inbound;Blue,70054;Bowdoin;Outbound;Blue
+70051;70051;Bowdoin;Inbound;Blue,70052;Bowdoin;Outbound;Blue
+70049;70049;Bowdoin;Inbound;Blue,70050;Bowdoin;Outbound;Blue
+70047;70047;Bowdoin;Inbound;Blue,70048;Bowdoin;Outbound;Blue
+70045;70045;Bowdoin;Inbound;Blue,70046;Bowdoin;Outbound;Blue
+70043;70043;Bowdoin;Inbound;Blue,70044;Bowdoin;Outbound;Blue
+70039;70039;Bowdoin;Outbound;Blue,70040;Bowdoin;Outbound;Blue
+70038;70038;Bowdoin;Inbound;Blue

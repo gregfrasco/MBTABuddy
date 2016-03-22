@@ -22,34 +22,34 @@ stationID,stationName,latitude,longitude,lineIDs
 70091,Shawmut,42.2931284,-71.0658033,Red
 70093,Ashmont,42.2844548,-71.0637444,Red
 70036,Oak Grove,42.4366626,-71.0709152,Orange
-70035,Malden Center,42.426632,-71.07411,Orange
+70034,Malden Center,42.426632,-71.07411,Orange
 70032,Wellington,42.40237,-71.077082,Orange
 70278,Assembly,42.392811,-71.077257,Orange
-70031,Sullivan Square,42.383975,-71.076994,Orange
-70029,Community College,42.373622,-71.069533,Orange
+70030,Sullivan Square,42.383975,-71.076994,Orange
+70028,Community College,42.373622,-71.069533,Orange
 70026,North Station,42.365577,-71.06129,Orange,Green-C,Green-E
 70024,Haymarket,42.363021,-71.05829,Orange,Green-C,Green-E
 70022,State Street,42.3588898,-71.0577078,Orange,Blue
-70018,Chinatown,42.352547,-71.062752,Orange
-70017,Tufts Medical Center,42.349662,-71.063917,Orange
-70015,Back Bay,42.34735,-71.075727,Orange
+70020,Chinatown,42.352547,-71.062752,Orange
+70016,Tufts Medical Center,42.349662,-71.063917,Orange
+70014,Back Bay,42.34735,-71.075727,Orange
 70012,Massachusetts Ave.,42.341512,-71.083423,Orange
 70010,Ruggles,42.336377,-71.088961,Orange
-70009,Roxbury Crossing,42.331397,-71.095451,Orange
-70007,Jackson Square,42.323132,-71.099592,Orange
+70008,Roxbury Crossing,42.331397,-71.095451,Orange
+70006,Jackson Square,42.323132,-71.099592,Orange
 70004,Stony Brook,42.317062,-71.104248,Orange
-70003,Green Street,42.310525,-71.107414,Orange
+70002,Green Street,42.310525,-71.107414,Orange
 70001,Forest Hills,42.3007313,-71.1141017,Orange
 70060,Wonderland,42.41342,-70.991648,Blue
-70058,Revere Beach,42.40784254,-70.99253321,Blue
-70056,Beachmont,42.39754234,-70.99231944,Blue
-70054,Suffolk Downs,42.39050067,-70.99712259,Blue
+70057,Revere Beach,42.40784254,-70.99253321,Blue
+70055,Beachmont,42.39754234,-70.99231944,Blue
+70053,Suffolk Downs,42.39050067,-70.99712259,Blue
 70051,Orient Heights,42.386867,-71.004736,Blue
-70050,Wood Island,42.3796403,-71.02286539,Blue
-70048,Airport,42.374262,-71.030395,Blue
+70049,Wood Island,42.3796403,-71.02286539,Blue
+70047,Airport,42.374262,-71.030395,Blue
 70045,Maverick,42.36911856,-71.03952958,Blue
-70044,Aquarium,42.359784,-71.051652,Blue
-70040,Government Center,42.3592469,-71.0594724,Blue,Green-C,Green-D,Green-E
+70043,Aquarium,42.359784,-71.051652,Blue
+70041,Government Center,42.3592469,-71.0594724,Blue,Green-C,Green-D,Green-E
 70038,Bowdoin,42.36116,-71.06213,Blue
 70210,Lechmere,42.37116,-71.07715,Green-E
 70208,Science Park,42.366664,-71.067666,Green-E
