@@ -49,7 +49,7 @@ stationID,stationName,latitude,longitude,lineIDs
 70047,Airport,42.374262,-71.030395,Blue
 70045,Maverick,42.36911856,-71.03952958,Blue
 70043,Aquarium,42.359784,-71.051652,Blue
-70041,Government Center,42.3592469,-71.0594724,Blue,Green-C,Green-D,Green-E
+70039,Government Center,42.3592469,-71.0594724,Blue,Green-C,Green-D,Green-E
 70038,Bowdoin,42.36116,-71.06213,Blue
 70210,Lechmere,42.37116,-71.07715,Green-E
 70208,Science Park,42.366664,-71.067666,Green-E

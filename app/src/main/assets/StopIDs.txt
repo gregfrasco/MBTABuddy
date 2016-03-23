@@ -6,7 +6,7 @@ StationID,StopID;Destination;Direction;Line,...
 70069,70069;Braintree;Inbound;Red,70070;Alewife;Inbound;Red
 70071,70071;Braintree;Inbound;Red,70072;Alewife;Inbound;Red
 70073,70073;Braintree;Inbound;Red,70074;Alewife;Inbound;Red
-70075,70075;Braintree;Ashmont/Braintree;Red,70076;Alewife;Inbound;Red
+70075,70075;Braintree;Ashmont/Braintree;Red,70076;Alewife;Inbound;Red,70199;Heath Street;Inbound;Green-E,70200;Lechmere;Outbound;Green-E
 70077,70077;Braintree;Ashmont/Braintree;Red,70078;Alewife;Inbound;Red,70018;Forest Hills;Outbound;Orange,70019;Oak Grove;Inbound;Orange
 70079,70079;Braintree;Outbound;Red,70080;Alewife;Inbound;Red
 70081,70081;Braintree;Outbound;Red,70082;Alewife;Inbound;Red
@@ -27,8 +27,8 @@ StationID,StopID;Destination;Direction;Line,...
 70278,70278;Forest Hills;Inbound;Orange,70279;Oak Grove;Outbound;Orange
 70030,70030;Forest Hills;Inbound;Orange,70031;Oak Grove;Outbound;Orange
 70028,70028;Forest Hills;Inbound;Orange,70029;Oak Grove;Outbound;Orange
-70026,70026;Forest Hills;Inbound;Orange,70027;Oak Grove;Outbound;Orange
-70024,70024;Forest Hills;Inbound;Orange,70025;Oak Grove;Outbound;Orange
+70026,70026;Forest Hills;Inbound;Orange,70027;Oak Grove;Outbound;Orange,70206;Heath Street;Inbound;Green-E,70205;Lechmere;Outbound;Green-E
+70024,70024;Forest Hills;Inbound;Orange,70025;Oak Grove;Outbound;Orange,70204;Heath Street;Inbound;Green-E,70203;Lechmere;Outbound;Green-E
 70022,70022;Forest Hills;Inbound;Orange,70023;Oak Grove;Outbound;Orange,70041;Bowdoin;Inbound;Blue,70042;Bowdoin;Outbound;Blue
 70020,70020;Forest Hills;Inbound;Orange,70021;Oak Grove;Outbound;Orange
 70016,70016;Forest Hills;Outbound;Orange,70017;Oak Grove;Inbound;Orange
@@ -40,14 +40,30 @@ StationID,StopID;Destination;Direction;Line,...
 70004,70004;Forest Hills;Outbound;Orange,70005;Oak Grove;Inbound;Orange
 70002,70002;Forest Hills;Outbound;Orange,70003;Oak Grove;Inbound;Orange
 70001,70001;Forest Hills;Inbound;Orange
-70060;70060;Bowdoin;Inbound;Blue
-70057;70057;Bowdoin;Inbound;Blue,70058;Bowdoin;Outbound;Blue
-70055;70055;Bowdoin;Inbound;Blue,70056;Bowdoin;Outbound;Blue
-70053;70053;Bowdoin;Inbound;Blue,70054;Bowdoin;Outbound;Blue
-70051;70051;Bowdoin;Inbound;Blue,70052;Bowdoin;Outbound;Blue
-70049;70049;Bowdoin;Inbound;Blue,70050;Bowdoin;Outbound;Blue
-70047;70047;Bowdoin;Inbound;Blue,70048;Bowdoin;Outbound;Blue
-70045;70045;Bowdoin;Inbound;Blue,70046;Bowdoin;Outbound;Blue
-70043;70043;Bowdoin;Inbound;Blue,70044;Bowdoin;Outbound;Blue
-70039;70039;Bowdoin;Outbound;Blue,70040;Bowdoin;Outbound;Blue
-70038;70038;Bowdoin;Inbound;Blue
+70060,70060;Bowdoin;Inbound;Blue
+70057,70057;Bowdoin;Inbound;Blue,70058;Bowdoin;Outbound;Blue
+70055,70055;Bowdoin;Inbound;Blue,70056;Bowdoin;Outbound;Blue
+70053,70053;Bowdoin;Inbound;Blue,70054;Bowdoin;Outbound;Blue
+70051,70051;Bowdoin;Inbound;Blue,70052;Bowdoin;Outbound;Blue
+70049,70049;Bowdoin;Inbound;Blue,70050;Bowdoin;Outbound;Blue
+70047,70047;Bowdoin;Inbound;Blue,70048;Bowdoin;Outbound;Blue
+70045,70045;Bowdoin;Inbound;Blue,70046;Bowdoin;Outbound;Blue
+70043,70043;Bowdoin;Inbound;Blue,70044;Bowdoin;Outbound;Blue
+70039,70039;Bowdoin;Outbound;Blue,70040;Bowdoin;Outbound;Blue,70202;Heath Street;Inbound;Green-E,70201;Lechmere;Outbound;Green-E
+70038,70038;Bowdoin;Inbound;Blue
+70210,70210;Heath Street;Inbound;Green-E
+70208,70208;Heath Street;Inbound;Green-E,70207;Lechmere;Outbound;Green-E
+70159,70159;Heath Street;Outbound;Green-E,70158;Lechmere;Inbound;Green-E
+70157,70157;Heath Street;Outbound;Green-E,70156;Lechmere;Inbound;Green-E
+70155,70155;Heath Street;Outbound;Green-E,70154;Lechmere;Inbound;Green-E
+70239,70239;Heath Street;Outbound;Green-E,70240;Lechmere;Inbound;Green-E
+70241,70241;Heath Street;Outbound;Green-E,70242;Lechmere;Inbound;Green-E
+70243,70243;Heath Street;Outbound;Green-E,70244;Lechmere;Inbound;Green-E
+70245,70245;Heath Street;Outbound;Green-E,70246;Lechmere;Inbound;Green-E
+70247,70247;Heath Street;Outbound;Green-E,70248;Lechmere;Inbound;Green-E
+70249,70249;Heath Street;Outbound;Green-E,70250;Lechmere;Inbound;Green-E
+70251,70251;Heath Street;Outbound;Green-E,70252;Lechmere;Inbound;Green-E
+70253,70253;Heath Street;Outbound;Green-E,70254;Lechmere;Inbound;Green-E
+70255,70255;Heath Street;Outbound;Green-E,70256;Lechmere;Inbound;Green-E
+70257,70257;Heath Street;Outbound;Green-E,70258;Lechmere;Inbound;Green-E
+70259,70260;Lechmere;Inbound;Green-E
