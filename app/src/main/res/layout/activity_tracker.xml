@@ -36,11 +36,13 @@
             android:focusableInTouchMode="true">
 
             <EditText
+                android:hint="Search For Station...."
+                android:textColor="@android:color/white"
                 android:background="#c75b5a5a"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="3dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:id="@+id/destSearch"
                 android:layout_gravity="bottom"
                 android:layout_weight="6"/>
@@ -76,21 +78,22 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
+
+        <ImageView
+            android:src="@android:drawable/arrow_up_float"
+            android:background = "@color/material_gray"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
         <TextView
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textAlignment="center"
             android:text="MBTA Lines"
             android:textColor="@android:color/white"
             android:layout_weight="2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@android:color/black"/>
-        <ImageView
-            android:src="@android:drawable/ic_menu_upload"
-            android:background = "@android:color/black"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:background="@color/material_gray"/>
 
     </LinearLayout>
     <LinearLayout
@@ -115,7 +118,7 @@
             android:id="@+id/byLineList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/black"
+            android:background="@color/material_gray"
             android:horizontalSpacing="1dp"
             android:verticalSpacing="1dp"
             android:transitionGroup="false">
