@@ -11,6 +11,8 @@ import java.util.List;
 public class Lines {
 
     private static Lines instance;
+    public static final int Green = Color.rgb(0, 153, 51);
+    public static final int Orange = Color.rgb(255,140,0);
     //Lines
     public final Line RedLine;
     public final Line OrangeLine;
@@ -21,15 +23,16 @@ public class Lines {
     public final Line BlueLine;
     public final Line MattapanLine;
 
+
     public Lines() {
-        this.RedLine       = new Line("Red", Color.RED);
-        this.OrangeLine    = new Line("Orange", Color.rgb(255,140,0));
-        this.GreenLineB    = new Line("Green-B", Color.GREEN);
-        this.GreenLineC    = new Line("Green-C", Color.GREEN);
-        this.GreenLineD    = new Line("Green-D", Color.GREEN);
-        this.GreenLineE    = new Line("Green-E", Color.GREEN);
-        this.BlueLine      = new Line("Blue", Color.BLUE);
-        this.MattapanLine  = new Line("Mattapan", Color.RED);
+        this.RedLine       = new Line("Red","Red Line",LineType.Subway,Color.RED);
+        this.OrangeLine    = new Line("Orange","Orange Line",LineType.Subway,Orange);
+        this.GreenLineB    = new Line("Green-B","Green Line B",LineType.Tram,Green);
+        this.GreenLineC    = new Line("Green-C","Green Line C",LineType.Tram,Green);
+        this.GreenLineD    = new Line("Green-D","Green Line D",LineType.Tram,Green);
+        this.GreenLineE    = new Line("Green-E","Green Line E",LineType.Tram,Green);
+        this.BlueLine      = new Line("Blue","Blue Line",LineType.Subway,Color.BLUE);
+        this.MattapanLine  = new Line("Mattapan","Mattapan High Speed Line",LineType.Tram,Color.RED);
     }
 
     public static Lines getInstance(){

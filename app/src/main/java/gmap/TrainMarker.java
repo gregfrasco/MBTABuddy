@@ -7,7 +7,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 
 import mbta.Line;
+import mbta.Lines;
 import mbta.mbtabuddy.R;
+
+import static mbta.Lines.*;
 
 /**
  * Created by cruzj6 on 2/10/2016.
@@ -66,12 +69,14 @@ public class TrainMarker
         switch(line.getColor()){
             case Color.RED:
                 return BitmapDescriptorFactory.fromResource(R.drawable.ic_red);
-            case Color.GREEN:
-                return BitmapDescriptorFactory.fromResource(R.drawable.ic_green);
             case Color.BLUE:
                 return BitmapDescriptorFactory.fromResource(R.drawable.ic_blue);
             default:
-                return BitmapDescriptorFactory.fromResource(R.drawable.ic_orange);
+                if(line.getColor() == Lines.Green) {
+                    return BitmapDescriptorFactory.fromResource(R.drawable.ic_green);
+                } else {
+                    return BitmapDescriptorFactory.fromResource(R.drawable.ic_orange);
+                }
         }
     }
 
@@ -79,12 +84,14 @@ public class TrainMarker
         switch(line.getColor()){
             case Color.RED:
                 return R.drawable.ic_red;
-            case Color.GREEN:
-                return R.drawable.ic_green;
             case Color.BLUE:
                 return R.drawable.ic_blue;
             default:
-                return R.drawable.ic_orange;
+                if(line.getColor() == Lines.Green){
+                    return R.drawable.ic_green;
+                } else {
+                    return R.drawable.ic_orange;
+                }
         }
     }
 

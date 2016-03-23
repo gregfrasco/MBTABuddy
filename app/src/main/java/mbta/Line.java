@@ -34,15 +34,20 @@ public class Line {
     private int color;
 
     public Line(Route route,int color) {
-        MBTA mbta = MBTA.getInstance();
         this.lineID = route.getRouteId();
         this.lineName = route.getRouteName();
         this.type = route.getLineType();
         this.stations = getStations();
-        if(this.stations.size() > 0) {
-            this.setTerminalStation1(stations.get(0));
-            this.setTerminalStation2(stations.get(stations.size() - 1));
-        }
+        this.getTerminalStations();
+        this.color = color;
+    }
+
+    public Line(String lineID,String lineName,LineType type,int color){
+        this.lineID = lineID;
+        this.lineName = lineName;
+        this.type = type;
+        this.stations = getStations();
+        this.getTerminalStations();
         this.color = color;
     }
 
@@ -67,24 +72,28 @@ public class Line {
     }
 
     public List<Station> getStations() {
-        if(stations == null){
-            try{
-                List<Station> stations = new ArrayList<Station>();
-                InputStream is = MainActivity.context.getAssets().open("Stations.txt");
-                BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                String line = br.readLine(); // remove headers
-                while((line = br.readLine()) != null){
-                    List<String> stationInfo = new ArrayList<String>(Arrays.asList(line.split(",")));
-                    if(stationInfo.contains(this.getLineID())){
-                        stations.add(new Station(stationInfo));
-                    }
-                }
-                this.stations = stations;
-            } catch (IOException e) {
-                this.stations = MBTA.getInstance().getStationsByLine(this);
-            }
+        if(this.stations == null){
+            this.initStations();
         }
         return stations;
+    }
+
+    private void initStations(){
+        List<Station> stations = new ArrayList<Station>();
+        try{
+            InputStream is = MainActivity.context.getAssets().open("Stations.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String line = br.readLine(); // remove headers
+            while((line = br.readLine()) != null){
+                List<String> stationInfo = new ArrayList<String>(Arrays.asList(line.split(",")));
+                if(stationInfo.contains(this.getLineID())){
+                    stations.add(new Station(stationInfo));
+                }
+            }
+            this.stations = stations;
+        } catch (IOException e) {
+            this.stations = MBTA.getInstance().getStationsByLine(this);
+        }
     }
 
     public void setStations(List<Station> stations) {
@@ -190,5 +199,34 @@ public class Line {
         }
         vehicle.setVehicleLon(closestPoint.longitude);
         vehicle.setVehicleLat(closestPoint.latitude);
+    }
+
+
+
+    public void getTerminalStations() {
+        try{
+            List<Station> stations = new ArrayList<Station>();
+            InputStream is = MainActivity.context.getAssets().open("TerminalStations.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String line;
+            while((line = br.readLine()) != null){
+                String[] terminiInfo = line.split(",");
+                if(terminiInfo[0].equals(this.getLineID())){
+                    for(Station station: this.stations){
+                        if(station.getStationName().equals(terminiInfo[1])){
+                            this.setTerminalStation1(station);
+                        }
+                        if(station.getStationName().equals(terminiInfo[2])){
+                            this.setTerminalStation2(station);
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            if(this.stations.size() > 0) {
+                this.setTerminalStation1(stations.get(0));
+                this.setTerminalStation2(stations.get(stations.size() - 1));
+            }
+        }
     }
 }
