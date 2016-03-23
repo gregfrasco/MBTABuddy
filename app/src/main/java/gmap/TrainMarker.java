@@ -64,7 +64,6 @@ public class TrainMarker
         return trainRoute;
     }
 
-
     public static BitmapDescriptor GetIcon(Line line) {
         switch(line.getColor()){
             case Color.RED:
@@ -94,6 +93,4 @@ public class TrainMarker
                 }
         }
     }
-
-
 }

@@ -1,6 +1,7 @@
 package com.Activities;
 
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -63,7 +64,6 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         Bundle bundle = getIntent().getExtras();
         String stationID = bundle.getString("ID");
         this.station = MBTA.getInstance().getStopByID(stationID);
-        setTitle(station.getStationName());
         this.mapManager = new MapManager(this);
         this.mapManager.setStationClickable(false);
 
@@ -76,7 +76,8 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
 
         //Set our view components
         TextView name = (TextView) findViewById(R.id.stationName);
-        name.setText(this.station.getStationName());
+        name.setText(this.station.getStationName().toUpperCase());
+        name.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto-Bold.ttf"));
         LinearLayout stationHeader = (LinearLayout) findViewById(R.id.stationHeader);
         stationHeader.setBackgroundColor(this.station.getLine().get(0).getColor());
         initCountDownClicks();
