@@ -136,7 +136,7 @@ public class MapManager implements RoutingListener{
                         .position(location)
                         .title(title)
         );
-        TrainMarker newtm = new TrainMarker(line, newMarker, vehicleNum);
+        TrainMarker newtm = new TrainMarker(line, newMarker, vehicleNum, context);
         trainMarkers.add(newtm);
     }
 
@@ -145,7 +145,7 @@ public class MapManager implements RoutingListener{
                         .position(location)
                         .title(title)
         );
-        TrainMarker newtm = new TrainMarker(line, newMarker, vehicleNum);
+        TrainMarker newtm = new TrainMarker(line, newMarker, vehicleNum, context);
         newtm.SetSetStationId(statId);
         trainMarkers.add(newtm);
     }

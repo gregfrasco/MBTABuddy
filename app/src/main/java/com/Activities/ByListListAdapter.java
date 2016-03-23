@@ -14,6 +14,7 @@ import java.lang.reflect.Array;
 import java.util.List;
 import java.util.zip.Inflater;
 
+import DataManagement.IconHelper;
 import DataManagement.LoadingDialogManager;
 import gmap.TrainMarker;
 import mbta.Line;
@@ -45,7 +46,7 @@ public class ByListListAdapter extends ArrayAdapter<ByLineListContainer> {
 
         //Utilize the trainMarker class's method for getting appropriate icon and set it
         int trainIconRes = TrainMarker.GetIconResource(getItem(position).lineColor);
-        image.setImageBitmap(BitmapFactory.decodeResource(cont.getResources(), trainIconRes));
+        image.setImageBitmap(IconHelper.drawableToBitmap(cont.getResources().getDrawable(trainIconRes)));
 
         //Assign the line name
         TextView lineName = (TextView) listItem.findViewById(R.id.lineListItem_text);

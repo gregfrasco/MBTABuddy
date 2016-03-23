@@ -36,6 +36,7 @@
             android:focusableInTouchMode="true">
 
             <EditText
+                android:singleLine="true"
                 android:hint="Search For Station...."
                 android:textColor="@android:color/white"
                 android:background="#c75b5a5a"
@@ -45,7 +46,7 @@
                 android:layout_height="30dp"
                 android:id="@+id/destSearch"
                 android:layout_gravity="bottom"
-                android:layout_weight="6"/>
+                android:layout_weight="4"/>
 
             <Button
                 android:layout_marginRight="15dp"

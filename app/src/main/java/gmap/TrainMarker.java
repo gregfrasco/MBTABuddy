@@ -1,13 +1,16 @@
 package gmap;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 
+import DataManagement.IconHelper;
 import mbta.Line;
 import mbta.Lines;
 import mbta.mbtabuddy.R;
@@ -21,12 +24,14 @@ public class TrainMarker
     private Line trainRoute;
     private String vehicleNum;
     private String setStationId;
+    private Context context;
 
-    public TrainMarker(Line line, Marker marker, String VehicleNum)
+    public TrainMarker(Line line, Marker marker, String VehicleNum, Context cont)
     {
         vehicleNum = VehicleNum;
         mapMarker = marker;
         trainRoute = line;
+        context = cont;
 
 
         //Get out bitmapDescriptor (icon bmp) based on the color of the train
@@ -65,29 +70,42 @@ public class TrainMarker
     }
 
 
-    public static BitmapDescriptor GetIcon(Line line) {
+    public  BitmapDescriptor GetIcon(Line line) {
+        BitmapDescriptor theBmp;
         switch(line.getColor()){
             case Color.RED:
-                return BitmapDescriptorFactory.fromResource(R.drawable.ic_red);
+              theBmp = BitmapDescriptorFactory
+                       .fromBitmap(IconHelper.drawableToBitmap(context.getResources().getDrawable(R.drawable.ic_red_24dp)));
+
+                return theBmp;
             case Color.GREEN:
-                return BitmapDescriptorFactory.fromResource(R.drawable.ic_green);
+               theBmp = BitmapDescriptorFactory
+                        .fromBitmap(IconHelper.drawableToBitmap(context.getResources().getDrawable(R.drawable.ic_green_24dp)));
+
+                return theBmp;
             case Color.BLUE:
-                return BitmapDescriptorFactory.fromResource(R.drawable.ic_blue);
+                theBmp = BitmapDescriptorFactory
+                        .fromBitmap(IconHelper.drawableToBitmap(context.getResources().getDrawable(R.drawable.ic_blue_24dp)));
+
+                return theBmp;
             default:
-                return BitmapDescriptorFactory.fromResource(R.drawable.ic_orange);
+                theBmp = BitmapDescriptorFactory
+                        .fromBitmap(IconHelper.drawableToBitmap(context.getResources().getDrawable(R.drawable.ic_orange_24dp)));
+
+                return theBmp;
         }
     }
 
     public static int GetIconResource(Line line) {
         switch(line.getColor()){
             case Color.RED:
-                return R.drawable.ic_red;
+                return R.drawable.ic_red_24dp;
             case Color.GREEN:
-                return R.drawable.ic_green;
+                return R.drawable.ic_green_24dp;
             case Color.BLUE:
-                return R.drawable.ic_blue;
+                return R.drawable.ic_blue_24dp;
             default:
-                return R.drawable.ic_orange;
+                return R.drawable.ic_orange_24dp;
         }
     }
 
