@@ -6,7 +6,7 @@ StationID,StopID;Destination;Direction;Line,...
 70069,70069;Braintree;Inbound;Red,70070;Alewife;Inbound;Red
 70071,70071;Braintree;Inbound;Red,70072;Alewife;Inbound;Red
 70073,70073;Braintree;Inbound;Red,70074;Alewife;Inbound;Red
-70075,70075;Braintree;Ashmont/Braintree;Red,70076;Alewife;Inbound;Red,70199;Heath Street;Inbound;Green-E,70200;Lechmere;Outbound;Green-E
+70075,70075;Braintree;Ashmont/Braintree;Red,70076;Alewife;Inbound;Red,70199;Heath Street;Inbound;Green-E,70200;Lechmere;Outbound;Green-E,70198;Riverside;Outbound;Green-D,70200;Government Center;Inbound;Green-D
 70077,70077;Braintree;Ashmont/Braintree;Red,70078;Alewife;Inbound;Red,70018;Forest Hills;Outbound;Orange,70019;Oak Grove;Inbound;Orange
 70079,70079;Braintree;Outbound;Red,70080;Alewife;Inbound;Red
 70081,70081;Braintree;Outbound;Red,70082;Alewife;Inbound;Red
@@ -49,13 +49,13 @@ StationID,StopID;Destination;Direction;Line,...
 70047,70047;Bowdoin;Inbound;Blue,70048;Bowdoin;Outbound;Blue
 70045,70045;Bowdoin;Inbound;Blue,70046;Bowdoin;Outbound;Blue
 70043,70043;Bowdoin;Inbound;Blue,70044;Bowdoin;Outbound;Blue
-70039,70039;Bowdoin;Outbound;Blue,70040;Bowdoin;Outbound;Blue,70202;Heath Street;Inbound;Green-E,70201;Lechmere;Outbound;Green-E
+70039,70039;Bowdoin;Outbound;Blue,70040;Bowdoin;Outbound;Blue,70202;Heath Street;Inbound;Green-E,70201;Lechmere;Outbound;Green-E,70201;Government Center;Inbound;Green-D
 70038,70038;Bowdoin;Inbound;Blue
 70210,70210;Heath Street;Inbound;Green-E
 70208,70208;Heath Street;Inbound;Green-E,70207;Lechmere;Outbound;Green-E
-70159,70159;Heath Street;Outbound;Green-E,70158;Lechmere;Inbound;Green-E
-70157,70157;Heath Street;Outbound;Green-E,70156;Lechmere;Inbound;Green-E
-70155,70155;Heath Street;Outbound;Green-E,70154;Lechmere;Inbound;Green-E
+70159,70159;Heath Street;Outbound;Green-E,70158;Lechmere;Inbound;Green-E,70159;Riverside;Outbound;Green-D,70158;Government Center;Inbound;Green-D
+70157,70157;Heath Street;Outbound;Green-E,70156;Lechmere;Inbound;Green-E,70157;Riverside;Outbound;Green-D,70156;Government Center;Inbound;Green-D
+70155,70155;Heath Street;Outbound;Green-E,70154;Lechmere;Inbound;Green-E,70155;Riverside;Outbound;Green-D,70154;Government Center;Inbound;Green-D
 70239,70239;Heath Street;Outbound;Green-E,70240;Lechmere;Inbound;Green-E
 70241,70241;Heath Street;Outbound;Green-E,70242;Lechmere;Inbound;Green-E
 70243,70243;Heath Street;Outbound;Green-E,70244;Lechmere;Inbound;Green-E
@@ -67,3 +67,18 @@ StationID,StopID;Destination;Direction;Line,...
 70255,70255;Heath Street;Outbound;Green-E,70256;Lechmere;Inbound;Green-E
 70257,70257;Heath Street;Outbound;Green-E,70258;Lechmere;Inbound;Green-E
 70259,70260;Lechmere;Inbound;Green-E
+70153,70153;Riverside;Outbound;Green-D,70152;Government Center;Inbound;Green-D
+70151,70151;Riverside;Outbound;Green-D,70150;Government Center;Inbound;Green-D
+70187,70187;Riverside;Outbound;Green-D,70186;Government Center;Inbound;Green-D
+70183,70183;Riverside;Outbound;Green-D,70182;Government Center;Inbound;Green-D
+70181,70181;Riverside;Outbound;Green-D,70180;Government Center;Inbound;Green-D
+70179,70179;Riverside;Outbound;Green-D,70178;Government Center;Inbound;Green-D
+70177,70177;Riverside;Outbound;Green-D,70176;Government Center;Inbound;Green-D
+70175,70175;Riverside;Outbound;Green-D,70174;Government Center;Inbound;Green-D
+70173,70173;Riverside;Outbound;Green-D,70172;Government Center;Inbound;Green-D
+70171,70171;Riverside;Outbound;Green-D,70170;Government Center;Inbound;Green-D
+70169,70169;Riverside;Outbound;Green-D,70168;Government Center;Inbound;Green-D
+70167,70167;Riverside;Outbound;Green-D,70166;Government Center;Inbound;Green-D
+70165,70165;Riverside;Outbound;Green-D,70164;Government Center;Inbound;Green-D
+70163,70163;Riverside;Outbound;Green-D,70162;Government Center;Inbound;Green-D
+70161,70160;Government Center;Inbound;Green-D
