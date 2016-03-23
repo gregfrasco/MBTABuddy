@@ -1,7 +1,6 @@
 package com.Activities;
 
 import android.Manifest;
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,19 +19,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
-import com.google.android.gms.ads.formats.NativeAd;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import DataManagement.LoadingDialogManager;
@@ -92,9 +84,32 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         animHide = AnimationUtils.loadAnimation(getActivity(), R.anim.view_hide);
 
         //Sliding to open the stations by line
-        final View slide = retView.findViewById(R.id.open_stations_button);
+        final View slide = retView.findViewById(R.id.open_stations_slide_view);
         final int MIN_DIST = 20;
         final View byLineView = retView.findViewById(R.id.stations_by_line);
+
+        slide.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction())
+                {
+                    case MotionEvent.ACTION_POINTER_UP:
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_SCROLL:
+                        if(byLineView.getVisibility() == View.GONE) {
+                            byLineView.setVisibility(View.VISIBLE);
+                            byLineView.startAnimation(animShow);
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                return true;
+            }
+        });
+
         byLineView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -106,7 +121,6 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
 
                         }
                         else{
-                            slide.setVisibility(View.VISIBLE);
                             byLineView.setVisibility(View.GONE);
                             byLineView.startAnimation(animHide);
                         }
@@ -120,26 +134,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        slide.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch(event.getAction())
-                {
-                    case MotionEvent.ACTION_UP:
-                        if(byLineView.getVisibility() == View.GONE) {
-                            slide.setVisibility(View.INVISIBLE);
-                            byLineView.setVisibility(View.VISIBLE);
-                            byLineView.startAnimation(animShow);
-                        }
-                        break;
 
-                    default:
-                        break;
-                }
-
-                return true;
-            }
-        });
 
         View mapLayout = retView.findViewById(R.id.map_layout);
         mapLayout.setOnTouchListener(new View.OnTouchListener() {

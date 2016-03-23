@@ -69,6 +69,31 @@
 
     </RelativeLayout>
     <LinearLayout
+        android:layout_gravity="bottom"
+        android:background="@android:color/transparent"
+        android:id="@+id/open_stations_slide_view"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:textSize="25sp"
+            android:textAlignment="center"
+            android:text="MBTA Lines"
+            android:textColor="@android:color/white"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@android:color/black"/>
+        <ImageView
+            android:src="@android:drawable/ic_menu_upload"
+            android:background = "@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+    <LinearLayout
         android:visibility="gone"
         android:id="@+id/stations_by_line"
         android:orientation="vertical"
@@ -98,29 +123,5 @@
         </GridView>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_gravity="bottom"
-        android:background="@android:color/transparent"
-        android:id="@+id/open_stations_button"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
 
-            <TextView
-                android:textSize="25sp"
-                android:textAlignment="center"
-                android:text="MBTA Lines"
-                android:textColor="@android:color/white"
-                android:layout_weight="2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@android:color/black"/>
-        <ImageView
-            android:src="@android:drawable/ic_menu_upload"
-            android:background = "@android:color/black"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
 </FrameLayout>
