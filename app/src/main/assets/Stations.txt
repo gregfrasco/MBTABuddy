@@ -82,3 +82,16 @@ stationID,stationName,latitude,longitude,lineIDs
 70165,Waban,42.325943,-71.230728,Green-D
 70163,Woodland,42.333374,-71.244301,Green-D
 70161,Riverside,42.33737,-71.2526,Green-D
+70211,Saint Mary Street,42.345974,-71.107353,Green-C
+70213,Hawes Street,42.344906,-71.111145,Green-C
+70215,Kent Street,42.344074,-71.114197,Green-C
+70217,Saint Paul Street,42.343327,-71.116997,Green-C
+70219,Coolidge Corner,42.342116,-71.121263,Green-C
+70223,Summit Avenue,42.34111,-71.12561,Green-C
+70225,Brandon Hall,42.340023,-71.129082,Green-C
+70227,Fairbanks Street,42.339725,-71.131073,Green-C
+70229,Washington Square,42.339394,-71.13533,Green-C
+70231,Tappan Street,42.338459,-71.138702,Green-C
+70233,Dean Road,42.337807,-71.141853,Green-C
+70235,Englewood Avenue,42.336971,-71.14566,Green-C
+70237,Cleveland Circle,42.336142,-71.149326,Green-C

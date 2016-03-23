@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -98,7 +99,7 @@ public class Station {
                 String line = br.readLine(); // remove headers
                 while((line = br.readLine()) != null) {
                     if (line.contains(this.stationID)) {
-                        String[] numberOfStops = line.split(",");
+                        String[] numberOfStops = Arrays.copyOfRange(line.split(","), 1, line.split(",").length);
                         for (String stop : numberOfStops) {
                             String[] newStop = line.split(";");
                             stops.add(new Stop(newStop[0], newStop[1], newStop[2], newStop[3]));
@@ -117,6 +118,6 @@ public class Station {
 
     @Override
     public String toString() {
-        return this.getStopIDs()+ "," + this.getStationName() + "," + this.getLatitude() + "," + this.getLongitude();
+        return this.getStationName() + "," + this.getLatitude() + "," + this.getLongitude();
     }
 }

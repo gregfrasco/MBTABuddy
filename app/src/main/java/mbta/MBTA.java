@@ -272,8 +272,10 @@ public class MBTA{
         List<Trip> trips = new ArrayList<Trip>();
         if(predictionsByStop.getMode().size() > 0){
             if(predictionsByStop.getMode().get(0).getRoute().size() > 0){
-                if(predictionsByStop.getMode().get(0).getRoute().get(0).getDirection().size() > 0) {
-                     trips = predictionsByStop.getMode().get(0).getRoute().get(0).getDirection().get(0).getTrip();
+                if(predictionsByStop.getMode().get(0).getRoute().get(0).getDirection() != null) {
+                    if (predictionsByStop.getMode().get(0).getRoute().get(0).getDirection().size() > 0) {
+                        trips = predictionsByStop.getMode().get(0).getRoute().get(0).getDirection().get(0).getTrip();
+                    }
                 }
             }
         }

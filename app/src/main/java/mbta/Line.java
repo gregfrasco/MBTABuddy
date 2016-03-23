@@ -39,9 +39,10 @@ public class Line {
         this.lineName = route.getRouteName();
         this.type = route.getLineType();
         this.stations = getStations();
-        Station[] stations = mbta.getTerminalStations(this);
-        this.setTerminalStation1(stations[0]);
-        this.setTerminalStation2(stations[1]);
+        if(this.stations.size() > 0) {
+            this.setTerminalStation1(stations.get(0));
+            this.setTerminalStation2(stations.get(stations.size() - 1));
+        }
         this.color = color;
     }
 
