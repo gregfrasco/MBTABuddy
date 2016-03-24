@@ -23,9 +23,9 @@
             android:layout_width="240dp"
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"
-            android:divider="@android:color/holo_blue_dark"
-            android:dividerHeight="2dp"
-            android:background="@android:color/white">
+            android:divider="@android:color/black"
+            android:dividerHeight="1.5dp"
+            android:background="@color/material_gray">
 
         </ListView>
 

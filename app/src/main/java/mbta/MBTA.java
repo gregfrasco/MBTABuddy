@@ -122,6 +122,7 @@ public class MBTA{
     }
 
     public String run(final String query) {
+        Log.v("test", query);
         final Thread thread = new Thread() {
             @Override
             public void run() {

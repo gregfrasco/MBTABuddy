@@ -8,6 +8,7 @@
         <item>Map</item>
         <item>Favorites</item>
         <item>MBTA Map</item>
+        <!--item>Settings</item-->
     </string-array>
     <string name="drawer_open">Open Nav Drawer</string>
     <string name="drawer_close">Close Nav Drawer</string>

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    android:background="@color/material_gray">
 
     <TextView
         android:layout_marginLeft="10dp"
@@ -14,7 +15,7 @@
         android:id = "@+id/result_Name"
         android:layout_width="0px"
         android:layout_height="wrap_content"
-        android:textColor="#040303" />
+        android:textColor="@android:color/white" />
 
     <ImageButton
         android:layout_marginTop="5dp"

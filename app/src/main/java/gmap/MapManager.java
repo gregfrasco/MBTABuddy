@@ -1,10 +1,11 @@
 package gmap;
 
 import android.content.Context;
+
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 
-import com.Activities.MainActivity;
 import com.Activities.StationActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,14 +14,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import directions.AbstractRouting;
 import directions.RouteException;
@@ -141,9 +139,8 @@ public class MapManager implements RoutingListener{
         Marker newMarker = map.addMarker(new MarkerOptions()
                         .position(location)
                         .title(title)
-                        .anchor(0.5f,0.5f)
         );
-        TrainMarker newtm = new TrainMarker(line, newMarker, vehicleNum);
+        TrainMarker newtm = new TrainMarker(line, newMarker, vehicleNum, context);
         trainMarkers.add(newtm);
     }
 
@@ -152,7 +149,7 @@ public class MapManager implements RoutingListener{
                         .position(location)
                         .title(title)
         );
-        TrainMarker newtm = new TrainMarker(line, newMarker, vehicleNum);
+        TrainMarker newtm = new TrainMarker(line, newMarker, vehicleNum, context);
         newtm.setSetStationId(statId);
         trainMarkers.add(newtm);
     }
@@ -192,7 +189,7 @@ public class MapManager implements RoutingListener{
         Marker newMarker = map.addMarker(new MarkerOptions()
                 .position(location)
                 .title(stationName)
-                .anchor(0.5f, 0.5f)
+                .anchor(0.5f,0.5f)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_station)));
         StationMarker newsm = new StationMarker(stationName, newMarker);
         stationMarkers.add(newsm);
@@ -213,9 +210,9 @@ public class MapManager implements RoutingListener{
         //TODO: Make icon smaller
         if(map != null) {
             Marker meMarker = map.addMarker(new MarkerOptions()
-                            .position(location)
+                    .position(location)
                     .title(title)
-                    .anchor(0.5f,0.5f)
+                    .anchor(0.5f, 0.5f)
                     .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_myloc)));
             myMarker = meMarker;
         }
@@ -275,20 +272,8 @@ public class MapManager implements RoutingListener{
     }
 
     public void drawAllStations(){
-
-        try{
-            InputStream is = MainActivity.context.getAssets().open("Stations.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            String line = br.readLine(); // remove headers
-            while((line = br.readLine()) != null){
-                List<String> stationInfo = new ArrayList<String>(Arrays.asList(line.split(",")));
-                Station station = new Station(stationInfo);
-                this.addStationMarker(station.getStationID(),station.getLatLan());
-            }
-        } catch (IOException e) {
-            for(Line line: Lines.getInstance().values()){
-                this.drawStations(line);
-            }
+        for(Line line: Lines.getInstance().values()){
+            this.drawStations(line);
         }
     }
 
