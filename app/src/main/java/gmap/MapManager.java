@@ -31,6 +31,7 @@ import mbta.Lines;
 import mbta.MBTA;
 import mbta.Station;
 import mbta.Stop;
+import mbta.mbtaAPI.Trip;
 import mbta.mbtaAPI.Vehicle;
 import mbta.mbtabuddy.R;
 
@@ -98,12 +99,12 @@ public class MapManager implements RoutingListener{
     // Move a train already on the map
     public void moveTrainMarker(String tripNum, LatLng newPos) {
         TrainMarker train = getTrainMarkerFromVehicleNum(tripNum);
-        train.GetMarker().setPosition(newPos);
+        train.getMarker().setPosition(newPos);
     }
 
     public TrainMarker getTrainMarkerFromId(String markerId) {
         for (TrainMarker train : trainMarkers) {
-            String id = train.GetMarker().getId();
+            String id = train.getMarker().getId();
             if (id.equals(markerId)) {
                 return train;
             }
@@ -117,7 +118,7 @@ public class MapManager implements RoutingListener{
      */
     public TrainMarker getTrainMarkerFromVehicleNum(String vehicleNum) {
         for (TrainMarker train : trainMarkers) {
-            if (train.GetVehicleNum().equals(vehicleNum)) {
+            if (train.getVehicleNum().equals(vehicleNum)) {
                 return train;
             }
         }
@@ -131,7 +132,7 @@ public class MapManager implements RoutingListener{
 
     public void zoomToTrainMarker(String vehicleNum, int zoomNum) {
         TrainMarker train = getTrainMarkerFromVehicleNum(vehicleNum);
-        LatLng position = train.GetMarker().getPosition();
+        LatLng position = train.getMarker().getPosition();
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, zoomNum));
     }
 
@@ -152,7 +153,7 @@ public class MapManager implements RoutingListener{
                         .title(title)
         );
         TrainMarker newtm = new TrainMarker(line, newMarker, vehicleNum);
-        newtm.SetSetStationId(statId);
+        newtm.setSetStationId(statId);
         trainMarkers.add(newtm);
     }
 
@@ -358,5 +359,23 @@ public class MapManager implements RoutingListener{
             }
         }
         return null;
+    }
+
+    public void removeAllTrains() {
+        for(TrainMarker marker: this.trainMarkers){
+            marker.getMarker().remove();
+        }
+    }
+
+    public void addTrains(String lineID, Station station,String stopID) {
+        Line line = this.getLine(lineID);
+        List<Trip> trips = MBTA.getInstance().getTripsByRoute(line);
+        Stop stop = station.getStop(stopID);
+        for(Trip trip:trips){
+            if(trip.getTripHeadsign().toLowerCase().contains(stop.getDestination().toLowerCase())){
+                Vehicle vehicle = trip.getVehicle();
+                this.addTrainMarker(vehicle.getVehicleId(),vehicle.getLatLng(), trip.getTripHeadsign(),line);
+            }
+        }
     }
 }

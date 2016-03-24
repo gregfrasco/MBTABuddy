@@ -318,6 +318,19 @@ public class MBTA{
         return vehicles;
     }
 
+    public List<Trip> getTripsByRoute(Line line) {
+        String apiResult = run(mbtaAPI + "vehiclesbyroute" + apiKey + "&route=" + line.getLineID() + format);
+        Gson gson = new Gson();
+        VehiclesByRoute vehiclesByRoute = gson.fromJson(apiResult, VehiclesByRoute.class);
+        List<Trip> trips = new ArrayList<Trip>();
+        for(Direction direction: vehiclesByRoute.getDirection()){
+            for(Trip trip: direction.getTrip()){
+                trips.add(trip);
+            }
+        }
+        return trips;
+    }
+
     public List<Stop> getPredictionsByTrip(Trip trip) {
         String apiResult = run(mbtaAPI + "predictionsbytrip" + apiKey + "&trip="+ trip.getTripId() + format);
         Gson gson = new Gson();

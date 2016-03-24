@@ -47,19 +47,16 @@ public class TrainInfoWindow implements GoogleMap.InfoWindowAdapter {
 
         ImageView image = (ImageView) window.findViewById(R.id.mImage);
         //TODO: change icon based on train (route Enum maybe)
-        image.setImageBitmap(BitmapFactory.decodeResource(cont.getResources(), TrainMarker.GetIconResource(tMarker.GetLines())));
+        image.setImageBitmap(BitmapFactory.decodeResource(cont.getResources(), TrainMarker.getIconResource(tMarker.getLines())));
 
         //Get our Vehicles on the route
         MBTA mbta = MBTA.getInstance();
-        VehiclesByRoute vehiclesByRoute = mbta.GetVehiclesByRouteItem(tMarker.GetLines().getLineID());
+        VehiclesByRoute vehiclesByRoute = mbta.GetVehiclesByRouteItem(tMarker.getLines().getLineID());
 
         //Look for the corresponding vehicle
-        for(Direction direction : vehiclesByRoute.getDirection())
-        {
-            for(Trip trip : direction.getTrip())
-            {
-                if(trip.getVehicle().getVehicleId().equals(tMarker.GetVehicleNum()))
-                {
+        for(Direction direction : vehiclesByRoute.getDirection()) {
+            for(Trip trip : direction.getTrip()) {
+                if(trip.getVehicle().getVehicleId().equals(tMarker.getVehicleNum())) {
                     //Utilize the Headsign data of the train
                     Vehicle vehicle = trip.getVehicle();
                     title.setText(trip.getTripHeadsign());
@@ -69,8 +66,7 @@ public class TrainInfoWindow implements GoogleMap.InfoWindowAdapter {
                     directionText.setText(trip.getTripName());
 
                     //If the optional speed parameter is retrieved show the user
-                    if(vehicle.getVehicleSpeed() != null)
-                    {
+                    if(vehicle.getVehicleSpeed() != null) {
                         snippetText.setText("Speed: " + vehicle.getVehicleSpeed());
                     }
                 }

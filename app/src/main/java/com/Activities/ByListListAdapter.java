@@ -38,7 +38,7 @@ public class ByListListAdapter extends ArrayAdapter<ByLineListContainer> {
         ImageView image = (ImageView) listItem.findViewById(R.id.lineListItem_image);
 
         //Utilize the trainMarker class's method for getting appropriate icon and set it
-        int trainIconRes = TrainMarker.GetIconResource(getItem(position).lineColor);
+        int trainIconRes = TrainMarker.getIconResource(getItem(position).lineColor);
         image.setImageBitmap(BitmapFactory.decodeResource(cont.getResources(), trainIconRes));
 
         //Assign the line name

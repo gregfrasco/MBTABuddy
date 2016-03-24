@@ -55,6 +55,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     private TextView station1time;
     private TextView station2time;
     private LinearLayout stationHeader;
+    private Stop firstStop = null;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -80,8 +81,8 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         station2 = (TextView) findViewById(R.id.station2);
         station1time = (TextView) findViewById(R.id.station1min);
         station2time = (TextView) findViewById(R.id.station2min);
-        station1.setText(this.station.getLine().get(0).getTerminalStation1().getStationName());
-        station2.setText(this.station.getLine().get(0).getTerminalStation2().getStationName());
+        //station1.setText(this.station.getLine().get(0).getTerminalStation1().getStationName());
+        //station2.setText(this.station.getLine().get(0).getTerminalStation2().getStationName());
 
         //Set our view components
         TextView name = (TextView) findViewById(R.id.stationName);
@@ -96,7 +97,6 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         final TabHost tabs=(TabHost)findViewById(R.id.tabHost);
         tabs.setup();
         tabs.clearAllTabs();
-        Stop firstStop = null;
         for(Stop stop: this.station.getStopIDs()){
             if(firstStop == null){
                 firstStop = stop;
@@ -123,6 +123,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     StationActivity.this.getWindow().setStatusBarColor(stop.getColor());
                 }
+                updateTrains(stop);
             }
         });
         stationHeader.setBackgroundColor(firstStop.getColor());
@@ -275,9 +276,14 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
             }
             this.mapManager.drawTrainLinesByStops(station.getStopIDs());
             this.mapManager.drawStations(station.getLine());
-            this.mapManager.addTrains(station.getLine(), station);
+            updateTrains(firstStop);
             this.mapManager.zoomToStationMarker(station.getStationID(), 16);
         }
+    }
+
+    private void updateTrains(Stop stop){
+        this.mapManager.removeAllTrains();
+        this.mapManager.addTrains(stop.getLineID(),this.station,stop.getStopID());
     }
 
     private class CountDownClock extends CountDownTimer{
