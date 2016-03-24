@@ -39,7 +39,7 @@ StationID,StopID;Destination;Direction;Line,...
 70006,70006;Forest Hills;Outbound;Orange,70007;Oak Grove;Inbound;Orange
 70004,70004;Forest Hills;Outbound;Orange,70005;Oak Grove;Inbound;Orange
 70002,70002;Forest Hills;Outbound;Orange,70003;Oak Grove;Inbound;Orange
-70001,70001;Forest Hills;Inbound;Orange
+70001,70001;Oak Grove;Inbound;Orange
 70060,70060;Bowdoin;Inbound;Blue
 70057,70057;Bowdoin;Inbound;Blue,70058;Bowdoin;Outbound;Blue
 70055,70055;Bowdoin;Inbound;Blue,70056;Bowdoin;Outbound;Blue

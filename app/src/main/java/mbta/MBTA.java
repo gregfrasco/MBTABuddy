@@ -41,7 +41,7 @@ public class MBTA{
 
     private static MBTA instance;
     private final String mbtaAPI = "http://realtime.mbta.com/developer/api/v2/";
-    private final String apiKey = "?api_key=lxzqGfe9OUWHBR9elGklBg";
+    private final String apiKey = "?api_key=RpDBj89zSU6aOljozJLfpg";
     private final String format = "&format=json";
     private final String alerts = "&include_access_alerts=true&include_service_alerts=true";
     private String results;
