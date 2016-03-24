@@ -30,6 +30,7 @@ import mbta.Line;
 import mbta.Lines;
 import mbta.MBTA;
 import mbta.Station;
+import mbta.Stop;
 import mbta.mbtaAPI.Vehicle;
 import mbta.mbtabuddy.R;
 
@@ -77,7 +78,7 @@ public class MapManager implements RoutingListener{
                 }
                 //For station markers
                 if (getStationMarkerById(marker.getId()) != null) {
-                    if(stationClickable) {
+                    if (stationClickable) {
                         Intent intent = new Intent(context, StationActivity.class);
                         intent.putExtra("ID", marker.getTitle());
                         context.startActivity(intent);
@@ -342,5 +343,20 @@ public class MapManager implements RoutingListener{
 
     public void setStationClickable(boolean stationClickable) {
         this.stationClickable = stationClickable;
+    }
+
+    public void drawTrainLinesByStops(List<Stop> stops) {
+        for(Stop stop: stops){
+            this.drawLine(getLine(stop.getLineID()));
+        }
+    }
+
+    private Line getLine(String lineID) {
+        for(Line line: Lines.getInstance().values()){
+            if(line.getLineID().equals(lineID)){
+                return line;
+            }
+        }
+        return null;
     }
 }

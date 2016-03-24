@@ -9,12 +9,19 @@ public class Stop {
     private String destination;
     private String direction;
     private String lineID;
+    private int color;
 
     public Stop(String stopID, String destination, String direction, String lineID) {
         this.stopID = stopID;
         this.destination = destination;
         this.direction = direction;
         this.lineID = lineID;
+        for(Line line:Lines.getInstance().values()){
+            if(line.getLineID().equals(lineID)){
+                this.color = line.getColor();
+                break;
+            }
+        }
     }
 
     public Stop(String stopID) {
@@ -51,5 +58,13 @@ public class Stop {
 
     public void setLineID(String lineID) {
         this.lineID = lineID;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }

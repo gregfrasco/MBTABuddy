@@ -2,6 +2,8 @@ package com.Activities;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -10,8 +12,11 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -49,6 +54,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     private TextView station2;
     private TextView station1time;
     private TextView station2time;
+    private LinearLayout stationHeader;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -81,12 +87,48 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         TextView name = (TextView) findViewById(R.id.stationName);
         name.setText(this.station.getStationName().toUpperCase());
         name.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto-Bold.ttf"));
-        LinearLayout stationHeader = (LinearLayout) findViewById(R.id.stationHeader);
-        stationHeader.setBackgroundColor(this.station.getLine().get(0).getColor());
+        stationHeader = (LinearLayout) findViewById(R.id.stationHeader);
         initCountDownClicks();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             this.getWindow().setStatusBarColor(this.station.getLine().get(0).getColor());
         }
+        //Tabs
+        final TabHost tabs=(TabHost)findViewById(R.id.tabHost);
+        tabs.setup();
+        tabs.clearAllTabs();
+        Stop firstStop = null;
+        for(Stop stop: this.station.getStopIDs()){
+            if(firstStop == null){
+                firstStop = stop;
+            }
+            TabHost.TabSpec tab = tabs.newTabSpec(stop.getStopID());
+            tab.setIndicator(stop.getDestination());
+            tab.setContent(new TabHost.TabContentFactory() {
+                @Override
+                public View createTabContent(String tag) {
+                    return StationActivity.this.station1;
+                }
+            });
+            tabs.addTab(tab);
+        }
+        TabWidget widget = tabs.getTabWidget();
+        tabs.getTabWidget().getChildAt(tabs.getCurrentTab()).getBackground().setColorFilter(this.station.getLine().get(0).getColor(), PorterDuff.Mode.MULTIPLY);
+        tabs.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                Stop stop = StationActivity.this.station.getStop(tabId);
+                tabs.getTabWidget().getChildAt(tabs.getCurrentTab()).getBackground().setColorFilter(stop.getColor(), PorterDuff.Mode.MULTIPLY);
+                stationHeader.setBackgroundColor(stop.getColor());
+                StationActivity.this.changeCountDownClocks(stop);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    StationActivity.this.getWindow().setStatusBarColor(stop.getColor());
+                }
+            }
+        });
+        stationHeader.setBackgroundColor(firstStop.getColor());
+        tabs.setCurrentTab(0);
+
+        //Favorites
         List<FavoritesDataContainer> favs = (List<FavoritesDataContainer>)DataStorageManager.getInstance().LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);
 
         for(FavoritesDataContainer fav : favs) {
@@ -100,6 +142,10 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         }
         //We are done loading
         LoadingDialogManager.getInstance().DismissLoading();
+    }
+
+    private void changeCountDownClocks(Stop stop) {
+
     }
 
 
@@ -227,7 +273,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
             if(this.dialog.isShowing()){
                 this.dialog.dismiss();
             }
-            this.mapManager.drawTrainLines(station.getLine());
+            this.mapManager.drawTrainLinesByStops(station.getStopIDs());
             this.mapManager.drawStations(station.getLine());
             this.mapManager.addTrains(station.getLine(), station);
             this.mapManager.zoomToStationMarker(station.getStationID(), 16);

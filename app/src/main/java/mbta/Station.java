@@ -116,6 +116,15 @@ public class Station {
         return stopIDs;
     }
 
+    public Stop getStop(String id){
+        for(Stop stop: this.getStopIDs()){
+            if(stop.getStopID().equals(id)){
+                return stop;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return this.getStationName() + "," + this.getLatitude() + "," + this.getLongitude();
