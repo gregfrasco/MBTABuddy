@@ -123,34 +123,20 @@
                  android:layout_width="match_parent"
                  android:layout_height="match_parent"
                  android:orientation="vertical">
-
+                 <HorizontalScrollView
+                     android:layout_width="fill_parent"
+                     android:layout_height="wrap_content"
+                     android:fillViewport="true"
+                     android:scrollbars="none">
                  <TabWidget
                      android:id="@android:id/tabs"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"></TabWidget>
-
+                 </HorizontalScrollView>
                  <FrameLayout
                      android:id="@android:id/tabcontent"
                      android:layout_width="match_parent"
                      android:layout_height="match_parent">
-
-                     <LinearLayout
-                         android:id="@+id/linearLayout4"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:orientation="vertical"></LinearLayout>
-
-                     <LinearLayout
-                         android:id="@+id/linearLayout5"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:orientation="vertical"></LinearLayout>
-
-                     <LinearLayout
-                         android:id="@+id/linearLayout6"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:orientation="vertical"></LinearLayout>
                  </FrameLayout>
              </LinearLayout>
          </TabHost>
