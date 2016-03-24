@@ -101,7 +101,7 @@ public class Station {
                     if (line.contains(this.stationID)) {
                         String[] numberOfStops = Arrays.copyOfRange(line.split(","), 1, line.split(",").length);
                         for (String stop : numberOfStops) {
-                            String[] newStop = line.split(";");
+                            String[] newStop = stop.split(";");
                             stops.add(new Stop(newStop[0], newStop[1], newStop[2], newStop[3]));
                         }
                         break;

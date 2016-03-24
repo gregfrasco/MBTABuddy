@@ -1,9 +1,11 @@
 package com.Activities;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentActivity;
@@ -48,6 +50,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     private TextView station1time;
     private TextView station2time;
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +84,9 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         LinearLayout stationHeader = (LinearLayout) findViewById(R.id.stationHeader);
         stationHeader.setBackgroundColor(this.station.getLine().get(0).getColor());
         initCountDownClicks();
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.getWindow().setStatusBarColor(this.station.getLine().get(0).getColor());
+        }
         List<FavoritesDataContainer> favs = (List<FavoritesDataContainer>)DataStorageManager.getInstance().LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);
 
         for(FavoritesDataContainer fav : favs) {
@@ -125,7 +130,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         //Save it
         dataManager.SaveStationFavorite(station.getStationID(), station.getStationName());
     }
-    //TODO Make Countdown Clock Fragment
+
     private void initCountDownClicks(){
         this.countDownClocks = new HashMap<String,TextView>();
         int count = 0;
@@ -148,7 +153,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
 
     private void updateCountdownClock(String stopID,int timeInMilliseconds){
         int time = timeInMilliseconds/1000;
-        if(time <= 60){
+        if(time <= 15){
             this.countDownClocks.get(stopID).setText("ARR");
             this.countDownClocks.get(stopID).invalidate();
         } else {
@@ -232,6 +237,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     private class CountDownClock extends CountDownTimer{
 
         private String stopID;
+        private int mintue = 1000;
 
         public CountDownClock(long millisInFuture, long countDownInterval,String stopID) {
             super(millisInFuture, countDownInterval);
@@ -240,7 +246,8 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
 
         @Override
         public void onTick(long millisUntilFinished) {
-            if((millisUntilFinished % 975) <= 250) {
+            if(this.mintue > millisUntilFinished/1000/60 || (int) millisUntilFinished/1000 >= 15){
+                this.mintue = (int)millisUntilFinished/1000/60;
                 StationActivity.this.updateCountdownClock(stopID, (int) millisUntilFinished);
             }
         }
