@@ -33,9 +33,14 @@ import gmap.MapManager;
 import gmap.StationMarker;
 import gmap.TrainMarker;
 import mbta.ArrivalTime;
+import mbta.CountDownClock;
+import mbta.Lines;
 import mbta.MBTA;
 import mbta.Station;
 import mbta.Stop;
+import mbta.TrainClock;
+import mbta.mbtaAPI.Trip;
+import mbta.mbtaAPI.Vehicle;
 import mbta.mbtabuddy.R;
 
 public class StationActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -54,6 +59,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     private Stop firstStop = null;
     private CountDownClock countDownClock1;
     private CountDownClock countDownClock2;
+    private TrainClock trainClock;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -126,8 +132,8 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         });
         stationHeader.setBackgroundColor(firstStop.getColor());
         tabs.setCurrentTab(0);
+        //Clocks
         initCountDownClicks();
-
         //Favorites
         List<FavoritesDataContainer> favs = (List<FavoritesDataContainer>)DataStorageManager.getInstance().LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);
 
@@ -162,6 +168,8 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         this.mapManager.setMap(googleMap);
         new LoadStation(StationActivity.this,this.station,this.mapManager).execute();
+        trainClock = new TrainClock(15,1000,this);
+        trainClock.start();
     }
 
     public void addFavoriteStation(View view) {
@@ -179,15 +187,15 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
 
     private void initCountDownClicks(){
         ArrivalTime arrivalTime = this.station.getArrivalTimes(this.firstStop);
-        countDownClock1 = new CountDownClock(arrivalTime.getFirstTime(),1000,this.firstStop,1);
-        countDownClock2 = new CountDownClock(arrivalTime.getSecondTime(),1000,this.firstStop,2);
+        countDownClock1 = new CountDownClock(arrivalTime.getFirstTime(),1000,this.firstStop,1,this);
+        countDownClock2 = new CountDownClock(arrivalTime.getSecondTime(),1000,this.firstStop,2,this);
         updateCountdownClock(this.firstStop, 1, arrivalTime.getFirstTime(), countDownClock1.getPrediction());
         updateCountdownClock(this.firstStop, 2, arrivalTime.getSecondTime(), countDownClock2.getPrediction());
         countDownClock1.start();
         countDownClock2.start();
     }
 
-    private void updateCountdownClock(Stop stop, int row, int timeInMilliseconds, boolean prediction){
+    public void updateCountdownClock(Stop stop, int row, int timeInMilliseconds, boolean prediction){
         if(row == 1){
             this.station1.setText(stop.getDestination());
             this.station1time.setText(formatTime(timeInMilliseconds,prediction));
@@ -209,16 +217,37 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         }
     }
 
-    private void startNewTimer(Stop stop) {
+    public void startNewTimer(Stop stop) {
         countDownClock1.cancel();
         countDownClock2.cancel();
         ArrivalTime arrivalTime = this.station.getArrivalTimes(stop);
-        countDownClock1 = new CountDownClock(arrivalTime.getFirstTime(),1000,stop,1);
-        countDownClock2 = new CountDownClock(arrivalTime.getSecondTime(),1000,stop,2);
+        countDownClock1 = new CountDownClock(arrivalTime.getFirstTime(),1000,stop,1,this);
+        countDownClock2 = new CountDownClock(arrivalTime.getSecondTime(),1000,stop,2,this);
         this.updateCountdownClock(stop,1,arrivalTime.getFirstTime(), countDownClock1.getPrediction());
         this.updateCountdownClock(stop,2,arrivalTime.getSecondTime(),countDownClock2.getPrediction());
         countDownClock1.start();
         countDownClock2.start();
+    }
+
+    public void moveTrains() {
+        List<Trip> trips = MBTA.getInstance().getTripsByRoute(Lines.getInstance().getLine(this.countDownClock1.getStop().getLineID()));
+        for(Trip trip: trips){
+            if(findTrainMaker(trip,this.trainMarkers)){
+                Vehicle vehicle = trip.getVehicle();
+                this.mapManager.moveTrainMarker(vehicle.getVehicleId(),vehicle.getLatLng());
+            }
+        }
+        this.trainClock = new TrainClock(15000,1000,this);
+        this.trainClock.start();
+    }
+
+    private boolean findTrainMaker(Trip trip, List<TrainMarker> trainMarkers) {
+        for(TrainMarker trainMarker: trainMarkers){
+            if(trainMarker.getMarker().getId().equals(trip.getVehicle().getVehicleId())){
+                return true;
+            }
+        }
+        return false;
     }
 
     private class LoadStation extends AsyncTask<String, Integer, Boolean> {
@@ -287,40 +316,6 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     private void updateTrains(Stop stop){
         this.mapManager.removeAllTrains();
         this.mapManager.addTrains(stop.getLineID(), this.station, stop.getStopID());
-    }
-
-    private class CountDownClock extends CountDownTimer{
-
-        private Stop stop;
-        private int row;
-        private int minute = 1000;
-        private boolean prediction = true;
-
-        public CountDownClock(long millisInFuture, long countDownInterval,Stop stop,int row) {
-            super(millisInFuture, countDownInterval);
-            this.stop = stop;
-            this.row = row;
-            if(millisInFuture == 1200000){
-                this.prediction = false;
-            }
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            if(this.minute > millisUntilFinished/1000/60 || (int) millisUntilFinished/1000 >= 15){
-                this.minute = (int)millisUntilFinished/1000/60;
-                updateCountdownClock(stop, row,(int) millisUntilFinished,prediction);
-            }
-        }
-
-        @Override
-        public void onFinish() {
-            startNewTimer(stop);
-        }
-
-        public boolean getPrediction() {
-            return prediction;
-        }
     }
 }
 
