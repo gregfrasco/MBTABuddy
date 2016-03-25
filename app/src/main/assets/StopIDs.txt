@@ -6,7 +6,7 @@ StationID,StopID;Destination;Direction;Line,...
 70069,70069;Braintree;Inbound;Red,70070;Alewife;Inbound;Red
 70071,70071;Braintree;Inbound;Red,70072;Alewife;Inbound;Red
 70073,70073;Braintree;Inbound;Red,70074;Alewife;Inbound;Red
-70075,70075;Braintree;Ashmont/Braintree;Red,70076;Alewife;Inbound;Red,70199;Heath Street;Inbound;Green-E,70200;Lechmere;Outbound;Green-E,70198;Riverside;Outbound;Green-D,70200;Government Center;Inbound;Green-D,70197;Cleveland Circle;Inbound;Green-C,70158;North Station;Inbound;Green-C
+70075,70075;Braintree;Ashmont/Braintree;Red,70076;Alewife;Inbound;Red,70199;Heath Street;Inbound;Green-E,70200;Lechmere;Outbound;Green-E,70198;Riverside;Outbound;Green-D,70200;Government Center;Inbound;Green-D,70197;Cleveland Circle;Inbound;Green-C,70158;North Station;Inbound;Green-C,70196;Boston College;Outbound;Green-B,70200;Park Street;Inbound;Green-B
 70077,70077;Braintree;Ashmont/Braintree;Red,70078;Alewife;Inbound;Red,70018;Forest Hills;Outbound;Orange,70019;Oak Grove;Inbound;Orange
 70079,70079;Braintree;Outbound;Red,70080;Alewife;Inbound;Red
 70081,70081;Braintree;Outbound;Red,70082;Alewife;Inbound;Red
@@ -53,9 +53,9 @@ StationID,StopID;Destination;Direction;Line,...
 70038,70038;Wonderland;Inbound;Blue
 70210,70210;Heath Street;Inbound;Green-E
 70208,70208;Heath Street;Inbound;Green-E,70207;Lechmere;Outbound;Green-E
-70159,70159;Heath Street;Outbound;Green-E,70158;Lechmere;Inbound;Green-E,70159;Riverside;Outbound;Green-D,70158;Government Center;Inbound;Green-D,70159;Cleveland Circle;Outbound;Green-C,70156;North Station;Inbound;Green-C
-70157,70157;Heath Street;Outbound;Green-E,70156;Lechmere;Inbound;Green-E,70157;Riverside;Outbound;Green-D,70156;Government Center;Inbound;Green-D,70157;Cleveland Circle;Outbound;Green-C,70154;North Station;Inbound;Green-C
-70155,70155;Heath Street;Outbound;Green-E,70154;Lechmere;Inbound;Green-E,70155;Riverside;Outbound;Green-D,70154;Government Center;Inbound;Green-D,70155;Cleveland Circle;Outbound;Green-C,70152;North Station;Inbound;Green-C
+70159,70159;Heath Street;Outbound;Green-E,70158;Lechmere;Inbound;Green-E,70159;Riverside;Outbound;Green-D,70158;Government Center;Inbound;Green-D,70159;Cleveland Circle;Outbound;Green-C,70156;North Station;Inbound;Green-C,70159;Boston College;Outbound;Green-B,70158;Park Street;Inbound;Green-B
+70157,70157;Heath Street;Outbound;Green-E,70156;Lechmere;Inbound;Green-E,70157;Riverside;Outbound;Green-D,70156;Government Center;Inbound;Green-D,70157;Cleveland Circle;Outbound;Green-C,70154;North Station;Inbound;Green-C,70157;Boston College;Outbound;Green-B,70156;Park Street;Inbound;Green-B
+70155,70155;Heath Street;Outbound;Green-E,70154;Lechmere;Inbound;Green-E,70155;Riverside;Outbound;Green-D,70154;Government Center;Inbound;Green-D,70155;Cleveland Circle;Outbound;Green-C,70152;North Station;Inbound;Green-C,70155;Boston College;Outbound;Green-B,70154;Park Street;Inbound;Green-B
 70239,70239;Heath Street;Outbound;Green-E,70240;Lechmere;Inbound;Green-E
 70241,70241;Heath Street;Outbound;Green-E,70242;Lechmere;Inbound;Green-E
 70243,70243;Heath Street;Outbound;Green-E,70244;Lechmere;Inbound;Green-E
@@ -67,8 +67,8 @@ StationID,StopID;Destination;Direction;Line,...
 70255,70255;Heath Street;Outbound;Green-E,70256;Lechmere;Inbound;Green-E
 70257,70257;Heath Street;Outbound;Green-E,70258;Lechmere;Inbound;Green-E
 70259,70260;Lechmere;Inbound;Green-E
-70153,70153;Riverside;Outbound;Green-D,70152;Government Center;Inbound;Green-D,70153;Cleveland Circle;Outbound;Green-C,70150;North Station;Inbound;Green-C
-70151,70151;Riverside;Outbound;Green-D,70150;Government Center;Inbound;Green-D,70151;Cleveland Circle;Outbound;Green-C,70212;North Station;Inbound;Green-C
+70153,70153;Riverside;Outbound;Green-D,70152;Government Center;Inbound;Green-D,70153;Cleveland Circle;Outbound;Green-C,70150;North Station;Inbound;Green-C,70153;Boston College;Outbound;Green-B,70152;Park Street;Inbound;Green-B
+70151,70151;Riverside;Outbound;Green-D,70150;Government Center;Inbound;Green-D,70151;Cleveland Circle;Outbound;Green-C,70212;North Station;Inbound;Green-C,70151;Boston College;Outbound;Green-B,70150;Park Street;Inbound;Green-B
 70187,70187;Riverside;Outbound;Green-D,70186;Government Center;Inbound;Green-D
 70183,70183;Riverside;Outbound;Green-D,70182;Government Center;Inbound;Green-D
 70181,70181;Riverside;Outbound;Green-D,70180;Government Center;Inbound;Green-D
@@ -95,3 +95,21 @@ StationID,StopID;Destination;Direction;Line,...
 70233,70233;Cleveland Circle;Outbound;Green-C,70234;North Station;Inbound;Green-C
 70235,70235;Cleveland Circle;Outbound;Green-C,70236;North Station;Inbound;Green-C
 70237,70238;North Station;Inbound;Green-C
+70149,70149;Boston College;Outbound;Green-B,70148;Park Street;Inbound;Green-B
+70147,70147;Boston College;Outbound;Green-B,70146;Park Street;Inbound;Green-B
+70145,70145;Boston College;Outbound;Green-B,70144;Park Street;Inbound;Green-B
+70143,70143;Boston College;Outbound;Green-B,70142;Park Street;Inbound;Green-B
+70141,70141;Boston College;Outbound;Green-B,70140;Park Street;Inbound;Green-B
+70139,70139;Boston College;Outbound;Green-B,70138;Park Street;Inbound;Green-B
+70137,70137;Boston College;Outbound;Green-B,70136;Park Street;Inbound;Green-B
+70135,70135;Boston College;Outbound;Green-B,70134;Park Street;Inbound;Green-B
+70131,70131;Boston College;Outbound;Green-B,70130;Park Street;Inbound;Green-B
+70129,70129;Boston College;Outbound;Green-B,70128;Park Street;Inbound;Green-B
+70127,70127;Boston College;Outbound;Green-B,70126;Park Street;Inbound;Green-B
+70125,70125;Boston College;Outbound;Green-B,70124;Park Street;Inbound;Green-B
+70121,70121;Boston College;Outbound;Green-B,70120;Park Street;Inbound;Green-B
+70117,70117;Boston College;Outbound;Green-B,70116;Park Street;Inbound;Green-B
+70115,70115;Boston College;Outbound;Green-B,70114;Park Street;Inbound;Green-B
+70113,70113;Boston College;Outbound;Green-B,70112;Park Street;Inbound;Green-B
+70111,70111;Boston College;Outbound;Green-B,70110;Park Street;Inbound;Green-B
+70107,70107;Park Street;Inbound;Green-B
