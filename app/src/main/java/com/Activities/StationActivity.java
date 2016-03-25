@@ -2,15 +2,18 @@ package com.Activities;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -26,6 +29,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import DataManagement.DataStorageManager;
 import DataManagement.FavoritesDataContainer;
@@ -35,6 +39,7 @@ import DataManagement.StationFavContainer;
 import gmap.MapManager;
 import gmap.StationMarker;
 import gmap.TrainMarker;
+import gmapdirections.GPSManager;
 import mbta.ArrivalTime;
 import mbta.MBTA;
 import mbta.Station;
@@ -163,6 +168,23 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         this.mapManager.setMap(googleMap);
         new LoadStation(StationActivity.this,this.station,this.mapManager).execute();
+    }
+
+    public void openDirectionsApp(View view)
+    {
+        //For our URI for getting directions
+        String uri = String.format("http://maps.google.com/maps?saddr=%f,%f&daddr=%f,%f&mode=walking",
+                GPSManager.getInstance().getCurrentLoc().getLatitude(),
+                GPSManager.getInstance().getCurrentLoc().getLongitude(),
+                station.getLatLan().latitude,
+                station.getLatLan().longitude);
+
+        //Log what is going to be used
+        Log.v("StationActivity", "Directions Requested, URI Used: " + uri);
+
+        //Action view intent so we open external app
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(Intent.createChooser(intent, "Select a directions app"));
     }
 
     public void addFavoriteStation(View view) {

@@ -16,9 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -79,6 +81,14 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        final ImageButton toMeButton = (ImageButton) retView.findViewById(R.id.go_to_gps_button);
+        toMeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapManager.moveCameraToMe();
+            }
+        });
+
         final Animation animShow, animHide;
         animShow = AnimationUtils.loadAnimation(getActivity(), R.anim.view_show);
         animHide = AnimationUtils.loadAnimation(getActivity(), R.anim.view_hide);
@@ -87,7 +97,13 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         final View slide = retView.findViewById(R.id.open_stations_slide_view);
         final int MIN_DIST = 20;
         final View byLineView = retView.findViewById(R.id.stations_by_line);
+        //final TranslateAnimation ta =
+          //      new TranslateAnimation(toMeButton.getLeft(), toMeButton.getLeft(), toMeButton.getTop(), toMeButton.getTop() + byLineView.getHeight());
+        //ta.setDuration(1000);
+        //ta.setFillAfter(false);
 
+
+        final float toMeLoc = toMeButton.getY();
         slide.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -99,6 +115,12 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
                         if(byLineView.getVisibility() == View.GONE) {
                             byLineView.setVisibility(View.VISIBLE);
                             byLineView.startAnimation(animShow);
+
+
+                            //toMeButton.startAnimation(ta);
+                            //Move the to device gps location button
+                            //toMeButton.setY(byLineView.getHeight());
+                            //toMeButton.setY(byLineView.getHeight());
                         }
                         break;
 
@@ -123,6 +145,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
                         else{
                             byLineView.setVisibility(View.GONE);
                             byLineView.startAnimation(animHide);
+                          //  toMeButton.setY(toMeLoc);
                         }
                         break;
 
@@ -140,7 +163,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         mapLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(byLineView.getVisibility() == View.VISIBLE) {
+                if (byLineView.getVisibility() == View.VISIBLE) {
                     byLineView.setVisibility(View.GONE);
                     byLineView.startAnimation(animHide);
                 }
@@ -148,6 +171,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
                 return true;
             }
         });
+
 
         //Build station list
         createStationList(retView);
@@ -183,7 +207,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, gpsManager);
-        gpsManager.InitLocationManager(getActivity(), locationManager);
+        gpsManager.InitLocationManager(getActivity(), locationManager, mapManager);
     }
 
     /**
@@ -198,6 +222,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
         //Get our mapManager singleton and give it the context
         mapManager = new MapManager(getActivity(),mMap);
         /*mapManager.drawAllTrainLines();
@@ -217,11 +242,14 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         } else {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, gpsManager);
-            gpsManager.InitLocationManager(getActivity(), locationManager);
+            gpsManager.InitLocationManager(getActivity(), locationManager, mapManager);
             Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
+
         }
       //  mapManager.drawAllStations();
+        mapManager.moveCameraToMe();
         new LoadMapLines(mMap, mapManager).execute();
+
 
     }
 
@@ -263,7 +291,8 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         @Override
         protected void onPostExecute(Void result) {
             Station station = Lines.getInstance().RedLine.getStations().get(0);
-            mapManager.zoomToStationMarker(station.getStationID(),18);
+            //Move map to the device's location
+            mapManager.moveCameraToMe();
             LoadingDialogManager.getInstance().DismissLoading();
         }
     }

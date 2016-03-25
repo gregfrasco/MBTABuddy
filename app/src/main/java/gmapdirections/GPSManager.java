@@ -29,6 +29,7 @@ public class GPSManager implements LocationListener {
     private LocationManager locationManager;
     private Context myContext;
     private MapManager mapManager;
+    private Location currentLoc;
 
     public static GPSManager getInstance() {
         if (instance == null) {
@@ -46,10 +47,15 @@ public class GPSManager implements LocationListener {
         Log.v("GPSManager", lastLoc.getLatitude() + " " + lastLoc.getLongitude());
     }
 
-    public void InitLocationManager(Context context, LocationManager _locationManager) {
+    public void InitLocationManager(Context context, LocationManager _locationManager, MapManager mManager) {
         myContext = context;
         locationManager = _locationManager;
-        mapManager = new MapManager(myContext);
+        mapManager = mManager;
+    }
+
+    public void SetMapManager(MapManager mManager)
+    {
+        mapManager = mManager;
     }
 
     /*
@@ -57,7 +63,8 @@ public class GPSManager implements LocationListener {
      */
     @Override
     public void onLocationChanged(Location location) {
-        //Log.v("GPSManager", "Device GPS Location Changed to: " + location.getLatitude() + " " + location.getLongitude());
+        Log.v("GPSManager", "Device GPS Location Changed to: " + location.getLatitude() + " " + location.getLongitude());
+        currentLoc = location;
         mapManager.moveMyLocationMarker(new LatLng(location.getLatitude(), location.getLongitude()));
     }
 
@@ -74,5 +81,10 @@ public class GPSManager implements LocationListener {
     @Override
     public void onProviderDisabled(String provider) {
         Log.v("GPSManager", "provider disabled: " + provider);
+    }
+
+    public Location getCurrentLoc()
+    {
+        return currentLoc;
     }
 }
