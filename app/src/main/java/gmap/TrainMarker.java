@@ -66,30 +66,27 @@ public class TrainMarker
         return trainRoute;
     }
 
-
     public  BitmapDescriptor getIcon(Line line) {
         BitmapDescriptor theBmp;
         switch(line.getColor()){
             case Color.RED:
               theBmp = BitmapDescriptorFactory
                        .fromBitmap(IconHelper.drawableToBitmap(context.getResources().getDrawable(R.drawable.ic_red_24dp)));
-
-                return theBmp;
-            case Color.GREEN:
-               theBmp = BitmapDescriptorFactory
-                        .fromBitmap(IconHelper.drawableToBitmap(context.getResources().getDrawable(R.drawable.ic_green_24dp)));
-
                 return theBmp;
             case Color.BLUE:
                 theBmp = BitmapDescriptorFactory
                         .fromBitmap(IconHelper.drawableToBitmap(context.getResources().getDrawable(R.drawable.ic_blue_24dp)));
-
                 return theBmp;
             default:
-                theBmp = BitmapDescriptorFactory
-                        .fromBitmap(IconHelper.drawableToBitmap(context.getResources().getDrawable(R.drawable.ic_orange_24dp)));
-
-                return theBmp;
+                if(line.getColor() == Lines.Orange) {
+                    theBmp = BitmapDescriptorFactory
+                            .fromBitmap(IconHelper.drawableToBitmap(context.getResources().getDrawable(R.drawable.ic_orange_24dp)));
+                    return theBmp;
+                } else {
+                    theBmp = BitmapDescriptorFactory
+                            .fromBitmap(IconHelper.drawableToBitmap(context.getResources().getDrawable(R.drawable.ic_green_24dp)));
+                    return theBmp;
+                }
         }
     }
 
@@ -97,12 +94,14 @@ public class TrainMarker
         switch(line.getColor()){
             case Color.RED:
                 return R.drawable.ic_red_24dp;
-            case Color.GREEN:
-                return R.drawable.ic_green_24dp;
             case Color.BLUE:
                 return R.drawable.ic_blue_24dp;
             default:
-                return R.drawable.ic_orange_24dp;
+                if(line.getColor() == Lines.Orange) {
+                    return R.drawable.ic_orange_24dp;
+                } else {
+                    return R.drawable.ic_green_24dp;
+                }
         }
     }
 

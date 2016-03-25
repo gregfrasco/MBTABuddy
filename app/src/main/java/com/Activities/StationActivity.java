@@ -15,7 +15,6 @@ import android.os.CountDownTimer;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
@@ -27,7 +26,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,9 +39,14 @@ import gmap.StationMarker;
 import gmap.TrainMarker;
 import gmapdirections.GPSManager;
 import mbta.ArrivalTime;
+import mbta.CountDownClock;
+import mbta.Lines;
 import mbta.MBTA;
 import mbta.Station;
 import mbta.Stop;
+import mbta.TrainClock;
+import mbta.mbtaAPI.Trip;
+import mbta.mbtaAPI.Vehicle;
 import mbta.mbtabuddy.R;
 
 public class StationActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -53,7 +56,6 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     private Station station;
     private List<TrainMarker> trainMarkers = new ArrayList<TrainMarker>();
     private List<StationMarker> stationMarkers = new ArrayList<StationMarker>();
-    private HashMap<String,TextView> countDownClocks;
 
     private TextView station1;
     private TextView station2;
@@ -61,6 +63,9 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     private TextView station2time;
     private LinearLayout stationHeader;
     private Stop firstStop = null;
+    private CountDownClock countDownClock1;
+    private CountDownClock countDownClock2;
+    private TrainClock trainClock;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -94,7 +99,6 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         name.setText(this.station.getStationName().toUpperCase());
         name.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto-Bold.ttf"));
         stationHeader = (LinearLayout) findViewById(R.id.stationHeader);
-        initCountDownClicks();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             this.getWindow().setStatusBarColor(this.station.getLine().get(0).getColor());
         }
@@ -129,11 +133,13 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
                     StationActivity.this.getWindow().setStatusBarColor(stop.getColor());
                 }
                 updateTrains(stop);
+                startNewTimer(stop);
             }
         });
         stationHeader.setBackgroundColor(firstStop.getColor());
         tabs.setCurrentTab(0);
-
+        //Clocks
+        initCountDownClicks();
         //Favorites
         List<FavoritesDataContainer> favs = (List<FavoritesDataContainer>)DataStorageManager.getInstance().LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);
 
@@ -168,6 +174,8 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         this.mapManager.setMap(googleMap);
         new LoadStation(StationActivity.this,this.station,this.mapManager).execute();
+        trainClock = new TrainClock(15,1000,this);
+        trainClock.start();
     }
 
     public void openDirectionsApp(View view)
@@ -201,41 +209,68 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     private void initCountDownClicks(){
-        this.countDownClocks = new HashMap<String,TextView>();
-        int count = 0;
-        for(Stop stop: this.station.getStopIDs()){
-            if(count == 0) {
-                this.countDownClocks.put(stop.getStopID(), this.station1time);
-                count += 1;
-            } else if(count == 1) {
-                this.countDownClocks.put(stop.getStopID(),this.station2time);
-                count += 1;
-            } else {
-                break;
-            }
-            ArrivalTime arrivalTime = this.station.getArrivalTimes(stop.getStopID());
-            CountDownClock countDownClock = new CountDownClock(arrivalTime.getFirstTime(),1000,stop.getStopID());
-            countDownClock.start();
-            updateCountdownClock(stop.getStopID(),arrivalTime.getFirstTime());
-        }
+        ArrivalTime arrivalTime = this.station.getArrivalTimes(this.firstStop);
+        countDownClock1 = new CountDownClock(arrivalTime.getFirstTime(),1000,this.firstStop,1,this);
+        countDownClock2 = new CountDownClock(arrivalTime.getSecondTime(),1000,this.firstStop,2,this);
+        updateCountdownClock(this.firstStop, 1, arrivalTime.getFirstTime(), countDownClock1.getPrediction());
+        updateCountdownClock(this.firstStop, 2, arrivalTime.getSecondTime(), countDownClock2.getPrediction());
+        countDownClock1.start();
+        countDownClock2.start();
     }
 
-    private void updateCountdownClock(String stopID,int timeInMilliseconds){
-        int time = timeInMilliseconds/1000;
-        if(time <= 15){
-            this.countDownClocks.get(stopID).setText("ARR");
-            this.countDownClocks.get(stopID).invalidate();
+    public void updateCountdownClock(Stop stop, int row, int timeInMilliseconds, boolean prediction){
+        if(row == 1){
+            this.station1.setText(stop.getDestination());
+            this.station1time.setText(formatTime(timeInMilliseconds,prediction));
         } else {
-            this.countDownClocks.get(stopID).setText((time/60 + 1) + " min");
-            this.countDownClocks.get(stopID).invalidate();
+            this.station2.setText(stop.getDestination());
+            this.station2time.setText(formatTime(timeInMilliseconds,prediction));
         }
     }
 
-    private void startNewTimer(String stopID) {
-        ArrivalTime arrivalTime = this.station.getArrivalTimes(stopID);
-        CountDownClock countDownClock = new CountDownClock(arrivalTime.getFirstTime(),1000,stopID);
-        this.updateCountdownClock(stopID,arrivalTime.getFirstTime());
-        countDownClock.start();
+    private String formatTime(int timeInMilliseconds,boolean prediction) {
+        if(prediction) {
+            if ((timeInMilliseconds / 1000) < 15) {
+                return "ARR";
+            } else {
+                return ((timeInMilliseconds / 1000 / 60) + 1) + " min";
+            }
+        }else {
+            return "No info";
+        }
+    }
+
+    public void startNewTimer(Stop stop) {
+        countDownClock1.cancel();
+        countDownClock2.cancel();
+        ArrivalTime arrivalTime = this.station.getArrivalTimes(stop);
+        countDownClock1 = new CountDownClock(arrivalTime.getFirstTime(),1000,stop,1,this);
+        countDownClock2 = new CountDownClock(arrivalTime.getSecondTime(),1000,stop,2,this);
+        this.updateCountdownClock(stop,1,arrivalTime.getFirstTime(), countDownClock1.getPrediction());
+        this.updateCountdownClock(stop,2,arrivalTime.getSecondTime(),countDownClock2.getPrediction());
+        countDownClock1.start();
+        countDownClock2.start();
+    }
+
+    public void moveTrains() {
+        List<Trip> trips = MBTA.getInstance().getTripsByRoute(Lines.getInstance().getLine(this.countDownClock1.getStop().getLineID()));
+        for(Trip trip: trips){
+            if(findTrainMaker(trip,this.trainMarkers)){
+                Vehicle vehicle = trip.getVehicle();
+                this.mapManager.moveTrainMarker(vehicle.getVehicleId(),vehicle.getLatLng());
+            }
+        }
+        this.trainClock = new TrainClock(15000,1000,this);
+        this.trainClock.start();
+    }
+
+    private boolean findTrainMaker(Trip trip, List<TrainMarker> trainMarkers) {
+        for(TrainMarker trainMarker: trainMarkers){
+            if(trainMarker.getMarker().getId().equals(trip.getVehicle().getVehicleId())){
+                return true;
+            }
+        }
+        return false;
     }
 
     private class LoadStation extends AsyncTask<String, Integer, Boolean> {
@@ -245,7 +280,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
         private MapManager mapManager;
         private Station station;
 
-        public LoadStation(StationActivity activity,Station station,MapManager mapManager){
+        public LoadStation(StationActivity activity, Station station, MapManager mapManager) {
             this.activity = activity;
             this.mapManager = mapManager;
             this.station = station;
@@ -262,16 +297,14 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
 
         @Override
         protected Boolean doInBackground(String... params) {
-            try{
+            try {
                 DataStorageManager.getInstance().SetContext(activity);
                 List<FavoritesDataContainer> favs = (List<FavoritesDataContainer>)
                         DataStorageManager.getInstance().LoadUserData(DataStorageManager.UserDataTypes.FAVORITES_DATA);
 
                 //Check if this is already a favorite, if it is give it the full star icon
-                for(FavoritesDataContainer fav : favs)
-                {
-                    if(fav.favName.equals(station.getStationName()))
-                    {
+                for (FavoritesDataContainer fav : favs) {
+                    if (fav.favName.equals(station.getStationName())) {
                         final Drawable filledStarDrawable = getResources().getDrawable(R.drawable.ic_star_24dp);
                         final ImageButton favoritesButton = (ImageButton) findViewById(R.id.favoriteButton);
 
@@ -284,7 +317,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
                     }
                 }
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 return false;
             }
@@ -305,31 +338,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
 
     private void updateTrains(Stop stop){
         this.mapManager.removeAllTrains();
-        this.mapManager.addTrains(stop.getLineID(),this.station,stop.getStopID());
-    }
-
-    private class CountDownClock extends CountDownTimer{
-
-        private String stopID;
-        private int mintue = 1000;
-
-        public CountDownClock(long millisInFuture, long countDownInterval,String stopID) {
-            super(millisInFuture, countDownInterval);
-            this.stopID = stopID;
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            if(this.mintue > millisUntilFinished/1000/60 || (int) millisUntilFinished/1000 >= 15){
-                this.mintue = (int)millisUntilFinished/1000/60;
-                StationActivity.this.updateCountdownClock(stopID, (int) millisUntilFinished);
-            }
-        }
-
-        @Override
-        public void onFinish() {
-            StationActivity.this.startNewTimer(stopID);
-        }
+        this.mapManager.addTrains(stop.getLineID(), this.station, stop.getStopID());
     }
 }
 

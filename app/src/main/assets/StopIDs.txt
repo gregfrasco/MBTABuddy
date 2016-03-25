@@ -39,18 +39,18 @@ StationID,StopID;Destination;Direction;Line,...
 70006,70006;Forest Hills;Outbound;Orange,70007;Oak Grove;Inbound;Orange
 70004,70004;Forest Hills;Outbound;Orange,70005;Oak Grove;Inbound;Orange
 70002,70002;Forest Hills;Outbound;Orange,70003;Oak Grove;Inbound;Orange
-70001,70001;Forest Hills;Inbound;Orange
+70001,70001;Oak Grove;Inbound;Orange
 70060,70060;Bowdoin;Inbound;Blue
-70057,70057;Bowdoin;Inbound;Blue,70058;Bowdoin;Outbound;Blue
-70055,70055;Bowdoin;Inbound;Blue,70056;Bowdoin;Outbound;Blue
-70053,70053;Bowdoin;Inbound;Blue,70054;Bowdoin;Outbound;Blue
-70051,70051;Bowdoin;Inbound;Blue,70052;Bowdoin;Outbound;Blue
-70049,70049;Bowdoin;Inbound;Blue,70050;Bowdoin;Outbound;Blue
-70047,70047;Bowdoin;Inbound;Blue,70048;Bowdoin;Outbound;Blue
-70045,70045;Bowdoin;Inbound;Blue,70046;Bowdoin;Outbound;Blue
-70043,70043;Bowdoin;Inbound;Blue,70044;Bowdoin;Outbound;Blue
-70039,70039;Bowdoin;Outbound;Blue,70040;Bowdoin;Outbound;Blue,70202;Heath Street;Inbound;Green-E,70201;Lechmere;Outbound;Green-E,70201;Government Center;Inbound;Green-D,70204;Cleveland Circle;Inbound;Green-C,70201;North Station;Inbound;Green-C
-70038,70038;Bowdoin;Inbound;Blue
+70057,70057;Bowdoin;Inbound;Blue,70058;Wonderland;Outbound;Blue
+70055,70055;Bowdoin;Inbound;Blue,70056;Wonderland;Outbound;Blue
+70053,70053;Bowdoin;Inbound;Blue,70054;Wonderland;Outbound;Blue
+70051,70051;Bowdoin;Inbound;Blue,70052;Wonderland;Outbound;Blue
+70049,70049;Bowdoin;Inbound;Blue,70050;Wonderland;Outbound;Blue
+70047,70047;Bowdoin;Inbound;Blue,70048;Wonderland;Outbound;Blue
+70045,70045;Bowdoin;Inbound;Blue,70046;Wonderland;Outbound;Blue
+70043,70043;Bowdoin;Inbound;Blue,70044;Wonderland;Outbound;Blue
+70039,70039;Bowdoin;Outbound;Blue,70040;Wonderland;Outbound;Blue,70202;Heath Street;Inbound;Green-E,70201;Lechmere;Outbound;Green-E,70201;Government Center;Inbound;Green-D,70204;Cleveland Circle;Inbound;Green-C,70201;North Station;Inbound;Green-C
+70038,70038;Wonderland;Inbound;Blue
 70210,70210;Heath Street;Inbound;Green-E
 70208,70208;Heath Street;Inbound;Green-E,70207;Lechmere;Outbound;Green-E
 70159,70159;Heath Street;Outbound;Green-E,70158;Lechmere;Inbound;Green-E,70159;Riverside;Outbound;Green-D,70158;Government Center;Inbound;Green-D,70159;Cleveland Circle;Outbound;Green-C,70156;North Station;Inbound;Green-C
