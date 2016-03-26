@@ -330,9 +330,19 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
                 this.dialog.dismiss();
             }
             this.mapManager.drawTrainLinesByStops(station.getStopIDs());
+            this.checkAsmontLine();
             this.mapManager.drawStations(station.getLine());
             updateTrains(firstStop);
             this.mapManager.zoomToStationMarker(station.getStationID(), 16);
+        }
+
+        private void checkAsmontLine() {
+            for(Stop stop: station.getStopIDs()) {
+                if (stop.getDestination().equals("Ashmont")) {
+                    this.mapManager.drawAshmontLine();
+                    break;
+                }
+            }
         }
     }
 
