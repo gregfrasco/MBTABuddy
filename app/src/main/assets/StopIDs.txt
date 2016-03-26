@@ -113,3 +113,11 @@ StationID,StopID;Destination;Direction;Line,...
 70113,70113;Boston College;Outbound;Green-B,70112;Park Street;Inbound;Green-B
 70111,70111;Boston College;Outbound;Green-B,70110;Park Street;Inbound;Green-B
 70107,70107;Park Street;Inbound;Green-B
+70261,70261;Mattapan;Outbound;Mattapan
+70263,70263;Mattapan;Outbound;Mattapan,70264,Ashmont;Inbound;Mattapan
+70265,70265;Mattapan;Outbound;Mattapan,70266,Ashmont;Inbound;Mattapan
+70267,70267;Mattapan;Outbound;Mattapan,70268,Ashmont;Inbound;Mattapan
+70269,70269;Mattapan;Outbound;Mattapan,70270,Ashmont;Inbound;Mattapan
+70271,70271;Mattapan;Outbound;Mattapan,70272,Ashmont;Inbound;Mattapan
+70273,70273;Mattapan;Outbound;Mattapan,70274,Ashmont;Inbound;Mattapan
+70275,70276;Ashmont;Inbound;Mattapan
