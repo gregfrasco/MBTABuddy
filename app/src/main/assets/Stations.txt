@@ -113,11 +113,3 @@ stationID,stationName,latitude,longitude,lineIDs
 70113,Chestnut Hill Avenue,42.338169,-71.15316,Green-B
 70111,South Street,42.3396,-71.157661,Green-B
 70107,Boston College,42.340081,-71.166769,Green-B
-70261,Ashmont,42.28365,-71.063,Mattapan
-70263,Cedar Grove,42.279682,-71.060432,Mattapan
-70265,Butler,42.2723309,-71.0625697,Mattapan
-70267,Milton,42.2702948,-71.0676724,Mattapan
-70269,Central Ave.,42.2699971,-71.0733288,Mattapan
-70271,Valley Road,42.2682967,-71.0815559,Mattapan
-70273,Capen Street,42.2676618,-71.0877674,Mattapan
-70275,Mattapan,42.26752,-71.09199,Mattapan

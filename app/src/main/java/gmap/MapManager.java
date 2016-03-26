@@ -3,12 +3,16 @@ package gmap;
 import android.content.Context;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.util.Log;
 
 import com.Activities.StationActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -20,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import DataManagement.IconHelper;
 import directions.AbstractRouting;
 import directions.RouteException;
 import directions.Routing;
@@ -206,14 +211,24 @@ public class MapManager implements RoutingListener{
         }
     }
 
+    public void moveCameraToMe()
+    {
+        //Move the camera to my current location
+        if(myMarker != null) {
+            this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(myMarker.getPosition(), 18));
+        }
+    }
+
     public void addMyLocationMarker(String title, LatLng location) {
         //TODO: Make icon smaller
         if(map != null) {
+            Bitmap bmp = IconHelper.drawableToBitmap(context.getResources().getDrawable(R.drawable.ic_lens_24dp));
+            BitmapDescriptor myLocIcon = BitmapDescriptorFactory.fromBitmap(bmp);
             Marker meMarker = map.addMarker(new MarkerOptions()
                     .position(location)
                     .title(title)
                     .anchor(0.5f, 0.5f)
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_myloc)));
+                    .icon(myLocIcon));
             myMarker = meMarker;
         }
     }
