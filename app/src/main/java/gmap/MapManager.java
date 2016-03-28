@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.util.Log;
 
+import com.Activities.MainActivity;
 import com.Activities.StationActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,6 +21,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -376,6 +381,25 @@ public class MapManager implements RoutingListener{
                 Vehicle vehicle = trip.getVehicle();
                 this.addTrainMarker(vehicle.getVehicleId(),vehicle.getLatLng(), trip.getTripHeadsign(),line);
             }
+        }
+    }
+
+    public void drawAshmontLine() {
+        try {
+            Line train = Lines.getInstance().RedLine;
+            List<LatLng> points = new ArrayList<LatLng>();
+            InputStream is = MainActivity.context.getAssets().open("Red-Ashmont.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                String[] point = line.split(",");
+                points.add(new LatLng(Double.parseDouble(point[0]), Double.parseDouble(point[1])));
+            }
+            map.addPolyline(new PolylineOptions().width(20).color(train.getColor()).zIndex(1).addAll(points));
+            //line border
+            map.addPolyline(new PolylineOptions().width(30).color(Color.BLACK).zIndex(0).addAll(points));
+        } catch (IOException e){
+
         }
     }
 }

@@ -25,6 +25,7 @@ import android.widget.ImageButton;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,6 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         //Get our GDirections instance, give it context
         gDirections = GDirections.getInstance();
         gDirections.setContext(getActivity());
-        gDirections.Test();
 
         Button searchButton = (Button) retView.findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +172,6 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-
         //Build station list
         createStationList(retView);
         return retView;
@@ -246,11 +245,8 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
             Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
 
         }
-      //  mapManager.drawAllStations();
-        mapManager.moveCameraToMe();
         new LoadMapLines(mMap, mapManager).execute();
-
-
+        mapManager.moveCameraToMe();
     }
 
     class LoadMapLines extends AsyncTask<Void, Void, Void>
@@ -282,6 +278,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
                     mManager.setMap(mMap);
                     mManager.drawAllTrainLines();
                     mManager.drawAllStations();
+                    mManager.moveCameraToMe();
                 }
             });
 
@@ -290,10 +287,10 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
 
         @Override
         protected void onPostExecute(Void result) {
-            Station station = Lines.getInstance().RedLine.getStations().get(0);
             //Move map to the device's location
-            mapManager.moveCameraToMe();
             LoadingDialogManager.getInstance().DismissLoading();
+            mapManager.zoomTwoPoints(new LatLng(42.3453099, -71.0698502), new LatLng(42.3708664, -71.0617971));
+            mManager.drawAshmontLine();
         }
     }
 

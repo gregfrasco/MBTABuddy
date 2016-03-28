@@ -21,7 +21,8 @@ public class Lines {
     public final Line GreenLineD;
     public final Line GreenLineE;
     public final Line BlueLine;
-    public final Line MattapanLine;
+    //All Lines
+    public List<Line> lines;
 
 
     public Lines() {
@@ -32,7 +33,6 @@ public class Lines {
         this.GreenLineD    = new Line("Green-D","Green Line D",LineType.Tram,Green);
         this.GreenLineE    = new Line("Green-E","Green Line E",LineType.Tram,Green);
         this.BlueLine      = new Line("Blue","Blue Line",LineType.Subway,Color.BLUE);
-        this.MattapanLine  = new Line("Mattapan","Mattapan High Speed Line",LineType.Tram,Color.RED);
     }
 
     public static Lines getInstance(){
@@ -43,16 +43,16 @@ public class Lines {
     }
 
     public List<Line> values() {
-        new Lines();
-        List<Line> lines = new ArrayList<Line>();
-        lines.add(RedLine);
-        lines.add(OrangeLine);
-        lines.add(GreenLineB);
-        lines.add(GreenLineC);
-        lines.add(GreenLineD);
-        lines.add(GreenLineE);
-        lines.add(BlueLine);
-        lines.add(MattapanLine);
+        if(lines == null) {
+            lines = new ArrayList<Line>();
+            lines.add(RedLine);
+            lines.add(OrangeLine);
+            lines.add(GreenLineB);
+            lines.add(GreenLineC);
+            lines.add(GreenLineD);
+            lines.add(GreenLineE);
+            lines.add(BlueLine);
+        }
         return lines;
     }
 

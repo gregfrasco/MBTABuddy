@@ -95,3 +95,21 @@ stationID,stationName,latitude,longitude,lineIDs
 70233,Dean Road,42.337807,-71.141853,Green-C
 70235,Englewood Avenue,42.336971,-71.14566,Green-C
 70237,Cleveland Circle,42.336142,-71.149326,Green-C
+70149,Blandford Street,42.349293,-71.100258,Green-B
+70147,Boston Univ East,42.349735,-71.103889,Green-B
+70145,Boston Univ Central,42.350082,-71.106865,Green-B
+70143,Boston Univ West,42.350941,-71.113876,Green-B
+70141,Saint Paul Street,42.3512,-71.116104,Green-B
+70139,Pleasant Street,42.351521,-71.118889,Green-B
+70137,Babcock Street,42.35182,-71.12165,Green-B
+70135,Packards Corner,42.351967,-71.125031,Green-B
+70131,Harvard Avenue,42.350243,-71.131355,Green-B
+70129,Griggs Street,42.348545,-71.134949,Green-B
+70127,Allston Street,42.348701,-71.137955,Green-B
+70125,Warren Street,42.348343,-71.140457,Green-B
+70121,Washington Street,42.343864,-71.142853,Green-B
+70117,Sutherland Road,42.341614,-71.146202,Green-B
+70115,Chiswick Road,42.340805,-71.150711,Green-B
+70113,Chestnut Hill Avenue,42.338169,-71.15316,Green-B
+70111,South Street,42.3396,-71.157661,Green-B
+70107,Boston College,42.340081,-71.166769,Green-B
