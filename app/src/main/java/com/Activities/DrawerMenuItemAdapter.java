@@ -32,6 +32,11 @@ public class DrawerMenuItemAdapter extends ArrayAdapter<DrawerMenuItem> {
         LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.drawer_menu_item_layout, null);
 
+        if(position == 0)
+        {
+            view.findViewById(R.id.drawer_header).setVisibility(View.VISIBLE);
+        }
+
         //Set up name
         String itemName = getItem(position).menuItemName;
         TextView itemText = (TextView) view.findViewById(R.id.drawer_item_text);
