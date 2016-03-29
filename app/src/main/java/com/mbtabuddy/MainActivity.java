@@ -167,6 +167,11 @@ public class MainActivity extends ActionBarActivity {
                             newFragment = new MBTAStaticMapFragment();
                             break;
 
+                        case 3:
+                            setTitle(getResources().getStringArray(R.array.drawer_menu_labels)[3]);
+                            newFragment = new Reliability_Fragment();
+                            break;
+
                         default: //Return, do nothing
                             return;
                     }
