@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.location.Location;
 import android.util.Log;
 
 import com.mbtabuddy.MainActivity;
@@ -31,6 +32,7 @@ import directions.AbstractRouting;
 import directions.RouteException;
 import directions.Routing;
 import directions.RoutingListener;
+import gmapdirections.GPSManager;
 import mbta.Line;
 import mbta.Lines;
 import mbta.MBTA;
@@ -215,10 +217,10 @@ public class MapManager implements RoutingListener{
 
     public void moveCameraToMe()
     {
-        //Move the camera to my current location
-        if(myMarker != null) {
-            this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(myMarker.getPosition(), 18));
-        }
+        Location curLoc = GPSManager.getInstance().getCurrentLoc();
+        if(curLoc != null)
+             this.map.moveCamera(CameraUpdateFactory
+                .newLatLngZoom(new LatLng(curLoc.getLatitude(), curLoc.getLongitude()), 13));
     }
 
     public void addMyLocationMarker(String title, LatLng location) {
