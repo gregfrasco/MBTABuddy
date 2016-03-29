@@ -1,4 +1,4 @@
-package com.Activities;
+package com.mbtabuddy;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -36,7 +35,6 @@ import gmapdirections.GDirections;
 import gmapdirections.GPSManager;
 import mbta.Line;
 import mbta.Lines;
-import mbta.Station;
 import mbta.mbtabuddy.R;
 
 public class TrackerFragment extends Fragment implements OnMapReadyCallback {

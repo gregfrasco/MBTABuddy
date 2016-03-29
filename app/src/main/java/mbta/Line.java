@@ -3,7 +3,7 @@ package mbta;
 import android.graphics.Color;
 import android.location.Location;
 
-import com.Activities.MainActivity;
+import com.mbtabuddy.MainActivity;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;

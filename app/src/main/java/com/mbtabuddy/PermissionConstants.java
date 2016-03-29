@@ -1,4 +1,4 @@
-package com.Activities;
+package com.mbtabuddy;
 
 public enum PermissionConstants
 {

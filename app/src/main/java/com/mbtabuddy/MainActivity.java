@@ -1,4 +1,4 @@
-package com.Activities;
+package com.mbtabuddy;
 
 import android.content.Context;
 import android.content.pm.PackageManager;

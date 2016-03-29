@@ -1,8 +1,7 @@
-package com.Activities;
+package com.mbtabuddy;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import DataManagement.IconHelper;
 import DataManagement.LoadingDialogManager;
 import gmap.TrainMarker;
-import mbta.Line;
-import mbta.Lines;
-import mbta.MBTA;
-import mbta.Station;
 import mbta.mbtabuddy.R;
 
 /**

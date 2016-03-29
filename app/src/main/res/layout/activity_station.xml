@@ -16,7 +16,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        tools:context="com.Activities.StationActivity"
+        tools:context="com.mbtabuddy.StationActivity"
              android:layout_weight="0.74" />
 
      </LinearLayout>

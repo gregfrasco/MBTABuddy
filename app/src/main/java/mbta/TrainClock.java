@@ -2,7 +2,7 @@ package mbta;
 
 import android.os.CountDownTimer;
 
-import com.Activities.StationActivity;
+import com.mbtabuddy.StationActivity;
 
 /**
  * Created by frascog on 3/24/16.
