@@ -220,7 +220,7 @@ public class MapManager implements RoutingListener{
         Location curLoc = GPSManager.getInstance().getCurrentLoc();
         if(curLoc != null)
              this.map.moveCamera(CameraUpdateFactory
-                .newLatLngZoom(new LatLng(curLoc.getLatitude(), curLoc.getLongitude()), 13));
+                .newLatLngZoom(new LatLng(curLoc.getLatitude(), curLoc.getLongitude()), 15));
     }
 
     public void addMyLocationMarker(String title, LatLng location) {

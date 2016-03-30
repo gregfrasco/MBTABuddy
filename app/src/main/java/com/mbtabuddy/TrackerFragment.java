@@ -288,8 +288,9 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         protected void onPostExecute(Void result) {
             //Move map to the device's location
             LoadingDialogManager.getInstance().DismissLoading();
-            //mapManager.zoomTwoPoints(new LatLng(42.3453099, -71.0698502), new LatLng(42.3708664, -71.0617971));
-            mapManager.moveCameraToMe();
+            //default map will be Boston Downtown
+            mapManager.zoomTwoPoints(new LatLng(42.3453099, -71.0698502), new LatLng(42.3708664, -71.0617971));
+            //mapManager.moveCameraToMe();
             mManager.drawAshmontLine();
         }
     }
