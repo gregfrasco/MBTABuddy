@@ -1,19 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
-    <TextView
-        android:id="@+id/commuter_reliability"
+    <RelativeLayout
+        android:layout_gravity="top"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/mbta_reli_item_bck"
+        android:id="@+id/train_stack"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/rail_reliability"
+        android:layout_height="120dp">
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:background="@color/primary_UI_blue"
+            android:src="@drawable/ic_train_black"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:text="@string/sub_reli"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:text="@string/ph"
+                android:id="@+id/rail_reliability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+<RelativeLayout
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_gravity="top"
+    android:layout_height="120dp"
+    android:background="@drawable/mbta_reli_item_bck"
+    android:layout_below="@id/train_stack"
+    android:id="@+id/com_stack"
+    android:layout_width="match_parent">
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_com_rail_black"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/bus_reliability"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="@string/com_rail_reli_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:text="@string/ph"
+            android:id="@+id/commuter_reliability"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="top"
+        android:background="@drawable/mbta_reli_item_bck"
+        android:layout_below="@id/com_stack"
         android:layout_width="match_parent"
+        android:layout_height="120dp">
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_directions_bus_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:text="@string/bus_reli_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:text="@string/ph"
+                android:id="@+id/bus_reliability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true" />
+        </LinearLayout>
+    </RelativeLayout>
+    <Button
+        android:id="@+id/mbta_site_open_btn"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/material_gray"
+        android:text="@string/more_stats_mbta"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
 
 </LinearLayout>
