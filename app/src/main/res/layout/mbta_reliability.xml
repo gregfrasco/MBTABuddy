@@ -34,6 +34,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
+                android:textColor="@android:color/white"
+                android:layout_gravity="center"
+                android:text="@string/reli_target"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
 
                 android:textStyle="bold"
                 android:textAlignment="center"
@@ -78,6 +84,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
+            android:textColor="@android:color/white"
+            android:layout_gravity="center"
+            android:text="@string/reli_target"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
             android:textStyle="bold"
             android:textAlignment="center"
             android:textColor="@android:color/white"
@@ -115,6 +127,12 @@
                 android:textStyle="bold"
                 android:text="@string/bus_reli_title"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textColor="@android:color/white"
+                android:layout_gravity="center"
+                android:text="@string/reli_target"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:textStyle="bold"

@@ -26,6 +26,7 @@
     <string name="no_network_string">No Network Connection</string>
     <string name="ph">PlaceHolder</string>
     <string name="sub_reli">Subway Reliability</string>
+    <string name="reli_target">(Reliability/Target)</string>
     <string name="bus_reli_title">Bus Reliability</string>
     <string name="com_rail_reli_title">Commuter Rail Reliability</string>
     <string name="more_stats_mbta">More MBTA Statistics</string>
