@@ -1,4 +1,4 @@
-package com.Activities;
+package com.mbtabuddy;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
@@ -43,6 +44,8 @@ public class FavoritesFragment extends Fragment {
     private DataStorageManager dataManager;
     private List<FavoritesDataContainer> favs;
     private FavoritesItemsAdapter favAdapter;
+    ListView favList;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -92,17 +95,15 @@ public class FavoritesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
+        favList =  (ListView) view.findViewById(R.id.favoritesList);
 
         if(favs.size() > 0) {
-            //Get our LIstView for favorites
-            ListView favoritesList = (ListView) view.findViewById(R.id.favoritesList);
-
             //Finally set up adapter and ListView
             favAdapter = new FavoritesItemsAdapter(getActivity(), android.R.layout.simple_list_item_1, favs);
-            favoritesList.setAdapter(favAdapter);
+            favList.setAdapter(favAdapter);
 
             //Set up on click listeners
-            favoritesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            favList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     FavoritesDataContainer fav = (FavoritesDataContainer) parent.getItemAtPosition(position);
@@ -144,19 +145,31 @@ public class FavoritesFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(
-            Menu menu, final MenuInflater inflater)
-    {
+            Menu menu, final MenuInflater inflater) {
         inflater.inflate(R.menu.favorites_menu, menu);
-        MenuItem removeItem = menu.findItem(R.id.action_remove);
+        final MenuItem removeItem = menu.findItem(R.id.action_remove);
+        final Button doneEditButton = (Button) getView().findViewById(R.id.done_edit_button);
+
+        //When user clicks done editing
+        doneEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeItem.setTitle(getString(R.string.remove_menu_favorites));
+                doneEditButton.setVisibility(View.GONE);
+
+                favAdapter.setIsRemoving(false);
+
+                ShowRemoveButtons(false);
+            }
+        });
 
         //Remove item mode toggle for removing favorites
         removeItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                ListView favList =  (ListView) getView().findViewById(R.id.favoritesList);
 
                 //If no favorites do nothing
-                if(favList.getCount() <= 0 )
+                if (favList.getCount() <= 0)
                     return false;
 
                 try {
@@ -165,33 +178,27 @@ public class FavoritesFragment extends Fragment {
                         case View.VISIBLE:
                             //Set our menu button title
                             item.setTitle(getString(R.string.remove_menu_favorites));
+                            doneEditButton.setVisibility(View.GONE);
 
                             favAdapter.setIsRemoving(false);
 
-                            //Disable the Remove button
-                            for (int i = 0; i < favList.getChildCount(); i++) {
-                                favList.getChildAt(i).findViewById(R.id.UnfavoriteBtn).setVisibility(View.INVISIBLE);
-                            }
+                            ShowRemoveButtons(false);
                             break;
 
                         case View.INVISIBLE:
                             //Set title to be "done removing"
                             item.setTitle(getString(R.string.done_remove_menu_favorites));
+                            doneEditButton.setVisibility(View.VISIBLE);
 
                             favAdapter.setIsRemoving(true);
 
-                            //Enable the Remove button and the End Remove Button
-                            for (int i = 0; i < favList.getChildCount(); i++) {
-                                favList.getChildAt(i).findViewById(R.id.UnfavoriteBtn).setVisibility(View.VISIBLE);
-                            }
+                            ShowRemoveButtons(true);
                             break;
 
                         default:
                             break;
                     }
-                }
-                catch(Exception e)
-                {
+                } catch (Exception e) {
                     Log.e("FavoritesFragment", "Error in processing menu Item click: " + e.getMessage());
                 }
 
@@ -213,6 +220,24 @@ public class FavoritesFragment extends Fragment {
                 return false;
             }
         });
+    }
+
+    private void ShowRemoveButtons(boolean show)
+    {
+        if(show)
+        {
+            //Enable the Remove button and the End Remove Button
+            for (int i = 0; i < favList.getChildCount(); i++) {
+                favList.getChildAt(i).findViewById(R.id.UnfavoriteBtn).setVisibility(View.VISIBLE);
+            }
+        }
+        else
+        {
+            //Disable the Remove button
+            for (int i = 0; i < favList.getChildCount(); i++) {
+                favList.getChildAt(i).findViewById(R.id.UnfavoriteBtn).setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     @Override

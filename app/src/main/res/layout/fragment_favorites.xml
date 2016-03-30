@@ -2,10 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.Activities.FavoritesFragment"
+    tools:context="com.mbtabuddy.FavoritesFragment"
     android:background="@color/material_gray">
 
     <ListView
+        android:dividerHeight="1dp"
         android:divider="@android:color/white"
         android:id="@+id/favoritesList"
         android:layout_width="match_parent"
@@ -18,5 +19,15 @@
         android:layout_gravity="bottom|end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/primary_UI_blue"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:id="@+id/done_edit_button"
+        android:layout_gravity="left|bottom" />
 
 </FrameLayout>

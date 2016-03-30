@@ -1,4 +1,4 @@
-package com.Activities;
+package com.mbtabuddy;
 
 import android.net.Uri;
 import android.os.Bundle;

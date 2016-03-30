@@ -1,4 +1,4 @@
-package com.Activities;
+package com.mbtabuddy;
 
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;

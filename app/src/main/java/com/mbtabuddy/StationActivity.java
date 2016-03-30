@@ -1,17 +1,17 @@
-package com.Activities;
+package com.mbtabuddy;
 
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +27,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import DataManagement.DataStorageManager;
 import DataManagement.FavoritesDataContainer;
@@ -180,19 +179,29 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
 
     public void openDirectionsApp(View view)
     {
-        //For our URI for getting directions
-        String uri = String.format("http://maps.google.com/maps?saddr=%f,%f&daddr=%f,%f&mode=walking",
-                GPSManager.getInstance().getCurrentLoc().getLatitude(),
-                GPSManager.getInstance().getCurrentLoc().getLongitude(),
-                station.getLatLan().latitude,
-                station.getLatLan().longitude);
+        //Get current location info
+        Location currentLoc =  GPSManager.getInstance().getCurrentLoc();
 
-        //Log what is going to be used
-        Log.v("StationActivity", "Directions Requested, URI Used: " + uri);
+        if(currentLoc != null) {
+            //For our URI for getting directions
+            String uri = String.format("http://maps.google.com/maps?saddr=%f,%f&daddr=%f,%f&mode=walking",
+                    currentLoc.getLatitude(),
+                    GPSManager.getInstance().getCurrentLoc().getLongitude(),
+                    station.getLatLan().latitude,
+                    station.getLatLan().longitude);
 
-        //Action view intent so we open external app
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        startActivity(Intent.createChooser(intent, "Select a directions app"));
+            //Log what is going to be used
+            Log.v("StationActivity", "Directions Requested, URI Used: " + uri);
+
+            //Action view intent so we open external app
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            startActivity(Intent.createChooser(intent, "Select a directions app"));
+        }
+        else
+        {
+            Dialog d = new Dialog(this);
+            d.setTitle("Please Enable Location Services to get Directions");
+        }
     }
 
     public void addFavoriteStation(View view) {

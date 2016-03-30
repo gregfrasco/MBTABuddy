@@ -1,4 +1,4 @@
-package com.Activities;
+package com.mbtabuddy;
 
 /**
  * Created by cruzj6 on 3/16/2016.

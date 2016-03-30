@@ -5,12 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
+import android.location.Location;
 import android.util.Log;
 
-import com.Activities.MainActivity;
-import com.Activities.StationActivity;
+import com.mbtabuddy.MainActivity;
+import com.mbtabuddy.StationActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -27,13 +26,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import DataManagement.IconHelper;
 import directions.AbstractRouting;
 import directions.RouteException;
 import directions.Routing;
 import directions.RoutingListener;
+import gmapdirections.GPSManager;
 import mbta.Line;
 import mbta.Lines;
 import mbta.MBTA;
@@ -218,10 +217,10 @@ public class MapManager implements RoutingListener{
 
     public void moveCameraToMe()
     {
-        //Move the camera to my current location
-        if(myMarker != null) {
-            this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(myMarker.getPosition(), 18));
-        }
+        Location curLoc = GPSManager.getInstance().getCurrentLoc();
+        if(curLoc != null)
+             this.map.moveCamera(CameraUpdateFactory
+                .newLatLngZoom(new LatLng(curLoc.getLatitude(), curLoc.getLongitude()), 13));
     }
 
     public void addMyLocationMarker(String title, LatLng location) {

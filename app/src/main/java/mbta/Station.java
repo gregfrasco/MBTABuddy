@@ -1,6 +1,6 @@
 package mbta;
 
-import com.Activities.MainActivity;
+import com.mbtabuddy.MainActivity;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.BufferedReader;

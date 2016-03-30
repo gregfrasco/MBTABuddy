@@ -1,4 +1,4 @@
-package com.Activities;
+package com.mbtabuddy;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -165,6 +165,11 @@ public class MainActivity extends ActionBarActivity {
                             Log.v(TAG, "Fragment Switched to Static Map");
                             setTitle(getResources().getStringArray(R.array.drawer_menu_labels)[2]);
                             newFragment = new MBTAStaticMapFragment();
+                            break;
+
+                        case 3:
+                            setTitle(getResources().getStringArray(R.array.drawer_menu_labels)[3]);
+                            newFragment = new Reliability_Fragment();
                             break;
 
                         default: //Return, do nothing

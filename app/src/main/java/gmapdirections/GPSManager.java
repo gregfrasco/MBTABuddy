@@ -43,8 +43,9 @@ public class GPSManager implements LocationListener {
                 && ActivityCompat.checkSelfPermission(myContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             //TODO
         }
-        Location lastLoc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        Log.v("GPSManager", lastLoc.getLatitude() + " " + lastLoc.getLongitude());
+        Location currentLoc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        mapManager.moveCameraToMe();
+        if(currentLoc != null) Log.v("GPSManager", currentLoc.getLatitude() + " " + currentLoc.getLongitude());
     }
 
     public void InitLocationManager(Context context, LocationManager _locationManager, MapManager mManager) {
@@ -64,7 +65,15 @@ public class GPSManager implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         Log.v("GPSManager", "Device GPS Location Changed to: " + location.getLatitude() + " " + location.getLongitude());
-        currentLoc = location;
+        if(currentLoc == null)
+        {
+            Log.v("GPSManager", "Initial move cam, curloca assign");
+            currentLoc = location;
+            mapManager.moveCameraToMe();
+        }
+        else
+            currentLoc = location;
+
         mapManager.moveMyLocationMarker(new LatLng(location.getLatitude(), location.getLongitude()));
     }
 

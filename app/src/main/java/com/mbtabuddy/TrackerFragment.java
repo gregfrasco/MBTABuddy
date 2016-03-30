@@ -1,4 +1,4 @@
-package com.Activities;
+package com.mbtabuddy;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -36,7 +35,6 @@ import gmapdirections.GDirections;
 import gmapdirections.GPSManager;
 import mbta.Line;
 import mbta.Lines;
-import mbta.Station;
 import mbta.mbtabuddy.R;
 
 public class TrackerFragment extends Fragment implements OnMapReadyCallback {
@@ -245,8 +243,9 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
             Log.v("Tracker", "No Permissions Required, hooked up gpsManager");
 
         }
-        new LoadMapLines(mMap, mapManager).execute();
         mapManager.moveCameraToMe();
+        new LoadMapLines(mMap, mapManager).execute();
+
     }
 
     class LoadMapLines extends AsyncTask<Void, Void, Void>
@@ -289,7 +288,8 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         protected void onPostExecute(Void result) {
             //Move map to the device's location
             LoadingDialogManager.getInstance().DismissLoading();
-            mapManager.zoomTwoPoints(new LatLng(42.3453099, -71.0698502), new LatLng(42.3708664, -71.0617971));
+            //mapManager.zoomTwoPoints(new LatLng(42.3453099, -71.0698502), new LatLng(42.3708664, -71.0617971));
+            mapManager.moveCameraToMe();
             mManager.drawAshmontLine();
         }
     }
