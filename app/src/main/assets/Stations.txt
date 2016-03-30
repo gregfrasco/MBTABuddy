@@ -22,23 +22,23 @@ stationID,stationName,latitude,longitude,lineIDs
 70091,Shawmut,42.2931319,-71.0657451,Red
 70093,Ashmont,42.2844548,-71.0637444,Red
 70036,Oak Grove,42.4366626,-71.0709152,Orange
-70034,Malden Center,42.426632,-71.07411,Orange
-70032,Wellington,42.40237,-71.077082,Orange
-70278,Assembly,42.392811,-71.077257,Orange
-70030,Sullivan Square,42.383975,-71.076994,Orange
-70028,Community College,42.373622,-71.069533,Orange
-70026,North Station,42.365577,-71.06129,Orange,Green-C,Green-E
-70024,Haymarket,42.363021,-71.05829,Orange,Green-C,Green-E
+70034,Malden Center,42.4268197,-71.0742131,Orange
+70032,Wellington,42.4016501,-71.0771529,Orange
+70278,Assembly,42.392714,-71.0772196,Orange
+70030,Sullivan Square,42.3840716,-71.0769363,Orange
+70028,Community College,42.3736958,-71.0696998,Orange
+70026,North Station,42.3664772,-71.0612509,Orange,Green-C,Green-E
+70024,Haymarket,42.3621435,-71.0579208,Orange,Green-C,Green-E
 70022,State Street,42.3588898,-71.0577078,Orange,Blue
-70020,Chinatown,42.352547,-71.062752,Orange
-70016,Tufts Medical Center,42.349662,-71.063917,Orange
-70014,Back Bay,42.34735,-71.075727,Orange
-70012,Massachusetts Ave.,42.341512,-71.083423,Orange
-70010,Ruggles,42.336377,-71.088961,Orange
-70008,Roxbury Crossing,42.331397,-71.095451,Orange
-70006,Jackson Square,42.323132,-71.099592,Orange
-70004,Stony Brook,42.317062,-71.104248,Orange
-70002,Green Street,42.310525,-71.107414,Orange
+70020,Chinatown,42.3526394,-71.0624981,Orange
+70016,Tufts Medical Center,42.3496587,-71.06396,Orange
+70014,Back Bay,42.3474537,-71.0756028,Orange
+70012,Massachusetts Ave.,42.3413992,-71.0833697,Orange
+70010,Ruggles,42.3365835,-71.0893234,Orange
+70008,Roxbury Crossing,42.3312999,-71.0954314,Orange
+70006,Jackson Square,42.3231245,-71.0998841,Orange
+70004,Stony Brook,42.3172385,-71.1042571,Orange
+70002,Green Street,42.3104012,-71.1075704,Orange
 70001,Forest Hills,42.3007313,-71.1141017,Orange
 70060,Wonderland,42.41342,-70.991648,Blue
 70057,Revere Beach,42.4078636,-70.99254,Blue
@@ -52,15 +52,15 @@ stationID,stationName,latitude,longitude,lineIDs
 70039,Government Center,42.3592469,-71.0594724,Blue,Green-C,Green-D,Green-E
 70038,Bowdoin,42.36116,-71.06213,Blue
 70210,Lechmere,42.37116,-71.07715,Green-E
-70208,Science Park,42.366664,-71.067666,Green-E
-70159,Boylston,42.35302,-71.06459,Green-B,Green-C,Green-D,Green-E
-70157,Arlington,42.351902,-71.070893,Green-B,Green-C,Green-D,Green-E
-70155,Copley,42.349974,-71.077447,Green-B,Green-C,Green-D,Green-E
-70239,Prudential,42.34557,-71.081696,Green-E
-70241,Symphony,42.342687,-71.085056,Green-E
-70243,Northeastern University,42.340401,-71.088806,Green-E
-70245,Museum of Fine Arts,42.337711,-71.095512,Green-E
-70247,Longwood Medical Area,42.33596,-71.100052,Green-E
+70208,Science Park,42.3667262,-71.0676964,Green-E
+70159,Boylston,42.3525165,-71.0647794,Green-B,Green-C,Green-D,Green-E
+70157,Arlington,42.3518037,-71.0707983,Green-B,Green-C,Green-D,Green-E
+70155,Copley,42.3498265,-71.078032,Green-B,Green-C,Green-D,Green-E
+70239,Prudential,42.345674,-71.0812406,Green-E
+70241,Symphony,42.3426476,-71.0849922,Green-E
+70243,Northeastern University,42.3400764,-71.0894813,Green-E
+70245,Museum of Fine Arts,42.337845,-71.0951136,Green-E
+70247,Longwood Medical Area,42.3360491,-71.099755,Green-E
 70249,Brigham Circle,42.334229,-71.104609,Green-E
 70251,Fenwood Road,42.333706,-71.105728,Green-E
 70253,Mission Park,42.333195,-71.109756,Green-E
