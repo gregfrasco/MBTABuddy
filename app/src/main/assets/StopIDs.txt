@@ -15,7 +15,7 @@ StationID,StopID;Destination;Direction;Line,...
 70087,70087;Ashmont;Outbound;Red,70088;Alewife;Inbound;Red
 70089,70089;Ashmont;Outbound;Red,70090;Alewife;Inbound;Red
 70091,70091;Ashmont;Outbound;Red,70092;Alewife;Inbound;Red
-70093,70093;Ashmont;Outbound;Red,70094;Alewife;Inbound;Red
+70093,70094;Alewife;Inbound;Red
 70097,70097;Braintree;Outbound;Red,70098;Alewife;Inbound;Red
 70099,70099;Braintree;Outbound;Red,70100;Alewife;Inbound;Red
 70101,70101;Braintree;Outbound;Red,70102;Alewife;Inbound;Red

@@ -17,7 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         tools:context="com.mbtabuddy.StationActivity"
-             android:layout_weight="0.74" />
+             android:layout_weight="0.74"
+             android:layout_marginBottom="40dp" />
 
      </LinearLayout>
 

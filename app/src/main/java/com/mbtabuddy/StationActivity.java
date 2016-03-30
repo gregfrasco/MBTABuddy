@@ -347,7 +347,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
 
         private void checkAsmontLine() {
             for(Stop stop: station.getStopIDs()) {
-                if (stop.getDestination().equals("Ashmont")) {
+                if (stop.getDestination().equals("Ashmont") || station.getStationName().equals("Ashmont")) {
                     this.mapManager.drawAshmontLine();
                     break;
                 }
