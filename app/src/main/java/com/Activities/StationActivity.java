@@ -260,7 +260,7 @@ public class StationActivity extends FragmentActivity implements OnMapReadyCallb
                 this.mapManager.moveTrainMarker(vehicle.getVehicleId(),vehicle.getLatLng());
             }
         }
-        this.trainClock = new TrainClock(15000,1000,this);
+        this.trainClock = new TrainClock(60000,1000,this);
         this.trainClock.start();
     }
 

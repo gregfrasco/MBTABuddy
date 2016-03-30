@@ -1,16 +1,16 @@
 StationID,StopID;Destination;Direction;Line,...
-70061,70061;Braintree;Inbound;Red
-70063,70063;Braintree;Inbound;Red,70064;Alewife;Inbound;Red
-70065,70065;Braintree;Inbound;Red,70066;Alewife;Inbound;Red
-70067,70067;Braintree;Inbound;Red,70068;Alewife;Inbound;Red
-70069,70069;Braintree;Inbound;Red,70070;Alewife;Inbound;Red
-70071,70071;Braintree;Inbound;Red,70072;Alewife;Inbound;Red
-70073,70073;Braintree;Inbound;Red,70074;Alewife;Inbound;Red
-70075,70075;Braintree;Ashmont/Braintree;Red,70076;Alewife;Inbound;Red,70199;Heath Street;Inbound;Green-E,70200;Lechmere;Outbound;Green-E,70198;Riverside;Outbound;Green-D,70200;Government Center;Inbound;Green-D,70197;Cleveland Circle;Inbound;Green-C,70158;North Station;Inbound;Green-C,70196;Boston College;Outbound;Green-B,70200;Park Street;Inbound;Green-B
-70077,70077;Braintree;Ashmont/Braintree;Red,70078;Alewife;Inbound;Red,70018;Forest Hills;Outbound;Orange,70019;Oak Grove;Inbound;Orange
-70079,70079;Braintree;Outbound;Red,70080;Alewife;Inbound;Red
-70081,70081;Braintree;Outbound;Red,70082;Alewife;Inbound;Red
-70083,70083;Braintree;Outbound;Red,70084;Alewife;Inbound;Red
+70061,70061;Braintree;Inbound;Red,70061;Ashmont;Inbound;Red
+70063,70063;Braintree;Inbound;Red,70063;Ashmont;Inbound;Red,70064;Alewife;Inbound;Red
+70065,70065;Braintree;Inbound;Red,70065;Ashmont;Inbound;Red,70066;Alewife;Inbound;Red
+70067,70067;Braintree;Inbound;Red,70067;Ashmont;Inbound;Red,70068;Alewife;Inbound;Red
+70069,70069;Braintree;Inbound;Red,70069;Ashmont;Inbound;Red,70070;Alewife;Inbound;Red
+70071,70071;Braintree;Inbound;Red,70071;Ashmont;Inbound;Red,70072;Alewife;Inbound;Red
+70073,70073;Braintree;Inbound;Red,70073;Ashmont;Inbound;Red,70074;Alewife;Inbound;Red
+70075,70075;Braintree;Inbound;Red,70075;Ashmont;Inbound;Red,70076;Alewife;Inbound;Red,70199;Heath Street;Inbound;Green-E,70200;Lechmere;Outbound;Green-E,70198;Riverside;Outbound;Green-D,70200;Government Center;Inbound;Green-D,70197;Cleveland Circle;Inbound;Green-C,70158;North Station;Inbound;Green-C,70196;Boston College;Outbound;Green-B,70200;Park Street;Inbound;Green-B
+70077,70077;Braintree;Inbound;Red,70077;Ashmont;Inbound;Red,70078;Alewife;Inbound;Red,70018;Forest Hills;Outbound;Orange,70019;Oak Grove;Inbound;Orange
+70079,70079;Braintree;Outbound;Red,70079;Ashmont;Inbound;Red,70080;Alewife;Inbound;Red
+70081,70081;Braintree;Outbound;Red,70081;Ashmont;Inbound;Red70082;Alewife;Inbound;Red
+70083,70083;Braintree;Outbound;Red,70083;Ashmont;Inbound;Red70084;Alewife;Inbound;Red
 70095;Braintree;Outbound;Red,70096;Alewife;Inbound;Red,70085;Ashmont;Outbound;Red,70086;Alewife;Inbound;Red
 70087,70087;Ashmont;Outbound;Red,70088;Alewife;Inbound;Red
 70089,70089;Ashmont;Outbound;Red,70090;Alewife;Inbound;Red

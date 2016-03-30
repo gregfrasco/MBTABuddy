@@ -46,6 +46,7 @@ public class MBTA{
     private final String alerts = "&include_access_alerts=true&include_service_alerts=true";
     private String results;
     private List<Route> routes;
+    private int apiCounter = 0;
 
     public static MBTA getInstance(){
         if(instance == null){
@@ -122,19 +123,18 @@ public class MBTA{
     }
 
     public String run(final String query) {
-        Log.v("test", query);
         final Thread thread = new Thread() {
             @Override
             public void run() {
                 InputStream is = null;
                 try {
                     URL url = new URL(query);
+                    apiCount();
                     is = url.openStream();  // throws an IOException
                     BufferedReader br = new BufferedReader(new InputStreamReader(is));
                     MBTA.this.results = "";
                     String readLine;
-                    while((readLine = br.readLine()) != null)
-                    {
+                    while((readLine = br.readLine()) != null) {
                         MBTA.this.results += readLine;
                     }
                 } catch (MalformedURLException mue) {
@@ -382,5 +382,10 @@ public class MBTA{
             }
         }
         return stopIDs;
+    }
+
+    private void apiCount(){
+        this.apiCounter += 1;
+        Log.v("MBTA","API Useage: " + this.apiCounter + " times");
     }
 }
