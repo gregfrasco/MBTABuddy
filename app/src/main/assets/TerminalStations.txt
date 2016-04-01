@@ -1,8 +1,0 @@
-Red,Alewife,Braintree,Ashmont
-Orange,Oak Grove,Forest Hills
-Blue,Wonderland,Bowdoin
-Green-B,Park Street,Boston College
-Green-C,North Station,Cleveland Circle
-Green-D,Government Center,Riverside
-Green-E,Lechmere,Heath Street
-Mattapan,Ashmont,Mattapan
