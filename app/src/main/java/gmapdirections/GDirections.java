@@ -168,7 +168,7 @@ public class GDirections {
         }
 
         fullRequest += "transit_mode=rail&";
-        fullRequest += "key=" + cont.getString(R.string.google_server_key);
+        //fullRequest += "key=" + cont.getString(R.string.google_server_key);
 
         RequestThread req = new RequestThread(fullRequest);
         Thread reqThread = new Thread(req);
