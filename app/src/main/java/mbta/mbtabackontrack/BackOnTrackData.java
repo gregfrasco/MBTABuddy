@@ -1,5 +1,7 @@
 package mbta.mbtabackontrack;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -172,31 +174,34 @@ public class BackOnTrackData {
 
         @Override
         public void run() {
-            response = "";
-            URL url = null;
             try {
-                url = new URL(fullRequest);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-
-            InputStream inStream = null;  // throws an IOException
-            try {
-                inStream = url.openStream();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
-            try {
-                String readline = "";
-                while ((readline = br.readLine()) != null) {
-                    response += readline;
+                response = "";
+                URL url = null;
+                try {
+                    url = new URL(fullRequest);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+
+                InputStream inStream = null;  // throws an IOException
+                try {
+                    inStream = url.openStream();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
+                try {
+                    String readline = "";
+                    while ((readline = br.readLine()) != null) {
+                        response += readline;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
+                Log.e("BackOnTrackData", e.getMessage());
             }
         }
-
         public String getResponse() {
             return response;
         }

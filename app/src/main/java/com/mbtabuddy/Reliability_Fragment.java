@@ -1,12 +1,15 @@
 package com.mbtabuddy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -59,21 +62,50 @@ public class Reliability_Fragment extends Fragment {
             HashMap<String, String> reliData = BackOnTrackData.getInstance().getReliabilityForTransType();
             HashMap<String, String> targetData = BackOnTrackData.getInstance().getTargetForTransType();
 
+            //Get commuter rail data as int
+            int comReli = getIntPercentage(reliData, BackOnTrackData.TransitTypes.COMMUTER);
+            int comTar = getIntPercentage(targetData, BackOnTrackData.TransitTypes.COMMUTER);
+
+            //Subway data
+            int trainReliPer = getIntPercentage(reliData, BackOnTrackData.TransitTypes.RAIL);
+            int trainTarPer = getIntPercentage(targetData, BackOnTrackData.TransitTypes.RAIL);
+
+            //Bus data
+            int busReliPer = getIntPercentage(reliData, BackOnTrackData.TransitTypes.BUS);
+            int busTarPer = getIntPercentage(targetData, BackOnTrackData.TransitTypes.BUS);
+
             //Set the text fields
-            commuterReli.setText(reliData.get(BackOnTrackData.TransitTypes.COMMUTER.toString())
-                    + "/" + targetData.get(BackOnTrackData.TransitTypes.COMMUTER.toString()));
+            commuterReli.setText(comReli + "%"
+                    + "/" + comTar + "%");
             trainReli
-                    .setText(reliData.get(BackOnTrackData.TransitTypes.RAIL.toString())
-                            + "/" + targetData.get(BackOnTrackData.TransitTypes.RAIL.toString()));
+                    .setText(trainReliPer + "%"
+                            + "/" + trainTarPer + "%");
             busReli
-                    .setText(reliData.get(BackOnTrackData.TransitTypes.BUS.toString())
-                            + "/" + targetData.get(BackOnTrackData.TransitTypes.BUS.toString()));
+                    .setText(busReliPer + "%"
+                            + "/" + busTarPer + "%");
         }
         catch (Exception e)
         {
-
+            Log.e("ReliabilityFragment", "Error: " + e.getMessage());
         }
 
+        //Set up button for seeing additional statistics (Open Back on track site)
+        Button openMBTASiteBtn = (Button) retView.findViewById(R.id.mbta_site_open_btn);
+        openMBTASiteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Give the extra for the URL and create intent for opening webViewAct
+                Intent opnWebIntent = new Intent(getActivity(), WebViewActivity.class);
+                opnWebIntent.putExtra("url", "http://www.mbtabackontrack.com/performance/index.html#/home");
+                startActivity(opnWebIntent);
+            }
+        });
+
         return retView;
+    }
+
+    private int getIntPercentage(HashMap<String, String> data,BackOnTrackData.TransitTypes type)
+    {
+        return (int)(Double.parseDouble(data.get(type.toString())) * 100);
     }
 }

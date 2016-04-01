@@ -13,7 +13,7 @@
     </string-array>
     <string name="drawer_open">Open Nav Drawer</string>
     <string name="drawer_close">Close Nav Drawer</string>
-
+    <string name="google_server_key">AIzaSyC2Awh3geJVP0Ux0_A7waXXGfmqPx6FdKI</string>
     <string name="google_maps_directions_api_key">AIzaSyAuq6B6ktEChZCEfB-LbwyxshF44bWKItM</string>
     <string name="title_activity_station">StationActivity</string>
 
@@ -24,5 +24,13 @@
     <string name="add_menu_favorites">Add Favorite</string>
     <string name="search_text">Search</string>
     <string name="no_network_string">No Network Connection</string>
+    <string name="ph">PlaceHolder</string>
+    <string name="sub_reli">Subway Reliability</string>
+    <string name="reli_target">(Reliability/Target)</string>
+    <string name="bus_reli_title">Bus Reliability</string>
+    <string name="com_rail_reli_title">Commuter Rail Reliability</string>
+    <string name="more_stats_mbta">More MBTA Statistics</string>
+    <string name="exit">Exit</string>
+    <string name="back_text"><![CDATA[<]]></string>
 
 </resources>
