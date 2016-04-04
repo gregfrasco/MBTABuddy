@@ -46,7 +46,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
     private LocationManager locationManager;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
@@ -96,7 +96,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         final int MIN_DIST = 20;
         final View byLineView = retView.findViewById(R.id.stations_by_line);
         //final TranslateAnimation ta =
-          //      new TranslateAnimation(toMeButton.getLeft(), toMeButton.getLeft(), toMeButton.getTop(), toMeButton.getTop() + byLineView.getHeight());
+        //      new TranslateAnimation(toMeButton.getLeft(), toMeButton.getLeft(), toMeButton.getTop(), toMeButton.getTop() + byLineView.getHeight());
         //ta.setDuration(1000);
         //ta.setFillAfter(false);
 
@@ -105,12 +105,11 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         slide.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch(event.getAction())
-                {
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_POINTER_UP:
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_SCROLL:
-                        if(byLineView.getVisibility() == View.GONE) {
+                        if (byLineView.getVisibility() == View.GONE) {
                             byLineView.setVisibility(View.VISIBLE);
                             byLineView.startAnimation(animShow);
 
@@ -137,13 +136,12 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
 
-                        if(byLineView.getVisibility() == View.GONE) {
+                        if (byLineView.getVisibility() == View.GONE) {
 
-                        }
-                        else{
+                        } else {
                             byLineView.setVisibility(View.GONE);
                             byLineView.startAnimation(animHide);
-                          //  toMeButton.setY(toMeLoc);
+                            //  toMeButton.setY(toMeLoc);
                         }
                         break;
 
@@ -154,7 +152,6 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
                 return true;
             }
         });
-
 
 
         View mapLayout = retView.findViewById(R.id.map_layout);
@@ -175,13 +172,11 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         return retView;
     }
 
-    private void createStationList(View view)
-    {
+    private void createStationList(View view) {
         //Create our list of lines for each lines enum
         List<ByLineListContainer> lineItems = new ArrayList<>();
         final List<Line> lineVals = Lines.getInstance().values();
-        for(Line line : lineVals)
-        {
+        for (Line line : lineVals) {
             ByLineListContainer newLineItem = new ByLineListContainer();
             newLineItem.lineColor = line;
             newLineItem.lineName = line.getLineName();
@@ -221,7 +216,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         mMap = googleMap;
         googleMap.getUiSettings().setZoomControlsEnabled(true);
         //Get our mapManager singleton and give it the context
-        mapManager = new MapManager(getActivity(),mMap);
+        mapManager = new MapManager(getActivity(), mMap);
         /*mapManager.drawAllTrainLines();
         mapManager.setMap(mMap);*/
 
@@ -246,6 +241,32 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         mapManager.moveCameraToMe();
         new LoadMapLines(mMap, mapManager).execute();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(this.mMap != null) {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                        PermissionConstants.LOCATION_TrackerFragment.getValue());
+            } else {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsManager);
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, gpsManager);
+                gpsManager.InitLocationManager(getActivity(), locationManager, mapManager);
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        locationManager.removeUpdates(gpsManager);
     }
 
     class LoadMapLines extends AsyncTask<Void, Void, Void>
