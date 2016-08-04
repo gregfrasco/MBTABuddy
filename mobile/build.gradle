@@ -21,6 +21,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -31,4 +32,5 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha5'
     compile 'com.android.support:support-v4:24.1.1'
     testCompile 'junit:junit:4.12'
+    compile 'javax.annotation:javax.annotation-api:1.2'
 }

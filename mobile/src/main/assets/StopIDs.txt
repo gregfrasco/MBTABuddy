@@ -1,0 +1,115 @@
+StationID,StopID;Destination;Direction;Line,...
+70061,70061;Braintree;Inbound;Red,70061;Ashmont;Inbound;Red
+70063,70063;Braintree;Inbound;Red,70063;Ashmont;Inbound;Red,70064;Alewife;Inbound;Red
+70065,70065;Braintree;Inbound;Red,70065;Ashmont;Inbound;Red,70066;Alewife;Inbound;Red
+70067,70067;Braintree;Inbound;Red,70067;Ashmont;Inbound;Red,70068;Alewife;Inbound;Red
+70069,70069;Braintree;Inbound;Red,70069;Ashmont;Inbound;Red,70070;Alewife;Inbound;Red
+70071,70071;Braintree;Inbound;Red,70071;Ashmont;Inbound;Red,70072;Alewife;Inbound;Red
+70073,70073;Braintree;Inbound;Red,70073;Ashmont;Inbound;Red,70074;Alewife;Inbound;Red
+70075,70075;Braintree;Inbound;Red,70075;Ashmont;Inbound;Red,70076;Alewife;Inbound;Red,70199;Heath Street;Inbound;Green-E,70200;Lechmere;Outbound;Green-E,70198;Riverside;Outbound;Green-D,70200;Government Center;Inbound;Green-D,70197;Cleveland Circle;Inbound;Green-C,70158;North Station;Inbound;Green-C,70196;Boston College;Outbound;Green-B,70200;Park Street;Inbound;Green-B
+70077,70077;Braintree;Inbound;Red,70077;Ashmont;Inbound;Red,70078;Alewife;Inbound;Red,70018;Forest Hills;Outbound;Orange,70019;Oak Grove;Inbound;Orange
+70079,70079;Braintree;Outbound;Red,70079;Ashmont;Inbound;Red,70080;Alewife;Inbound;Red
+70081,70081;Braintree;Outbound;Red,70081;Ashmont;Inbound;Red70082;Alewife;Inbound;Red
+70083,70083;Braintree;Outbound;Red,70083;Ashmont;Inbound;Red70084;Alewife;Inbound;Red
+70095;Braintree;Outbound;Red,70096;Alewife;Inbound;Red,70085;Ashmont;Outbound;Red,70086;Alewife;Inbound;Red
+70087,70087;Ashmont;Outbound;Red,70088;Alewife;Inbound;Red
+70089,70089;Ashmont;Outbound;Red,70090;Alewife;Inbound;Red
+70091,70091;Ashmont;Outbound;Red,70092;Alewife;Inbound;Red
+70093,70094;Alewife;Inbound;Red
+70097,70097;Braintree;Outbound;Red,70098;Alewife;Inbound;Red
+70099,70099;Braintree;Outbound;Red,70100;Alewife;Inbound;Red
+70101,70101;Braintree;Outbound;Red,70102;Alewife;Inbound;Red
+70103,70103;Braintree;Outbound;Red,70104;Alewife;Inbound;Red
+70105,70105;Braintree;Outbound;Red
+70036,70036;Forest Hills;Inbound;Orange
+70034,70034;Forest Hills;Inbound;Orange,70035;Oak Grove;Outbound;Orange
+70032,70032;Forest Hills;Inbound;Orange,70033;Oak Grove;Outbound;Orange
+70278,70278;Forest Hills;Inbound;Orange,70279;Oak Grove;Outbound;Orange
+70030,70030;Forest Hills;Inbound;Orange,70031;Oak Grove;Outbound;Orange
+70028,70028;Forest Hills;Inbound;Orange,70029;Oak Grove;Outbound;Orange
+70026,70026;Forest Hills;Inbound;Orange,70027;Oak Grove;Outbound;Orange,70206;Heath Street;Inbound;Green-E,70205;Lechmere;Outbound;Green-E,70206;Cleveland Circle;Inbound;Green-C,70205;North Station;Inbound;Green-C
+70024,70024;Forest Hills;Inbound;Orange,70025;Oak Grove;Outbound;Orange,70204;Heath Street;Inbound;Green-E,70203;Lechmere;Outbound;Green-E,70204;Cleveland Circle;Inbound;Green-C,70203;North Station;Inbound;Green-C
+70022,70022;Forest Hills;Inbound;Orange,70023;Oak Grove;Outbound;Orange,70041;Bowdoin;Inbound;Blue,70042;Bowdoin;Outbound;Blue
+70020,70020;Forest Hills;Inbound;Orange,70021;Oak Grove;Outbound;Orange
+70016,70016;Forest Hills;Outbound;Orange,70017;Oak Grove;Inbound;Orange
+70014,70014;Forest Hills;Outbound;Orange,70015;Oak Grove;Inbound;Orange
+70012,70012;Forest Hills;Outbound;Orange,70013;Oak Grove;Inbound;Orange
+70010,70010;Forest Hills;Outbound;Orange,70011;Oak Grove;Inbound;Orange
+70008,70008;Forest Hills;Outbound;Orange,70009;Oak Grove;Inbound;Orange
+70006,70006;Forest Hills;Outbound;Orange,70007;Oak Grove;Inbound;Orange
+70004,70004;Forest Hills;Outbound;Orange,70005;Oak Grove;Inbound;Orange
+70002,70002;Forest Hills;Outbound;Orange,70003;Oak Grove;Inbound;Orange
+70001,70001;Oak Grove;Inbound;Orange
+70060,70060;Bowdoin;Inbound;Blue
+70057,70057;Bowdoin;Inbound;Blue,70058;Wonderland;Outbound;Blue
+70055,70055;Bowdoin;Inbound;Blue,70056;Wonderland;Outbound;Blue
+70053,70053;Bowdoin;Inbound;Blue,70054;Wonderland;Outbound;Blue
+70051,70051;Bowdoin;Inbound;Blue,70052;Wonderland;Outbound;Blue
+70049,70049;Bowdoin;Inbound;Blue,70050;Wonderland;Outbound;Blue
+70047,70047;Bowdoin;Inbound;Blue,70048;Wonderland;Outbound;Blue
+70045,70045;Bowdoin;Inbound;Blue,70046;Wonderland;Outbound;Blue
+70043,70043;Bowdoin;Inbound;Blue,70044;Wonderland;Outbound;Blue
+70039,70039;Bowdoin;Outbound;Blue,70040;Wonderland;Outbound;Blue,70202;Heath Street;Inbound;Green-E,70201;Lechmere;Outbound;Green-E,70201;Government Center;Inbound;Green-D,70204;Cleveland Circle;Inbound;Green-C,70201;North Station;Inbound;Green-C
+70038,70038;Wonderland;Inbound;Blue
+70210,70210;Heath Street;Inbound;Green-E
+70208,70208;Heath Street;Inbound;Green-E,70207;Lechmere;Outbound;Green-E
+70159,70159;Heath Street;Outbound;Green-E,70158;Lechmere;Inbound;Green-E,70159;Riverside;Outbound;Green-D,70158;Government Center;Inbound;Green-D,70159;Cleveland Circle;Outbound;Green-C,70156;North Station;Inbound;Green-C,70159;Boston College;Outbound;Green-B,70158;Park Street;Inbound;Green-B
+70157,70157;Heath Street;Outbound;Green-E,70156;Lechmere;Inbound;Green-E,70157;Riverside;Outbound;Green-D,70156;Government Center;Inbound;Green-D,70157;Cleveland Circle;Outbound;Green-C,70154;North Station;Inbound;Green-C,70157;Boston College;Outbound;Green-B,70156;Park Street;Inbound;Green-B
+70155,70155;Heath Street;Outbound;Green-E,70154;Lechmere;Inbound;Green-E,70155;Riverside;Outbound;Green-D,70154;Government Center;Inbound;Green-D,70155;Cleveland Circle;Outbound;Green-C,70152;North Station;Inbound;Green-C,70155;Boston College;Outbound;Green-B,70154;Park Street;Inbound;Green-B
+70239,70239;Heath Street;Outbound;Green-E,70240;Lechmere;Inbound;Green-E
+70241,70241;Heath Street;Outbound;Green-E,70242;Lechmere;Inbound;Green-E
+70243,70243;Heath Street;Outbound;Green-E,70244;Lechmere;Inbound;Green-E
+70245,70245;Heath Street;Outbound;Green-E,70246;Lechmere;Inbound;Green-E
+70247,70247;Heath Street;Outbound;Green-E,70248;Lechmere;Inbound;Green-E
+70249,70249;Heath Street;Outbound;Green-E,70250;Lechmere;Inbound;Green-E
+70251,70251;Heath Street;Outbound;Green-E,70252;Lechmere;Inbound;Green-E
+70253,70253;Heath Street;Outbound;Green-E,70254;Lechmere;Inbound;Green-E
+70255,70255;Heath Street;Outbound;Green-E,70256;Lechmere;Inbound;Green-E
+70257,70257;Heath Street;Outbound;Green-E,70258;Lechmere;Inbound;Green-E
+70259,70260;Lechmere;Inbound;Green-E
+70153,70153;Riverside;Outbound;Green-D,70152;Government Center;Inbound;Green-D,70153;Cleveland Circle;Outbound;Green-C,70150;North Station;Inbound;Green-C,70153;Boston College;Outbound;Green-B,70152;Park Street;Inbound;Green-B
+70151,70151;Riverside;Outbound;Green-D,70150;Government Center;Inbound;Green-D,70151;Cleveland Circle;Outbound;Green-C,70212;North Station;Inbound;Green-C,70151;Boston College;Outbound;Green-B,70150;Park Street;Inbound;Green-B
+70187,70187;Riverside;Outbound;Green-D,70186;Government Center;Inbound;Green-D
+70183,70183;Riverside;Outbound;Green-D,70182;Government Center;Inbound;Green-D
+70181,70181;Riverside;Outbound;Green-D,70180;Government Center;Inbound;Green-D
+70179,70179;Riverside;Outbound;Green-D,70178;Government Center;Inbound;Green-D
+70177,70177;Riverside;Outbound;Green-D,70176;Government Center;Inbound;Green-D
+70175,70175;Riverside;Outbound;Green-D,70174;Government Center;Inbound;Green-D
+70173,70173;Riverside;Outbound;Green-D,70172;Government Center;Inbound;Green-D
+70171,70171;Riverside;Outbound;Green-D,70170;Government Center;Inbound;Green-D
+70169,70169;Riverside;Outbound;Green-D,70168;Government Center;Inbound;Green-D
+70167,70167;Riverside;Outbound;Green-D,70166;Government Center;Inbound;Green-D
+70165,70165;Riverside;Outbound;Green-D,70164;Government Center;Inbound;Green-D
+70163,70163;Riverside;Outbound;Green-D,70162;Government Center;Inbound;Green-D
+70161,70160;Government Center;Inbound;Green-D
+70211,70211;Cleveland Circle;Outbound;Green-C,70212;North Station;Inbound;Green-C
+70213,70213;Cleveland Circle;Outbound;Green-C,70214;North Station;Inbound;Green-C
+70215,70215;Cleveland Circle;Outbound;Green-C,70216;North Station;Inbound;Green-C
+70217,70217;Cleveland Circle;Outbound;Green-C,70218;North Station;Inbound;Green-C
+70219,70219;Cleveland Circle;Outbound;Green-C,70220;North Station;Inbound;Green-C
+70223,70223;Cleveland Circle;Outbound;Green-C,70224;North Station;Inbound;Green-C
+70225,70225;Cleveland Circle;Outbound;Green-C,70226;North Station;Inbound;Green-C
+70227,70227;Cleveland Circle;Outbound;Green-C,70228;North Station;Inbound;Green-C
+70229,70229;Cleveland Circle;Outbound;Green-C,70230;North Station;Inbound;Green-C
+70231,70231;Cleveland Circle;Outbound;Green-C,70232;North Station;Inbound;Green-C
+70233,70233;Cleveland Circle;Outbound;Green-C,70234;North Station;Inbound;Green-C
+70235,70235;Cleveland Circle;Outbound;Green-C,70236;North Station;Inbound;Green-C
+70237,70238;North Station;Inbound;Green-C
+70149,70149;Boston College;Outbound;Green-B,70148;Park Street;Inbound;Green-B
+70147,70147;Boston College;Outbound;Green-B,70146;Park Street;Inbound;Green-B
+70145,70145;Boston College;Outbound;Green-B,70144;Park Street;Inbound;Green-B
+70143,70143;Boston College;Outbound;Green-B,70142;Park Street;Inbound;Green-B
+70141,70141;Boston College;Outbound;Green-B,70140;Park Street;Inbound;Green-B
+70139,70139;Boston College;Outbound;Green-B,70138;Park Street;Inbound;Green-B
+70137,70137;Boston College;Outbound;Green-B,70136;Park Street;Inbound;Green-B
+70135,70135;Boston College;Outbound;Green-B,70134;Park Street;Inbound;Green-B
+70131,70131;Boston College;Outbound;Green-B,70130;Park Street;Inbound;Green-B
+70129,70129;Boston College;Outbound;Green-B,70128;Park Street;Inbound;Green-B
+70127,70127;Boston College;Outbound;Green-B,70126;Park Street;Inbound;Green-B
+70125,70125;Boston College;Outbound;Green-B,70124;Park Street;Inbound;Green-B
+70121,70121;Boston College;Outbound;Green-B,70120;Park Street;Inbound;Green-B
+70117,70117;Boston College;Outbound;Green-B,70116;Park Street;Inbound;Green-B
+70115,70115;Boston College;Outbound;Green-B,70114;Park Street;Inbound;Green-B
+70113,70113;Boston College;Outbound;Green-B,70112;Park Street;Inbound;Green-B
+70111,70111;Boston College;Outbound;Green-B,70110;Park Street;Inbound;Green-B
+70107,70107;Park Street;Inbound;Green-B

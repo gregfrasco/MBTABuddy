@@ -15,6 +15,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import mbta.mbtabuddy.R;
+import mbta.mbtabuddy.googleMaps.MapManager;
+import mbta.mbtabuddy.mbta.Lines;
 
 public class TrackerFragment extends Fragment implements OnMapReadyCallback {
 
@@ -37,5 +39,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
         LatLng marker = new LatLng(42.3132883,-71.1972408);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 13));
         googleMap.addMarker(new MarkerOptions().title("Hello Google Maps!").position(marker));
+        MapManager mapManager = new MapManager(this.getActivity().getBaseContext(),googleMap);
+        mapManager.drawAllLines();
     }
 }

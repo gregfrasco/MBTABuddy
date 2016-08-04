@@ -1,6 +1,7 @@
 package mbta.mbtabuddy;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,8 +16,9 @@ import mbta.mbtabuddy.fragments.FavoritesFragment;
 import mbta.mbtabuddy.fragments.MBTAmap;
 import mbta.mbtabuddy.fragments.TrackerFragment;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             navigationView.getMenu().performIdentifierAction(R.id.tracker, 0);
         }
+        this.context = getBaseContext();
     }
 
     @Override

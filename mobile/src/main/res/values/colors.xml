@@ -3,4 +3,9 @@
     <color name="colorPrimary">#F44336</color>
     <color name="colorPrimaryDark">#B71C1C</color>
     <color name="colorAccent">#2196F3</color>
+
+    <color name="mbta_Red">#D7252C</color>
+    <color name="mbta_Orange">#E79440</color>
+    <color name="mbta_Green">#058246</color>
+    <color name="mbta_Blue">#0873B4</color>
 </resources>
