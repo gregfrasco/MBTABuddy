@@ -1,4 +1,4 @@
-package mbta.mbtabuddy.Fragments;
+package mbta.mbtabuddy.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;

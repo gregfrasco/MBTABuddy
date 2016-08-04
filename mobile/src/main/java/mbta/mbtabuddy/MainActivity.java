@@ -2,9 +2,6 @@ package mbta.mbtabuddy;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,8 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import mbta.mbtabuddy.Fragments.FavoritesFragment;
-import mbta.mbtabuddy.Fragments.TrackerFragment;
+import mbta.mbtabuddy.fragments.FavoritesFragment;
+import mbta.mbtabuddy.fragments.MBTAmap;
+import mbta.mbtabuddy.fragments.TrackerFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -86,7 +84,8 @@ public class MainActivity extends AppCompatActivity
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, new FavoritesFragment()).commit();
         } else if (id == R.id.map) {
-
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new MBTAmap()).commit();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
