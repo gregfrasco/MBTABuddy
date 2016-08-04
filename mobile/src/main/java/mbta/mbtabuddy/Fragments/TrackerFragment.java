@@ -37,9 +37,10 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         LatLng marker = new LatLng(42.3132883,-71.1972408);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 13));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 15));
         googleMap.addMarker(new MarkerOptions().title("Hello Google Maps!").position(marker));
         MapManager mapManager = new MapManager(this.getActivity().getBaseContext(),googleMap);
         mapManager.drawAllLines();
+        mapManager.addAllStations();
     }
 }
