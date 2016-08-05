@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import mbta.mbtabuddy.mbta.Line;
+import mbta.mbtabuddy.mbta.LineType;
 import mbta.mbtabuddy.mbta.Lines;
 import mbta.mbtabuddy.mbta.Station;
 
@@ -46,6 +47,18 @@ public class MapManager {
     public void addAllStations() {
         for (Line line: Lines.getInstance().values()){
             this.addStation(line);
+        }
+    }
+
+    public void addAllStations(boolean subway) {
+        for (Line line: Lines.getInstance().values()){
+            if(!subway){
+                if(!(line.getType().equals(LineType.Subway) || line.getType().equals(LineType.Tram))){
+                    this.addStation(line);
+                }
+            } else {
+                this.addStation(line);
+            }
         }
     }
 

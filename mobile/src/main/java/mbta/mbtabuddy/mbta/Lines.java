@@ -13,6 +13,7 @@ public class Lines {
     private static Lines instance;
     public static final int Green = Color.rgb(0, 153, 51);
     public static final int Orange = Color.rgb(255,140,0);
+    public static final int Purlpe = Color.rgb(121,46,102);
     //Lines
     public final Line RedLine;
     public final Line OrangeLine;
@@ -21,6 +22,11 @@ public class Lines {
     public final Line GreenLineD;
     public final Line GreenLineE;
     public final Line BlueLine;
+
+    public final Line CRFairmount;
+    public final Line CRFitchburg;
+    public final Line CRWorcester;
+    public final Line CRFranklin;
     //All Lines
     public List<Line> lines;
 
@@ -33,6 +39,11 @@ public class Lines {
         this.GreenLineD    = new Line("Green-D","Green Line D",LineType.Tram,Green);
         this.GreenLineE    = new Line("Green-E","Green Line E",LineType.Tram,Green);
         this.BlueLine      = new Line("Blue","Blue Line",LineType.Subway,Color.BLUE);
+
+        this.CRFairmount   = new Line("CR-Fairmount","Fairmount Line",LineType.Commuter_Rail,Purlpe);
+        this.CRFitchburg   = new Line("CR-Fitchburg","Fitchburg Line",LineType.Commuter_Rail,Purlpe);
+        this.CRWorcester   = new Line("CR-Worcester","Framingham / Worcester Line",LineType.Commuter_Rail,Purlpe);
+        this.CRFranklin   = new Line("CR-Franklin","Franklin Line",LineType.Commuter_Rail,Purlpe);
     }
 
     public static Lines getInstance(){
@@ -52,6 +63,10 @@ public class Lines {
             lines.add(GreenLineD);
             lines.add(GreenLineE);
             lines.add(BlueLine);
+            lines.add(CRFairmount);
+            lines.add(CRFitchburg);
+            lines.add(CRFranklin);
+            lines.add(CRWorcester);
         }
         return lines;
     }

@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import mbta.mbtabuddy.fragments.FavoritesFragment;
 import mbta.mbtabuddy.fragments.MBTAmap;
 import mbta.mbtabuddy.fragments.TrackerFragment;
+import mbta.mbtabuddy.mbta.Lines;
+import mbta.mbtabuddy.test.getMapPoints;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.getMenu().performIdentifierAction(R.id.tracker, 0);
         }
         this.context = getBaseContext();
+
+        getMapPoints getMapPoints = new getMapPoints();
+        getMapPoints.drawLine(Lines.getInstance().CRFranklin);
     }
 
     @Override

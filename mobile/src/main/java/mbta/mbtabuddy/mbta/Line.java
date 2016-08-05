@@ -164,7 +164,9 @@ public class Line {
         if(this.mapPoints == null){
             this.mapPoints = this.getMapPoints();
         }
-
+        if(this.mapPoints == null){
+            return;
+        }
         map.addPolyline(new PolylineOptions().width(20).color(this.getColor()).zIndex(1).addAll(this.mapPoints));
         //line border
         map.addPolyline(new PolylineOptions().width(30).color(Color.BLACK).zIndex(0).addAll(this.mapPoints));

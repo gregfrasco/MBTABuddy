@@ -46,8 +46,14 @@
     </TabHost>
 
     <mbta.mbtabuddy.util.ZoomImageView
-        android:id="@+id/mapView"
+        android:id="@+id/subwayView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
+
+    <mbta.mbtabuddy.util.ZoomImageView
+        android:id="@+id/railView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone"/>
 
 </LinearLayout>

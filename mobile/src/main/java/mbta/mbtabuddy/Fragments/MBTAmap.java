@@ -2,6 +2,7 @@ package mbta.mbtabuddy.fragments;
 
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,10 @@ import mbta.mbtabuddy.util.ZoomImageView;
 public class MBTAmap extends Fragment implements TabHost.OnTabChangeListener {
 
     private TabHost tabHost;
-    private ZoomImageView zoomImageView;
+    private ZoomImageView subwayImageView;
+    private ZoomImageView railImageView;
+    private ProgressDialog progressDialog;
+
 
     public MBTAmap() {
     }
@@ -28,9 +32,19 @@ public class MBTAmap extends Fragment implements TabHost.OnTabChangeListener {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.zoomImageView = (ZoomImageView)this.getActivity().findViewById(R.id.mapView);
-        this.zoomImageView.setImageDrawable(getResources().getDrawable(R.drawable.subway_spider));
-        this.zoomImageView.setMaxZoom(5);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading Map...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        this.subwayImageView = (ZoomImageView)this.getActivity().findViewById(R.id.subwayView);
+        this.subwayImageView.setImageDrawable(getResources().getDrawable(R.drawable.subway_spider));
+        this.subwayImageView.setMaxZoom(5);
+        this.subwayImageView.setMinZoom(1);
+
+        this.railImageView = (ZoomImageView)this.getActivity().findViewById(R.id.railView);
+        this.railImageView.setImageDrawable(getResources().getDrawable(R.drawable.rail_spider));
+        this.railImageView.setMaxZoom(5);
+        this.railImageView.setMinZoom(1);
 
         this.tabHost = (TabHost) getView().findViewById(R.id.tabHost);
         this.tabHost.setup();
@@ -48,18 +62,25 @@ public class MBTAmap extends Fragment implements TabHost.OnTabChangeListener {
 
         this.tabHost.setOnTabChangedListener(this);
 
+        progressDialog.dismiss();
     }
 
     @Override
     public void onTabChanged(String s) {
         switch (s){
             case "Subway":
-                this.zoomImageView.setImageDrawable(getResources().getDrawable(R.drawable.subway_spider));
-                this.zoomImageView.setZoom(1);
+                progressDialog.show();
+                this.subwayImageView.setZoom(1);
+                this.subwayImageView.setVisibility(View.VISIBLE);
+                this.railImageView.setVisibility(View.GONE);
+                progressDialog.dismiss();
                 break;
             case "Commuter Rail":
-                this.zoomImageView.setImageDrawable(getResources().getDrawable(R.drawable.rail_spider));
-                this.zoomImageView.setZoom(1);
+                progressDialog.show();
+                this.railImageView.setZoom(1);
+                this.subwayImageView.setVisibility(View.GONE);
+                this.railImageView.setVisibility(View.VISIBLE);
+                progressDialog.dismiss();
                 break;
         }
     }

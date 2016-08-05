@@ -18,7 +18,11 @@ import mbta.mbtabuddy.R;
 import mbta.mbtabuddy.googleMaps.MapManager;
 import mbta.mbtabuddy.mbta.Lines;
 
-public class TrackerFragment extends Fragment implements OnMapReadyCallback {
+public class TrackerFragment extends Fragment implements OnMapReadyCallback,GoogleMap.OnCameraMoveListener {
+
+    private GoogleMap googleMap;
+    private int zoomLevel = 15;
+    private MapManager mapManager;
 
     @Nullable
     @Override
@@ -36,11 +40,23 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
         LatLng marker = new LatLng(42.3132883,-71.1972408);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 15));
-        googleMap.addMarker(new MarkerOptions().title("Hello Google Maps!").position(marker));
-        MapManager mapManager = new MapManager(this.getActivity().getBaseContext(),googleMap);
-        mapManager.drawAllLines();
-        mapManager.addAllStations();
+        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, zoomLevel));
+        this.mapManager = new MapManager(this.getActivity().getBaseContext(),this.googleMap);
+        this.mapManager.drawAllLines();
+        this.mapManager.addAllStations(true);
+        this.googleMap.setOnCameraMoveListener(this);
+    }
+
+    @Override
+    public void onCameraMove() {
+        int newZoomLevel = (int) this.googleMap.getCameraPosition().zoom;
+        if (newZoomLevel != this.zoomLevel) {
+            this.zoomLevel = newZoomLevel;
+            this.googleMap.clear();
+            this.mapManager.drawAllLines();
+            this.mapManager.addAllStations(zoomLevel > 12);
+        }
     }
 }

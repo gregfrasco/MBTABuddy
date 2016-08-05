@@ -5,4 +5,3 @@ Green-B,Park Street,Boston College
 Green-C,North Station,Cleveland Circle
 Green-D,Government Center,Riverside
 Green-E,Lechmere,Heath Street
-Mattapan,Ashmont,Mattapan
