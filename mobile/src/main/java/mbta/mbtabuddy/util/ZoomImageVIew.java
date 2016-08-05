@@ -30,7 +30,7 @@ import android.widget.Scroller;
  * Created by frascog on 8/4/16.
  */
 
-public class ZoomImageVIew extends ImageView {
+public class ZoomImageView extends ImageView {
 
     private static final String DEBUG = "DEBUG";
 
@@ -90,17 +90,17 @@ public class ZoomImageVIew extends ImageView {
     private OnTouchListener userTouchListener = null;
     private OnTouchImageViewListener touchImageViewListener = null;
 
-    public ZoomImageVIew(Context context) {
+    public ZoomImageView(Context context) {
         super(context);
         sharedConstructing(context);
     }
 
-    public ZoomImageVIew(Context context, AttributeSet attrs) {
+    public ZoomImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         sharedConstructing(context);
     }
 
-    public ZoomImageVIew(Context context, AttributeSet attrs, int defStyle) {
+    public ZoomImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         sharedConstructing(context);
     }
@@ -395,7 +395,7 @@ public class ZoomImageVIew extends ImageView {
      * and ScaleType.
      * @param img
      */
-    public void setZoom(ZoomImageVIew img) {
+    public void setZoom(ZoomImageView img) {
         PointF center = img.getScrollPosition();
         setZoom(img.getCurrentZoom(), center.x, center.y, img.getScaleType());
     }
