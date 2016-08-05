@@ -41,6 +41,9 @@ public class Station {
     }
 
     public List<Line> getLine() {
+        if(lines == null){
+
+        }
         if(lines == null) {
             this.lines = MBTA.getInstance().getRoutesByStop(this.stationID,this.stationName);
         }

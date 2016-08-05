@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import mbta.mbtabuddy.MainActivity;
 import mbta.mbtabuddy.R;
+import mbta.mbtabuddy.mbta.Line;
 import mbta.mbtabuddy.mbta.Station;
 
 /**
@@ -22,29 +23,21 @@ public class StationMarker {
 
     public StationMarker(Station station) {
         this.station = station;
+        String lines = "";
+        /*
+        for(Line line: this.station.getLine()){
+            lines += line.getLineName() + ", ";
+        }
+        lines = lines.substring(0,lines.length()-3);
+        */
         this.options = new MarkerOptions()
                 .position(station.getLatLan())
                 .draggable(false)
                 .title(station.getStationName())
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.station))
                 .anchor(0.5f,0.5f)
-                .snippet(station.getStationName());
-    }
-
-    public StationMarker(Station station,int zoomLevel) {
-        this.station = station;
-        Bitmap icon = BitmapFactory.decodeResource(MainActivity.context.getResources(), R.drawable.station);
-        int width = icon.getWidth()/zoomLevel + 1;
-        int height = icon.getHeight()/zoomLevel + 1;
-        Bitmap.createScaledBitmap(icon, width,height/zoomLevel, false);
-        BitmapDescriptor marker = BitmapDescriptorFactory.fromBitmap(icon);
-        this.options = new MarkerOptions()
-                .position(station.getLatLan())
-                .draggable(false)
-                .title(station.getStationName())
-                .icon(marker)
-                .anchor(0.5f,0.5f)
-                .snippet(station.getStationName());
+                .snippet(lines)
+                .zIndex(4);
     }
 
     public MarkerOptions getMarkerOptions(){

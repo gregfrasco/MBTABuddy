@@ -38,9 +38,23 @@ public class MapManager {
         line.drawLine(map);
     }
 
+    public void drawLine(Line line,boolean subway){
+        line.drawLine(map,subway);
+    }
+
     public void drawAllLines() {
         for (Line line: Lines.getInstance().values()){
             this.drawLine(line);
+        }
+    }
+
+    public void drawAllLines(boolean subway) {
+        for (Line line: Lines.getInstance().values()) {
+            if ((line.getType().equals(LineType.Subway) || line.getType().equals(LineType.Tram))) {
+                this.drawLine(line, subway);
+            } else {
+                this.drawLine(line, !subway);
+            }
         }
     }
 

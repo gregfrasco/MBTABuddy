@@ -172,6 +172,23 @@ public class Line {
         map.addPolyline(new PolylineOptions().width(30).color(Color.BLACK).zIndex(0).addAll(this.mapPoints));
     }
 
+    public void drawLine(GoogleMap map, boolean subway) {
+        if(this.mapPoints == null){
+            this.mapPoints = this.getMapPoints();
+        }
+        if(this.mapPoints == null){
+            return;
+        }
+        int zIndex = 0;
+
+        if(subway){
+            zIndex += 2;
+        }
+        map.addPolyline(new PolylineOptions().width(20).color(this.getColor()).zIndex(zIndex+1).addAll(this.mapPoints));
+        //line border
+        map.addPolyline(new PolylineOptions().width(30).color(Color.BLACK).zIndex(zIndex).addAll(this.mapPoints));
+    }
+
     public void adjustStations(){
         for(Station station: this.getStations()){
             Location stationLocation = new Location("");

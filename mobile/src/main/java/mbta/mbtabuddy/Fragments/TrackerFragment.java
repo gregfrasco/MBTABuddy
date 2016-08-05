@@ -23,6 +23,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback,Goog
     private GoogleMap googleMap;
     private int zoomLevel = 15;
     private MapManager mapManager;
+    private boolean subwayView;
 
     @Nullable
     @Override
@@ -44,9 +45,10 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback,Goog
         LatLng marker = new LatLng(42.3132883,-71.1972408);
         this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, zoomLevel));
         this.mapManager = new MapManager(this.getActivity().getBaseContext(),this.googleMap);
-        this.mapManager.drawAllLines();
+        this.mapManager.drawAllLines(true);
         this.mapManager.addAllStations(true);
         this.googleMap.setOnCameraMoveListener(this);
+        this.subwayView = true;
     }
 
     @Override
@@ -54,9 +56,23 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback,Goog
         int newZoomLevel = (int) this.googleMap.getCameraPosition().zoom;
         if (newZoomLevel != this.zoomLevel) {
             this.zoomLevel = newZoomLevel;
-            this.googleMap.clear();
-            this.mapManager.drawAllLines();
-            this.mapManager.addAllStations(zoomLevel > 12);
+            if(zoomLevel > 13) {
+                if(!subwayView){
+                    this.subwayView = true;
+                    this.googleMap.clear();
+                    this.mapManager.drawAllLines(true);
+                    this.mapManager.addAllStations(true);
+                }
+            } else {
+                if(subwayView){
+                    this.subwayView = false;
+                    this.googleMap.clear();
+                    this.mapManager.drawAllLines(false);
+                    this.mapManager.addAllStations(false);
+                }
+            }
+
+
         }
     }
 }
