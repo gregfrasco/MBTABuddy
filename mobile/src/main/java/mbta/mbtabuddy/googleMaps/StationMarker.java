@@ -25,7 +25,7 @@ public class StationMarker {
         this.station = station;
         String lines = "";
         for(Line line: this.station.getLine()){
-            lines += line.getLineName() + ", ";
+            lines += line.getLineID() + ", ";
         }
         lines = lines.substring(0,lines.length()-2);
         this.options = new MarkerOptions()

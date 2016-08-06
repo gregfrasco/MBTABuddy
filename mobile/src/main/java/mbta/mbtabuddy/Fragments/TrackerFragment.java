@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import mbta.mbtabuddy.R;
 import mbta.mbtabuddy.googleMaps.MapManager;
+import mbta.mbtabuddy.googleMaps.StationInfoWindowAdapter;
 import mbta.mbtabuddy.mbta.Lines;
 
 public class TrackerFragment extends Fragment implements OnMapReadyCallback,GoogleMap.OnCameraMoveListener {
@@ -45,6 +46,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback,Goog
         LatLng marker = new LatLng(42.3132883,-71.1972408);
         this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, zoomLevel));
         this.mapManager = new MapManager(this.getActivity().getBaseContext(),this.googleMap);
+        this.googleMap.setInfoWindowAdapter(new StationInfoWindowAdapter());
         this.mapManager.drawAllLines(true);
         this.mapManager.addAllStations(true);
         this.googleMap.setOnCameraMoveListener(this);
