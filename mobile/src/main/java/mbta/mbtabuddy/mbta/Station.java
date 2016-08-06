@@ -42,7 +42,7 @@ public class Station {
 
     public List<Line> getLine() {
         if(lines == null){
-
+            this.lines = getAllLines();
         }
         if(lines == null) {
             this.lines = MBTA.getInstance().getRoutesByStop(this.stationID,this.stationName);
@@ -120,6 +120,26 @@ public class Station {
         return stopIDs;
     }
 
+    public List<Line> getAllLines(){
+        List<Line> lines = new ArrayList<>();
+        try{
+            InputStream is = MainActivity.context.getAssets().open("Stations.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String line = br.readLine(); // remove headers
+            while((line = br.readLine()) != null) {
+                if (line.contains(this.stationID)) {
+                    String[] lineIDs = Arrays.copyOfRange(line.split(","),4, line.split(",").length);
+                    for(String lineID: lineIDs){
+                        lines.add(Lines.getInstance().getLine(lineID));
+                    }
+                }
+            }
+        } catch (IOException e) {
+
+        }
+        return lines;
+    }
+
     public Stop getStop(String id){
         for(Stop stop: this.getStopIDs()){
             if(stop.getStopID().equals(id)){
@@ -128,6 +148,8 @@ public class Station {
         }
         return null;
     }
+
+
 
     @Override
     public String toString() {

@@ -24,12 +24,10 @@ public class StationMarker {
     public StationMarker(Station station) {
         this.station = station;
         String lines = "";
-        /*
         for(Line line: this.station.getLine()){
             lines += line.getLineName() + ", ";
         }
-        lines = lines.substring(0,lines.length()-3);
-        */
+        lines = lines.substring(0,lines.length()-2);
         this.options = new MarkerOptions()
                 .position(station.getLatLan())
                 .draggable(false)
