@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.context = getBaseContext();
 
         getMapPoints getMapPoints = new getMapPoints();
-        getMapPoints.drawLine(Lines.getInstance().CRFranklin);
+        getMapPoints.drawLine(Lines.getInstance().CRProvidence);
+
     }
 
     @Override

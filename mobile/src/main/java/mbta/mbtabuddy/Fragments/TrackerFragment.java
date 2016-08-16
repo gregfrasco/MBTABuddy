@@ -51,6 +51,7 @@ public class TrackerFragment extends Fragment implements OnMapReadyCallback,Goog
         this.mapManager.addAllStations(true);
         this.googleMap.setOnCameraMoveListener(this);
         this.subwayView = true;
+        this.googleMap.setMinZoomPreference(11f);
     }
 
     @Override

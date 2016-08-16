@@ -27,6 +27,7 @@ public class Lines {
     public final Line CRFitchburg;
     public final Line CRWorcester;
     public final Line CRFranklin;
+    public final Line CRProvidence;
     //All Lines
     public List<Line> lines;
 
@@ -43,7 +44,8 @@ public class Lines {
         this.CRFairmount   = new Line("CR-Fairmount","Fairmount Line",LineType.Commuter_Rail,Purlpe);
         this.CRFitchburg   = new Line("CR-Fitchburg","Fitchburg Line",LineType.Commuter_Rail,Purlpe);
         this.CRWorcester   = new Line("CR-Worcester","Framingham / Worcester Line",LineType.Commuter_Rail,Purlpe);
-        this.CRFranklin   = new Line("CR-Franklin","Franklin Line",LineType.Commuter_Rail,Purlpe);
+        this.CRFranklin    = new Line("CR-Franklin","Franklin Line",LineType.Commuter_Rail,Purlpe);
+        this.CRProvidence  = new Line("CR-Providence","Providence Line",LineType.Commuter_Rail,Purlpe);
     }
 
     public static Lines getInstance(){
@@ -67,6 +69,7 @@ public class Lines {
             lines.add(CRFitchburg);
             lines.add(CRFranklin);
             lines.add(CRWorcester);
+            lines.add(CRProvidence);
         }
         return lines;
     }

@@ -113,3 +113,37 @@ stationID,stationName,latitude,longitude,lineIDs
 70113,Chestnut Hill Avenue,42.338169,-71.15316,Green-B
 70111,South Street,42.3396,-71.157661,Green-B
 70107,Boston College,42.340081,-71.166769,Green-B
+South Station,South Station,42.3525181,-71.0550605,CR-Franklin,CR-Fairmount,CR-Providence
+Back Bay,Back Bay,42.3474537,-71.0756028,CR-Franklin,CR-Providence
+Ruggles,Ruggles,42.3365835,-71.0893234,CR-Franklin,CR-Providence
+Hyde Park,Hyde Park,42.25503,-71.125526,CR-Franklin,CR-Providence
+Readville,Readville,42.238405,-71.133246,CR-Franklin
+Endicott,Endicott,42.233249,-71.158647,CR-Franklin
+Dedham Corp Center,Dedham Corp Center,42.225896,-71.173806,CR-Franklin
+Islington,Islington,42.22105,-71.183961,CR-Franklin
+Norwood Depot,Norwood Depot,42.196857,-71.196688,CR-Franklin
+Norwood Central,Norwood Central,42.188775,-71.199665,CR-Franklin
+Plimptonville,Plimptonville,42.159123,-71.236125,CR-Franklin
+Windsor Gardens,Windsor Gardens,42.172127,-71.219366,CR-Franklin
+Walpole,Walpole,42.145477,-71.25779,CR-Franklin
+Norfolk,Norfolk,42.120694,-71.325217,CR-Franklin
+Franklin,Franklin,42.083238,-71.396102,CR-Franklin
+Forge Park / 495,Forge Park / 495,42.089941,-71.43902,CR-Franklin
+Newmarket,Newmarket,42.326701,-71.066314,CR-Fairmount
+Uphams Corner,Uphams Corner,42.31867,-71.069072,CR-Fairmount
+Four Corners / Geneva,Four Corners / Geneva,42.305037,-71.076833,CR-Fairmount
+Talbot Avenue,Talbot Avenue,42.292246,-71.07814,CR-Fairmount
+Morton Street,Morton Street,42.280994,-71.085475,CR-Fairmount
+Fairmount,Fairmount,42.253638,-71.11927,CR-Fairmount
+Readville,Readville,42.238405,-71.133246,CR-Fairmount
+Route 128,Route 128,42.209884,-71.1471,CR-Providence
+Canton Junction,Canton Junction,42.163204,-71.15376,CR-Providence
+Canton Center,Canton Center,42.15677,-71.145601,CR-Providence
+Sharon,Sharon,42.124553,-71.184468,CR-Providence
+Mansfield,Mansfield,42.032787,-71.219917,CR-Providence
+Stoughton,Stoughton,42.124084,-71.103627,CR-Providence
+Attleboro,Attleboro,41.940739,-71.285094,CR-Providence
+South Attleboro,South Attleboro,41.897943,-71.354621,CR-Providence
+Providence,Providence,41.829293,-71.413301,CR-Providence
+TF Green Airport,TF Green Airport,41.726599,-71.442453,CR-Providence
+Wickford Junction,Wickford Junction,41.581289,-71.491147,CR-Providence

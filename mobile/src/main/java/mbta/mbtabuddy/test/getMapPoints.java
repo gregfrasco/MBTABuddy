@@ -23,7 +23,7 @@ public class getMapPoints implements RoutingListener{
         if(line.getMapPoints() == null) {
             Routing routing = new Routing.Builder()
                     .travelMode(AbstractRouting.TravelMode.TRANSIT)
-                    .waypoints(new LatLng(42.3525181,-71.0550605), new LatLng(42.0899233,-71.4412513))
+                    .waypoints(new LatLng(42.3525181,-71.0550605), new LatLng(42.124084,-71.103627))
                     .key("AIzaSyBK7kLLVvVV4Yn-thFj8rtw1OfHu0XiYe8")
                     .withListener(this)
                     .withLine(line)
