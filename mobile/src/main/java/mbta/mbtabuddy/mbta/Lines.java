@@ -27,6 +27,13 @@ public class Lines {
     public final Line CRFitchburg;
     public final Line CRWorcester;
     public final Line CRFranklin;
+    public final Line CRGreenbush;
+    public final Line CRHaverhill;
+    public final Line CRKingston;
+    public final Line CRLowell;
+    public final Line CRMiddleborough;
+    public final Line CRNeedham;
+    public final Line CRNewburyport;
     public final Line CRProvidence;
     //All Lines
     public List<Line> lines;
@@ -41,11 +48,18 @@ public class Lines {
         this.GreenLineE    = new Line("Green-E","Green Line E",LineType.Tram,Green);
         this.BlueLine      = new Line("Blue","Blue Line",LineType.Subway,Color.BLUE);
 
-        this.CRFairmount   = new Line("CR-Fairmount","Fairmount Line",LineType.Commuter_Rail,Purlpe);
-        this.CRFitchburg   = new Line("CR-Fitchburg","Fitchburg Line",LineType.Commuter_Rail,Purlpe);
-        this.CRWorcester   = new Line("CR-Worcester","Framingham / Worcester Line",LineType.Commuter_Rail,Purlpe);
-        this.CRFranklin    = new Line("CR-Franklin","Franklin Line",LineType.Commuter_Rail,Purlpe);
-        this.CRProvidence  = new Line("CR-Providence","Providence Line",LineType.Commuter_Rail,Purlpe);
+        this.CRFairmount        = new Line("CR-Fairmount","Fairmount Line",LineType.Commuter_Rail,Purlpe);
+        this.CRFitchburg        = new Line("CR-Fitchburg","Fitchburg Line",LineType.Commuter_Rail,Purlpe);
+        this.CRWorcester        = new Line("CR-Worcester","Framingham / Worcester Line",LineType.Commuter_Rail,Purlpe);
+        this.CRFranklin         = new Line("CR-Franklin","Franklin Line",LineType.Commuter_Rail,Purlpe);
+        this.CRGreenbush        = new Line("CR-Greenbush","Greenbush Line",LineType.Commuter_Rail,Purlpe);
+        this.CRHaverhill        = new Line("CR-Haverhill","Haverhill Line",LineType.Commuter_Rail,Purlpe);
+        this.CRKingston         = new Line("CR-Kingston","Kingston Line",LineType.Commuter_Rail,Purlpe);
+        this.CRLowell           = new Line("CR-Lowell","Lowell Line",LineType.Commuter_Rail,Purlpe);
+        this.CRMiddleborough    = new Line("CR-Middleborough","Middleborough Line",LineType.Commuter_Rail,Purlpe);
+        this.CRNeedham          = new Line("CR-Needham","Needham Line",LineType.Commuter_Rail,Purlpe);
+        this.CRNewburyport      = new Line("CR-Newburyport","Newburyport Line",LineType.Commuter_Rail,Purlpe);
+        this.CRProvidence       = new Line("CR-Providence","Providence Line",LineType.Commuter_Rail,Purlpe);
     }
 
     public static Lines getInstance(){
@@ -67,8 +81,15 @@ public class Lines {
             lines.add(BlueLine);
             lines.add(CRFairmount);
             lines.add(CRFitchburg);
-            lines.add(CRFranklin);
             lines.add(CRWorcester);
+            lines.add(CRFranklin);
+            lines.add(CRGreenbush);
+            lines.add(CRHaverhill);
+            lines.add(CRKingston);
+            lines.add(CRLowell);
+            lines.add(CRMiddleborough);
+            lines.add(CRNeedham);
+            lines.add(CRNewburyport);
             lines.add(CRProvidence);
         }
         return lines;
