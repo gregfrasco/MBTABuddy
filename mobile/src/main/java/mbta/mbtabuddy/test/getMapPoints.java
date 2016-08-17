@@ -50,9 +50,12 @@ public class getMapPoints implements RoutingListener{
         route.get(0).getPoints().remove(0);
         route.get(0).getPoints().remove(route.get(0).getPoints().size() - 1);
         line.setMapPoints(route.get(0).getPoints());
-        line.adjustStations();
-        line.getMapPoints();
-        line.getStations();
+        String message = "";
+        for(LatLng point :line.getMapPoints()){
+            message += point.latitude + "," + point.longitude + "\n";
+        }
+        System.out.println(message);
+        message.toString();
     }
 
     @Override
